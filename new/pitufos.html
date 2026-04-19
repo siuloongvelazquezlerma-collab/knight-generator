@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+
+  <title>Pitufos</title>
+  <script src="../loader.min.js"></script>
+  <script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool@latest"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-ChzD5StK818vBAQZL5n94vJUmJl+jz1Ro8AiyOsd0GWIT6saFOY+zG+VVM/LMxltwGPplT7tI9On7kVCXkmVc=" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+  <link rel="icon" type="image/png" sizes="32x32" href="../logo-2025.png">
+    <link rel="manifest" href="../manifest.json">
+   <link href="https://vjs.zencdn.net/8.5.2/video-js.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../peliculas.css">
+  
+  <style>
+   .cover::before {
+  background: linear-gradient(to bottom, rgb(0, 0, 0), transparent 20%);
+}
+
+.cover::after {
+  background: linear-gradient(to top, rgb(0, 0, 0), rgb(0, 0, 0), rgb(0, 0, 0), rgb(0, 0, 0), rgba(0, 0, 0, 0.664), transparent 60%);
+}
+
+    .cover {
+      position: relative;
+  width: 100%;
+  height: 100vh;
+  background: url("https://image.tmdb.org/t/p/original/zOlllOUcAJELWJSTnFhNIuxgm8.jpg") no-repeat center top;
+  background-size: contain;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.cover::before,
+.cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+
+.cover-landscape {
+  position: absolute;
+  inset: 0;
+  background: url("https://image.tmdb.org/t/p/original/9whEVuKte4Qi0LI4TzPf7glinJW.jpg") no-repeat center top;
+  background-size: cover;
+  z-index: 0; /* <- Esto es clave para que se vea debajo del contenido, pero por encima del fondo negro */
+  display: none;
+}
+
+
+
+
+/* Ocultar sombras en landscape */
+@media screen and (orientation: landscape) {
+  .cover::before,
+  .cover::after {
+    display: none;
+  }
+
+  .cover-landscape {
+    display: block;
+  }
+}
+
+
+
+
+/* Mostrar landscape solo en modo horizontal */
+@media screen and (orientation: landscape) {
+  .cover {
+    background: none;
+  }
+
+  .cover-landscape {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  .cover-content {
+    padding-top: 70px; /* Ajusta según el tamaño de tu #header */
+  }
+}
+
+
+.cover-content img.logo {
+    width: 250px;
+    margin-bottom: 10px;
+  }
+
+  @media (orientation: landscape) {
+    
+  
+    .cover-content img.logo {
+      width: 190px;
+      margin-bottom: 4px;
+    }
+  
+    
+  }
+  
+  @media (min-width: 1024px) {
+    
+  
+    .cover-content img.logo {
+      margin-top:500px;
+      width: 360px;
+      margin-bottom: -10px;
+    }
+  
+    
+  } 
+
+
+/* General: espacio para header fijo en pantallas pequeñas */
+@media screen and (max-width: 1024px) {
+  .cover-content {
+    padding-top: 80px; /* deja espacio para el header fijo */
+  }
+}
+
+/* Móviles en portrait */
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  .cover-content {
+    padding-top: 90px; /* un poco más de espacio en modo vertical */
+  }
+
+  .cover {
+    padding-top: 0; /* el padding se maneja dentro de .cover-content */
+  }
+}
+
+/* Móviles en landscape (horizontal) */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .cover-content {
+    padding-top: 60px;
+  }
+}
+
+/* Tablets en cualquier orientación */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .cover-content {
+    padding-top: 70px;
+  }
+}
+
+/* PC: sin padding adicional */
+@media screen and (min-width: 1025px) {
+  .cover-content {
+    padding-top: 0;
+  }
+}
+
+
+</style>
+</head>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+  <div id="loader" class="loader"></div>
+  <div class="overlay-loader"></div>
+
+  <div class="custom-top-bar">
+    <button onclick="window.history.back()">
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <button onclick="location.reload()">
+      <span class="material-icons">refresh</span>
+    </button>
+  </div>
+  <header id="header">
+    <a href="javascript:history.back();" id="back-link" class="icon-link">
+        <span class="material-icons">chevron_left</span>
+    </a>
+    <span id="page-title" class="page-title">Pitufos</span> <!-- Título oculto por defecto -->
+</header>
+
+<!-- Tabs para pantallas grandes -->
+<!-- Tabs para pantallas grandes -->
+<div class="tabs tabs-secondary">
+  <!-- Logo a la izquierda -->
+  <a href="../main.html">
+    <img src="https://od.lk/s/M18zMTIxODI5MjVf/Knight.png" width="150px" class="logo" />
+  </a>
+
+  <!-- Tabs centradas -->
+  <div class="tabs-wrapper">
+    <a href="../main.html#inicio" class="tab">Inicio</a>
+    <a href="../main.html#series" class="tab">Películas</a>
+    <a href="../main.html#peliculas" class="tab">Series</a>
+    <a href="../main.html#hbo" class="tab">Anime</a>
+    <a href="../main.html#documentales" class="tab">Familia</a>
+    <a href="../main.html#mi-lista" class="tab">Doramas</a>
+  </div>
+
+  <!-- Íconos a la derecha -->
+  <div class="icons">
+    <!-- FAVORITOS -->
+    <a href="../new favoritos 2025.html" class="header-only">
+      <span class="material-icons-outlined">bookmark_border</span>
+    </a>
+
+    <!-- BUSCAR -->
+    <a href="../New search page 2025.html" class="header-only">
+      <span class="material-icons-outlined">search</span>
+    </a>
+
+    <!-- PERFIL -->
+    <a href="../perfil digital Knight 2025.html" class="header-only">
+      <img src="https://od.lk/s/M18zMTIxOTE0Mjlf/logo%202025.png" alt="Perfil" class="profile-icon-footer" id="headerProfileIcon" />
+    </a>
+  </div>
+</div>
+
+
+
+<!-- COVER / PORTADA -->
+<div class="cover" id="cover">
+    <!-- FONDO LANDSCAPE SOLO PARA MODO HORIZONTAL -->
+    <div class="cover-landscape">
+      <div class="cover-landscape-shadow-left"></div>
+    </div>
+  
+    <div class="cover-content">
+      <img src="https://image.tmdb.org/t/p/original/tPVrpSoD3asR8S4a9OW6ec3nOWQ.png" alt="Pitufos"class="logo" tabindex="2">
+      <div class="meta">7+   1h 32min   2025   Dob Lat</div>
+   
+  
+      <div class="bloque-botones">
+        <div id="video-controls">
+          <button id="watchButton" class="watch-button" onclick="showPlayer()">
+            <span id="watchButtonIcon" class="material-icons">play_arrow</span>
+            <div class="watch-text-wrapper">
+              <span id="watchButtonText">Ver ahora</span>
+              <div id="watchProgressBar" class="watch-progress-bar">
+                <div></div>
+              </div>
+            </div>
+          </button>
+          
+          <button id="restartButton" class="restart-button" onclick="restartMovie()"> 
+            <span class="material-icons">replay</span> Reiniciar
+          </button>
+       
+          <!-- Espacio opcional si quieres animar la separación (no obligatorio) -->
+          <!-- <div id="restartSpacer" style="height: 0px; transition: height 0.3s ease;"></div> -->
+        </div>
+      
+        <div class="iconos">
+          <!-- Botón de Favoritos -->
+          <button id="favoritoBtn" data-identificador="Pitufos" onclick="toggleFavorito()">
+            <span id="favoritoIcon" class="material-icons-outlined">add</span>
+            <p id="favoritoText">Favoritos</p>
+          </button>
+          
+      
+         <!-- Info oculta para localStorage -->
+          <!-- Info oculta para localStorage -->
+          <div id="favoritoData" style="display: none;">
+            <img id="favoritoImagen" class="poster" src="https://image.tmdb.org/t/p/original/11wxL3MWMuwWSGG7AKdHXfVG9E5.jpg" alt="Poster de la Película">
+            <a id="favoritoEnlace" href="pitufos.html"></a>
+            <span id="nombre">Pitufos</span>
+          </div>
+
+      
+          <!-- Notificación tipo "añadido a favoritos" -->
+          <div id="notificacion" class="notificacion" style="bottom: -100px;">
+            <span id="notificacionTexto">Añadido a favoritos</span>
+            <span class="notificacion-icono material-icons-outlined">check</span>
+          </div>
+      
+          <!-- Botón de Compartir -->
+          <div class="action-item" id="compartirBtn" onclick="window.location.href='http://action_share';">
+            <span class="material-icons-outlined">share</span>
+            <p>Compartir</p>
+          </div>
+      
+          <!-- Botón de Descargar -->
+<div class="download-action">
+  <a href="https://od.lk/d/M18zMTkzODkzNzhf/los%20pitufos%202025.mp4" download>
+    <i class="material-icons">arrow_downward</i>
+    <span class="underline"></span>
+    Descargar
+  </a>
+</div>
+
+        </div>
+      </div>
+      
+      <div class="description">
+        Cuando Papá Pitufo es secuestrado de forma misteriosa. Pitufina lleva a los Pitufos a una misión al mundo real para salvarlo.
+
+      </div>
+    </div>
+  </div>
+
+ <!-- QUIZÁ TAMBIÉN TE GUSTE -->
+<div class="sugerencias-section">
+  <div class="sugerencias-header">
+    <h2 class="sugerencias-titulo">Quizá también te guste</h2>
+    <div class="sugerencias-tabs-line"></div>
+  </div>
+  <div class="sugerencias-grid">
+    
+      
+    <a href="jefe en pañales 2.html" class="sugerencia-item">
+      <img src="https://image.tmdb.org/t/p/w300/85J1DwZowIlKFOF7jllgCD3iHhx.jpg" alt="Jefe en pañales 2">
+      <p class="sugerencia-titulo">Jefe en pañales 2</p>
+      <p class="sugerencia-sub">Dob | Lat</p>
+    </a>
+
+    <a href="trolls 3.html" class="sugerencia-item">
+      <img src="https://image.tmdb.org/t/p/w300/nQhVtZLLAZAtlTmFETL2XO91Tcs.jpg" alt="Trolls 3">
+      <p class="sugerencia-titulo">Trolls 3</p>
+      <p class="sugerencia-sub">Dob | Lat</p>
+    </a>
+
+    <a href="patos.html" class="sugerencia-item">
+      <img src="https://image.tmdb.org/t/p/w300/wyslVgKc8QcpSUR8vQcvouKmtL4.jpg" alt="Patos">
+      <p class="sugerencia-titulo">Patos</p>
+      <p class="sugerencia-sub">Dob | Lat</p>
+    </a>
+
+    <a href="kung fu panda 4.html" class="sugerencia-item">
+      <img src="https://od.lk/s/M18zMDE3NjAwNDJf/panda1.jpg" alt="Kung Fu Panda 4">
+      <p class="sugerencia-titulo">Kung Fu Panda 4</p>
+      <p class="sugerencia-sub">Dob | Lat</p>
+    </a>
+  </div>
+</div>
+
+
+<!-- PLAYER -->
+<div class="player" id="player">
+  <video
+  id="video"
+  class="video-js vjs-default-skin"
+  preload="auto"
+  width="100%"
+  height="100%"
+  poster="https://wallpapercave.com/wp/wp5415042.jpg"
+  data-setup='{"controls": false, "autoplay": false, "preload": "auto"}'>
+  <source src="https://od.lk/s/M18zMTkzODkzNzhf/los%20pitufos%202025.mp4" type="video/mp4" />
+</video>
+ <!-- Loader -->
+ <div class="video-loader hidden" id="videoLoader">
+  <div class="spinner"></div>
+</div>
+
+    <!-- Aspect Ratio Label -->
+    <div id="aspectLabel" style="
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 16px;
+      display: none;
+      z-index: 9999;
+    ">
+      cover
+    </div>
+  
+    <div class="overlay" id="overlay"></div>
+  
+   
+    <div class="controls" id="controls">
+      <div class="top-bar">
+        <div class="icon-btn material-icons" onclick="goBack()">chevron_left</div>
+        <div style="display: flex; gap: 15px;">
+            <div class="icon-btn material-icons" onclick="castCurrentVideo()">cast</div>
+          <div class="icon-btn material-icons" onclick="toggleAspectRatio()">aspect_ratio</div>
+        </div>
+      </div>
+  
+      <div class="center-controls">
+        <button class="btn" onclick="skip(-10)">
+          <span class="material-icons">replay_10</span>
+        </button>
+        <button class="btn" id="playPauseBtn" onclick="togglePlay()">
+          <span class="material-icons">play_arrow</span>
+        </button>
+        <button class="btn" onclick="skip(10)">
+          <span class="material-icons">forward_10</span>
+        </button>
+      </div>
+  
+      <div class="bottom-bar">
+        <div id="episodeHeader">
+          <div class="title">Pitufos</div>
+          <div class="subtitle" id="episodeSubtitle"></div>
+        </div>
+   
+      
+  
+        <div class="progress-container">
+          <input type="range" class="progress" id="progress" value="0" max="100">
+          <div class="time" id="duration">- 00:00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <a href="../main.html" class="footer-icon">
+        <span class="material-icons-outlined">home</span>
+        <span class="material-icons">home</span>
+    </a>
+    <a href="../new favoritos 2025.html" class="footer-icon">
+        <span class="material-icons-outlined">bookmark_border</span>
+        <span class="material-icons">bookmark</span>
+    </a>
+    <a href="../New search page 2025.html" class="footer-icon">
+        <span class="material-icons-outlined">search</span>
+        <span class="material-icons">search</span>
+    </a>
+    <a href="../perfil digital Knight 2025.html" class="footer-icon">
+        
+        <img src="../logo-2025.png" alt="Icono de Perfil" id="footerIconImg" class="profile-icon-footer">
+    </a>
+  </footer>
+  <script src="https://vjs.zencdn.net/8.5.2/video.min.js"></script>
+
+ 
+<script>
+
+window.movieId = "pitufos-936108";
+
+// 🆔 Asegura que tengas el ID de la película global
+const movieId = window.movieId || 'unknown-id';
+
+// Prevenir gestos táctiles no deseados
+document.addEventListener('touchmove', function (event) {
+  if (event.touches.length > 1) {
+    event.preventDefault();
+  }
+}, { passive: false });
+
+window.addEventListener('load', function () {
+  const overlay = document.querySelector('.overlay-loader');
+  const loader = document.getElementById('loader');
+
+  // Se mantiene el loader visible por 1 segundo
+  setTimeout(() => {
+        loader.style.opacity = '0';
+        setTimeout(() => {
+            loader.style.display = 'none';
+            overlay.classList.add('hidden');
+        }, 300);
+    }, 1000);
+});
+
+
+const video = document.getElementById('video');
+const controls = document.getElementById('controls');
+const overlay = document.getElementById('overlay');
+const player = document.getElementById('player');
+const progress = document.getElementById('progress');
+const duration = document.getElementById('duration');
+const playPauseBtn = document.getElementById('playPauseBtn').querySelector('.material-icons');
+const cover = document.getElementById('cover');
+const thumb = document.getElementById('thumb'); // si existe
+
+// ------------------------
+// 2️⃣ Función para actualizar barra y thumb
+// ------------------------
+function updateMovieProgress() {
+  if (!video.duration) return;
+
+  const remaining = video.duration - video.currentTime;
+  const hours = Math.floor(remaining / 3600);
+  const minutes = Math.floor((remaining % 3600) / 60);
+  const seconds = Math.floor(remaining % 60).toString().padStart(2, '0');
+
+  duration.textContent = hours > 0
+    ? `- ${hours}:${minutes.toString().padStart(2,'0')}:${seconds}`
+    : `- ${minutes}:${seconds}`;
+
+  const percent = (video.currentTime / video.duration) * 100;
+
+  progress.value = percent;
+  progress.style.background = `linear-gradient(to right, white ${percent}%, #666 ${percent}%)`;
+
+  if (thumb) {
+    const width = progress.offsetWidth;
+    thumb.style.left = `${(percent / 100) * width}px`;
+  }
+}
+
+// ------------------------
+// 3️⃣ Listeners del progreso
+// ------------------------
+progress.addEventListener('input', () => {
+  video.currentTime = (progress.value / 100) * video.duration;
+  updateMovieProgress(); // actualiza thumb en tiempo real
+});
+
+video.addEventListener('timeupdate', updateMovieProgress);
+video.addEventListener('loadedmetadata', updateMovieProgress);
+video.addEventListener('play', () => requestAnimationFrame(updateMovieProgress));
+video.addEventListener('pause', updateMovieProgress);
+// NUEVO:  para "Reanudar" y "Reinicia"
+const watchButtonText = document.getElementById('watchButtonText');
+const restartButton = document.getElementById('restartButton');
+
+// NUEVO: Barra visual de progreso
+const progressBar = document.getElementById('watchProgressBar');
+
+let hideControlsTimeout;
+
+// Reanudar desde donde se dejó
+// Reanudar desde donde se dejó
+video.addEventListener('loadedmetadata', () => {
+  const savedTime = localStorage.getItem(`progress_${movieId}`);
+  if (savedTime) {
+    video.currentTime = parseFloat(savedTime);
+  }
+  updateProgress();
+
+  // ✅ Mostrar barra y botón si aplica
+  if (video.currentTime > 5 && video.currentTime < video.duration - 5) {
+    progressBar.style.display = "block";
+    showRestartButton();
+    watchButtonText.textContent = "Continuar viendo";
+  }
+
+  // 🛰️ Sincronizar con Supabase al cargar metadata
+  if (typeof throttledSyncData === 'function') {
+    throttledSyncData(movieId);
+  }
+});
+
+let lastSync = 0; // Estado inicial del botón al cargar la página
+updateWatchButtonFromStorage();
+
+// Guardar progreso y actualizar UI
+video.addEventListener('timeupdate', () => {
+  updateProgress();
+
+  const currentTime = video.currentTime;
+  const totalDuration = video.duration || 1;
+
+  // Guardar en localStorage
+  localStorage.setItem(`progress_${movieId}`, currentTime);
+  localStorage.setItem(`duration_${movieId}`, totalDuration);
+  localStorage.setItem(`movie_${movieId}`, JSON.stringify({
+    tipo: 'movie',
+    title: document.querySelector(".title")?.textContent?.trim() || 'Sin título',
+    subtitle: document.getElementById("episodeSubtitle")?.textContent?.trim() || '',
+    poster: document.getElementById("favoritoImagen")?.src || '',
+    link: document.getElementById("favoritoEnlace")?.href || window.location.href,
+    progress: currentTime,
+    duration: totalDuration
+  }));
+
+  // Sincronizar cada 5 segundos
+  const now = Date.now();
+  if (typeof throttledSyncData === 'function' && now - lastSync > 5000) {
+    throttledSyncData(movieId);
+    lastSync = now;
+  }
+
+  // Barra de progreso
+  if (progressBar && totalDuration) {
+    const percent = (currentTime / totalDuration) * 100;
+    progressBar.firstElementChild?.style.setProperty("width", `${percent}%`);
+
+    if (currentTime > 5 && currentTime < totalDuration - 0.5) {
+      progressBar.style.display = "block";
+    }
+  }
+
+  // Botón reiniciar
+  if (currentTime > 5 && currentTime < totalDuration - 5) {
+    showRestartButton();
+    localStorage.setItem(`hasStarted_${movieId}`, 'true');
+  }
+
+  // Cambiar texto del botón
+  const percentPlayed = currentTime / totalDuration;
+  if (percentPlayed >= 0.8) {
+    watchButtonText.textContent = "Volver a ver";
+  } else if (currentTime > 10) {
+    watchButtonText.textContent = "Continuar viendo";
+  } else {
+    watchButtonText.textContent = "Ver ahora";
+  }
+});
+
+// Evento final real
+video.addEventListener('ended', () => {
+  endMovieCleanup(true); // 🔹 Indicamos que terminó al 100%
+});
+
+// Limpieza del estado
+function endMovieCleanup(finished = false) {
+  exitFullscreen();
+  player.style.display = 'none';
+  cover.style.display = 'flex';
+  video.pause();
+  playPauseBtn.textContent = 'play_arrow';
+  progressBar.style.display = 'none';
+  hideRestartButton();
+
+  if (finished) {
+    // Solo limpiar progreso si de verdad terminó
+    localStorage.removeItem(`progress_${movieId}`);
+    localStorage.removeItem(`hasStarted_${movieId}`);
+    progressBar.firstElementChild.style.width = "0%";
+  }
+
+  // 🔹 Siempre actualizar el botón al cerrar el reproductor
+  updateWatchButtonFromStorage();
+}
+
+// Nueva función que actualiza el botón y la barra según progreso
+function updateWatchButton() {
+  const savedTime = parseFloat(localStorage.getItem(`progress_${movieId}`) || "0");
+  const totalDuration = parseFloat(localStorage.getItem(`duration_${movieId}`) || video.duration || 1);
+  const currentTime = video.currentTime || 0;
+
+  const effectiveTime = Math.max(savedTime, currentTime);
+
+  // Actualizar el texto del botón según el progreso
+  if (effectiveTime >= totalDuration * 0.9) {
+    watchButtonText.textContent = "Volver a ver";
+    restartButton.style.display = "inline-flex";
+    progressBar.style.display = "block";
+  } else if (effectiveTime > 5) {
+    watchButtonText.textContent = "Continuar viendo";
+    restartButton.style.display = "inline-flex";
+    progressBar.style.display = "block";
+  } else {
+    watchButtonText.textContent = "Ver ahora";
+    restartButton.style.display = "none";
+    progressBar.style.display = "none";
+  }
+
+  // Actualizar barra de progreso
+  if (progressBar && totalDuration) {
+    const percent = (effectiveTime / totalDuration) * 100;
+    progressBar.firstElementChild.style.width = `${percent}%`;
+  }
+}
+
+// Llamadas a la función en distintos momentos del video
+video.addEventListener('loadedmetadata', updateWatchButton);
+video.addEventListener('timeupdate', updateWatchButton);
+video.addEventListener('play', updateWatchButton);
+
+
+// Tu función existente para mantener compatibilidad con el almacenamiento
+// Nueva función que actualiza el botón y la barra según progreso
+// Nueva función que actualiza el botón y la barra según progreso
+function updateWatchButton() {
+  const savedTime = parseFloat(localStorage.getItem(`progress_${movieId}`) || "0");
+  const totalDuration = parseFloat(localStorage.getItem(`duration_${movieId}`) || video.duration || 1);
+  const currentTime = video.currentTime || 0;
+
+  const effectiveTime = Math.max(savedTime, currentTime);
+
+  if (effectiveTime >= totalDuration * 0.9) {
+    // Caso: Volver a ver
+    watchButtonIcon.textContent = "replay";   // 👈 Cambié restart_alt por replay
+    watchButtonText.textContent = "Volver a ver";
+    restartButton.style.display = "none";     // 👈 Oculto el botón extra
+    progressBar.style.display = "block";
+  } else if (effectiveTime > 5) {
+    // Caso: Continuar viendo
+    watchButtonIcon.textContent = "play_arrow";
+    watchButtonText.textContent = "Continuar viendo";
+    restartButton.style.display = "inline-flex"; // 👈 Aquí sí se ve
+    progressBar.style.display = "block";
+  } else {
+    // Caso: Ver ahora
+    watchButtonIcon.textContent = "play_arrow";
+    watchButtonText.textContent = "Ver ahora";
+    restartButton.style.display = "none";
+    progressBar.style.display = "none";
+  }
+
+  // Barra de progreso
+  if (progressBar && totalDuration) {
+    const percent = (effectiveTime / totalDuration) * 100;
+    progressBar.firstElementChild.style.width = `${percent}%`;
+  }
+}
+
+// Llamadas a la función en distintos momentos del video
+video.addEventListener('loadedmetadata', updateWatchButton);
+video.addEventListener('timeupdate', updateWatchButton);
+video.addEventListener('play', updateWatchButton);
+
+
+// Función para mantener compatibilidad con almacenamiento
+function updateWatchButtonFromStorage() {
+  const savedTime = parseFloat(localStorage.getItem(`progress_${movieId}`) || "0");
+  const savedDuration = parseFloat(localStorage.getItem(`duration_${movieId}`) || "1");
+
+  if (savedTime > 10) {
+    const percentPlayed = savedTime / savedDuration;
+    if (percentPlayed >= 0.9) {
+      // Caso: Volver a ver
+      watchButtonIcon.textContent = "replay";   // 👈 Cambiado
+      watchButtonText.textContent = "Volver a ver";
+      restartButton.style.display = "none";     // 👈 Oculto
+    } else {
+      // Caso: Continuar viendo
+      watchButtonIcon.textContent = "play_arrow";
+      watchButtonText.textContent = "Continuar viendo";
+      restartButton.style.display = "inline-flex";
+    }
+    progressBar.style.display = "block";
+    progressBar.firstElementChild.style.width = `${(savedTime / savedDuration) * 100}%`;
+  } else {
+    // Caso: Ver ahora
+    watchButtonIcon.textContent = "play_arrow";
+    watchButtonText.textContent = "Ver ahora";
+    restartButton.style.display = "none";
+    progressBar.style.display = "none";
+  }
+}
+
+// Botón principal
+document.getElementById('watchButton').addEventListener('click', () => {
+  if (watchButtonText.textContent.includes("Volver a ver")) {
+    restartMovie();
+  } else {
+    showPlayer();
+  }
+});
+
+// Reiniciar
+function restartMovie() {
+  localStorage.removeItem(`progress_${movieId}`);
+  video.currentTime = 0;
+  showPlayer();
+  if (screen.orientation && screen.orientation.lock) {
+    screen.orientation.lock('landscape').catch(err => {
+      console.warn('⚠️ No se pudo bloquear orientación en restart:', err);
+    });
+  }
+}
+
+
+
+
+
+
+
+function togglePlay() {
+  if (video.paused) {
+    video.play();
+    playPauseBtn.textContent = 'pause';
+    overlay.classList.remove('visible');
+  } else {
+    video.pause();
+    playPauseBtn.textContent = 'play_arrow';
+    overlay.classList.add('visible');
+  }
+}
+
+function skip(seconds) {
+  video.currentTime += seconds;
+}
+
+function goBack() {
+  if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+    exitFullscreen();
+  }
+
+  player.style.display = 'none';
+  cover.style.display = 'flex';
+  video.pause();
+  playPauseBtn.textContent = 'play_arrow';
+}
+
+function updateProgress() {
+  if (video.duration) {
+    const remaining = video.duration - video.currentTime;
+
+    const hours = Math.floor(remaining / 3600);
+    const minutes = Math.floor((remaining % 3600) / 60);
+    const seconds = Math.floor(remaining % 60).toString().padStart(2, '0');
+
+    const formattedTime = hours > 0
+      ? `- ${hours}:${minutes.toString().padStart(2, '0')}:${seconds}`
+      : `- ${minutes}:${seconds}`;
+
+    duration.textContent = formattedTime;
+
+    const percent = (video.currentTime / video.duration) * 100;
+    progress.value = percent;
+    progress.style.background = `linear-gradient(to right, white ${percent}%, #666 ${percent}%)`;
+  }
+}
+
+progress.addEventListener('input', () => {
+  video.currentTime = (progress.value / 100) * video.duration;
+});
+
+/* -------------------
+   👇 Gestión de controles
+------------------- */
+let controlsVisible = false;
+
+/* -------------------
+   Ajuste de toggleControls
+------------------- */
+function toggleControls() {
+  if (controlsVisible) {
+    // 👇 Si ya están visibles → ocultarlos
+    hideControls();
+    clearTimeout(hideControlsTimeout);
+  } else {
+    // 👇 Si están ocultos → mostrarlos y reiniciar timeout
+    showControls();
+  }
+}
+
+function showControls() {
+  controls.classList.remove('hidden');
+  overlay.classList.add('visible');
+  controlsVisible = true;
+
+  clearTimeout(hideControlsTimeout); // 👈 Reinicia SIEMPRE
+  hideControlsTimeout = setTimeout(() => {
+    hideControls();
+  }, 7000);
+}
+
+function hideControls() {
+  controls.classList.add('hidden');
+  overlay.classList.remove('visible');
+  controlsVisible = false;
+}
+
+/* -------------------
+   Detectar si es táctil o desktop
+------------------- */
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+if (isTouchDevice) {
+  // 👉 En móviles: tap alterna los controles SIN ghost click
+  let lastTouch = 0;
+
+  video.addEventListener('touchstart', (e) => {
+    if (e.touches.length > 1) return; // ignora gestos multi-touch
+    e.preventDefault();               // evita que luego dispare click
+    e.stopPropagation();
+    lastTouch = Date.now();
+    toggleControls();                 // alterna inmediatamente al tocar
+  }, { passive: false });
+
+  // 🚫 Bloquear el click fantasma que llega tras el touch
+  video.addEventListener('click', (e) => {
+    if (Date.now() - lastTouch < 500) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+  }, true); // usar captura para interceptarlo primero
+} else {
+  // 👉 En PC: mousemove muestra controles y activa auto-ocultar cursor
+  video.addEventListener('mousemove', () => {
+    showControls();
+    enableCursorAutoHide(); // <-- ocultar cursor
+  });
+
+  /* -------------------
+     Ocultar cursor en PC
+  ------------------- */
+  let mouseMoveTimeout;
+
+  function enableCursorAutoHide() {
+    // mostrar cursor al mover el mouse
+    document.body.style.cursor = "default";
+    clearTimeout(mouseMoveTimeout);
+
+    mouseMoveTimeout = setTimeout(() => {
+      // 👉 Solo ocultar si el video está reproduciéndose
+      if (!video.paused) {
+        document.body.style.cursor = "none";
+      }
+    }, 3000); // 3 segundos sin mover → ocultar
+  }
+
+  // Cuando se pausa el video → mostrar cursor siempre
+  video.addEventListener('pause', () => {
+    document.body.style.cursor = "default";
+    clearTimeout(mouseMoveTimeout);
+  });
+
+  // Cuando se reproduce → activar auto-hide
+  video.addEventListener('play', enableCursorAutoHide);
+}
+
+function showPlayer() {
+  cover.style.display = 'none';
+  player.style.display = 'flex';
+  video.play();
+  playPauseBtn.textContent = 'pause';
+  showControls();
+  enterFullscreen();
+
+  // ✅ FORZAR ORIENTACIÓN A LANDSCAPE
+  if (screen.orientation && screen.orientation.lock) {
+    screen.orientation.lock('landscape').catch(err => {
+      console.warn('⚠️ No se pudo bloquear orientación:', err);
+    });
+  }
+
+  // ✅ Mostrar barra y botón si ya pasaron 5 segundos
+  if (video.currentTime > 5 && video.currentTime < video.duration - 5) {
+    progressBar.style.display = "block";
+    showRestartButton();
+  }
+}
+
+
+player.addEventListener('mousemove', showControls);
+player.addEventListener('click', showControls);
+player.addEventListener('touchstart', showControls);
+
+function enterFullscreen() {
+  if (player.requestFullscreen) {
+    player.requestFullscreen();
+  } else if (player.webkitRequestFullscreen) {
+    player.webkitRequestFullscreen();
+  } else if (player.msRequestFullscreen) {
+    player.msRequestFullscreen();
+  }
+}
+
+function exitFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  }
+}
+
+document.addEventListener('fullscreenchange', () => {
+  const isFullscreen = document.fullscreenElement;
+  if (!isFullscreen) {
+    if (!video.paused) {
+      video.pause();
+    }
+    playPauseBtn.textContent = 'play_arrow';
+    player.style.display = 'none';
+    cover.style.display = 'flex';
+  }
+});
+
+let hasStarted = false;
+let reiniciaTimer = null;
+
+video.addEventListener('play', () => {
+  if (!hasStarted && video.currentTime < video.duration - 5) {
+    hasStarted = true;
+
+    reiniciaTimer = setTimeout(() => {
+      if (video.currentTime > 5 && video.currentTime < video.duration - 5) {
+        showRestartButton();
+        localStorage.setItem(`hasStarted_${movieId}`, 'true');
+        progressBar.style.display = "block";
+      }
+    }, 5000);
+
+    // 🆕 Forzar fullscreen la primera vez que empieza
+    enterFullscreen();
+  }
+});
+
+
+// Función para mostrar el botón de "Reinicia"
+function showRestartButton() {
+  const currentTime = video.currentTime;
+  const totalDuration = video.duration || parseFloat(localStorage.getItem(`duration_${movieId}`) || "1");
+  const percentPlayed = currentTime / totalDuration;
+
+  // Solo mostrar si la película NO terminó (menos de 90%)
+  if (percentPlayed < 0.8) {
+    restartButton.style.display = 'flex';
+    restartButton.classList.add('shown');
+    document.getElementById('restartSpacer').style.height = '60px'; // ajusta según el alto del botón
+  } else {
+    hideRestartButton();
+  }
+}
+
+function hideRestartButton() {
+  restartButton.style.display = 'none';
+  restartButton.classList.remove('shown');
+  document.getElementById('restartSpacer').style.height = '0px';
+}
+
+// Ajustar al cargar la página
+window.addEventListener('DOMContentLoaded', () => {
+  const savedTime = parseFloat(localStorage.getItem(`progress_${movieId}`) || 0);
+  const totalDuration = parseFloat(localStorage.getItem(`duration_${movieId}`) || 1);
+  const percentPlayed = savedTime / totalDuration;
+  const hasStartedFlag = localStorage.getItem(`hasStarted_${movieId}`);
+
+  // Solo mostrar el botón si ya empezó pero NO terminó
+  if (percentPlayed < 0.8 && savedTime > 0 && hasStartedFlag === 'true') {
+    showRestartButton();
+  } else {
+    hideRestartButton();
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const header = document.getElementById('header');
+  const pageTitle = document.getElementById('page-title');
+
+  if (!header || !pageTitle) return;
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const maxScroll = 300;
+
+    const opacity = Math.min(scrollY / maxScroll, 1);
+    const titleOpacity = scrollY > 150 ? Math.min(scrollY / maxScroll, 1) : 0;
+
+    header.style.backgroundColor = `rgba(0, 0, 0, ${opacity})`;
+    pageTitle.style.opacity = titleOpacity;
+  });
+});
+
+const favoritoBtn = document.getElementById('favoritoBtn');
+const favoritoIcon = document.getElementById('favoritoIcon'); // Ícono
+const identificador = favoritoBtn.getAttribute('data-identificador');
+
+// Función para manejar el favorito
+async function toggleFavorito() {
+  const favoritoEnlace = document.getElementById('favoritoEnlace');
+  const imagen = document.getElementById('favoritoImagen');
+  const nombre = document.getElementById('nombre').textContent;
+  const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+
+  const encontrado = favoritos.some(f => f.identificador === identificador);
+
+  if (encontrado) {
+    const nuevos = favoritos.filter(f => f.identificador !== identificador);
+    localStorage.setItem('favoritos', JSON.stringify(nuevos));
+    favoritoIcon.innerText = 'add';
+    mostrarNotificacion('Se eliminó de favoritos');
+  } else {
+    favoritos.push({
+      identificador,
+      imagen: imagen.outerHTML,
+      enlace: favoritoEnlace.href,
+      nombre
+    });
+    localStorage.setItem('favoritos', JSON.stringify(favoritos));
+    favoritoIcon.innerText = 'check';
+    mostrarNotificacion('Se añadió a favoritos');
+  }
+
+  // ⏫ Sincronizar con Supabase directamente
+  try {
+    const { data: { session } } = await window.supabase.auth.getSession();
+    if (!session) return;
+    const userId = session.user.id;
+
+    if (!encontrado) {
+      await window.supabase.from('favoritos').upsert({
+        id: userId,
+        identificador,
+        nombre,
+        imagen: imagen.outerHTML,
+        enlace: favoritoEnlace.href
+      }, { onConflict: ['id', 'identificador'] });
+    } else {
+      await window.supabase.from('favoritos')
+        .delete()
+        .eq('id', userId)
+        .eq('identificador', identificador);
+    }
+  } catch (e) {
+    console.warn('❌ Error al sincronizar favorito:', e);
+  }
+
+  // 🔄 Subir el cambio a Supabase también por si hay más datos
+  if (typeof throttledSyncData === 'function') {
+    throttledSyncData(movieId);
+  }
+}
+
+
+// Función para cargar el estado inicial del botón de favoritos
+function cargarEstadoFavorito() {
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+    const encontrado = favoritos.some(favorito => favorito.identificador === identificador);
+
+    if (encontrado) {
+        // Si está en favoritos, cambia solo el ícono
+        favoritoIcon.innerText = 'check';
+    } else {
+        // Si no está en favoritos, deja el ícono por defecto
+        favoritoIcon.innerText = 'add';
+    }
+}
+
+// Llamar a la función al cargar la página
+document.addEventListener('DOMContentLoaded', cargarEstadoFavorito);
+
+function mostrarNotificacion(mensaje) {
+  const notificacion = document.getElementById('notificacion');
+  const notificacionTexto = document.getElementById('notificacionTexto');
+
+  notificacionTexto.innerText = mensaje;
+  notificacion.style.bottom = "80px"; // Justo encima del footer
+
+  setTimeout(() => {
+    notificacion.style.bottom = "-200px"; // Oculta fuera del viewport
+  }, 3000);
+}
+
+// Gestión de imágenes de perfil
+const footerProfileIcon = document.getElementById("footerIconImg");
+const profileImage = document.getElementById("profileImage");
+const profilePageImage = document.getElementById("profilePageImage");
+const headerProfileIcon = document.getElementById("headerProfileIcon");
+
+const defaultProfileIcon = document.getElementById("defaultProfileIcon"); // Icono de perfil en el footer
+const defaultProfileIconAlt = document.getElementById("defaultProfileIconAlt"); // Icono alternativo de perfil
+
+// Función para cambiar todas las imágenes de perfil
+// Función para cambiar todas las imágenes de perfil
+function updateProfileImage(src) {
+  const ids = [
+    "footerIconImg",
+    "footerProfileImage",
+    "profileImage",
+    "profilePageImage",
+    "editableProfile",
+    "editableProfileInModal",
+    "headerProfileIcon"
+  ];
+
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.src = src;
+  });
+
+  // Ocultar iconos por defecto si existen
+  const defaultIcon = document.getElementById("defaultProfileIcon");
+  if (defaultIcon) defaultIcon.style.display = "none";
+
+  const defaultIconAlt = document.getElementById("defaultProfileIconAlt");
+  if (defaultIconAlt) defaultIconAlt.style.display = "none";
+
+  // Guardar en localStorage
+  localStorage.setItem("profileImage", src);
+}
+
+// Restaurar la imagen de perfil guardada al cargar la página
+window.addEventListener("load", () => {
+  const storedProfileImage = localStorage.getItem("profileImage");
+  if (storedProfileImage) {
+    updateProfileImage(storedProfileImage); // Reutilizamos la función
+  }
+});
+
+
+var lastScrollTop = 0;
+    var footer = document.querySelector(".footer");
+
+    window.addEventListener("scroll", function () {
+        var currentScroll = window.scrollY;
+
+        if (currentScroll > lastScrollTop) {
+            // Desliza hacia abajo -> Ocultar footer
+            footer.classList.add("hidden");
+        } else {
+            // Desliza hacia arriba -> Mostrar footer
+            footer.classList.remove("hidden");
+        }
+
+        lastScrollTop = currentScroll;
+    });
+
+const aspectModes = ['cover', 'fill', 'contain', 'fit-height', 'fit-width', 'scale-down'];
+let currentAspectIndex = 0;
+
+function toggleAspectRatio() {
+  currentAspectIndex = (currentAspectIndex + 1) % aspectModes.length;
+  const mode = aspectModes[currentAspectIndex];
+
+  // Aplica el modo al video
+  video.style.objectFit = mode.includes('fit-') ? 'contain' : mode;
+
+  // Controla altura y ancho según modo
+  switch (mode) {
+    case 'fit-height':
+      video.style.width = 'auto';
+      video.style.height = '100%';
+      break;
+    case 'fit-width':
+      video.style.width = '100%';
+      video.style.height = 'auto';
+      break;
+    default:
+      video.style.width = '100%';
+      video.style.height = '100%';
+      break;
+  }
+
+  // Muestra etiqueta en pantalla
+  const label = document.getElementById('aspectLabel');
+  label.textContent = mode;
+  label.style.display = 'block';
+
+  clearTimeout(label._hideTimeout);
+  label._hideTimeout = setTimeout(() => {
+    label.style.display = 'none';
+  }, 1500);
+}
+
+const loader = document.getElementById('videoLoader');
+
+// Mostrar loader mientras se carga o busca
+video.addEventListener('waiting', () => {
+  loader.classList.remove('hidden');
+});
+
+// Ocultar loader cuando comience a reproducirse
+video.addEventListener('playing', () => {
+  loader.classList.add('hidden');
+});
+
+// También al cambiar manualmente de episodio o al adelantar
+video.addEventListener('seeking', () => {
+  loader.classList.remove('hidden');
+});
+
+video.addEventListener('seeked', () => {
+  loader.classList.add('hidden');
+});
+
+// Bloquear teclas comunes de desarrollo
+document.addEventListener('keydown', function(e) {
+  if (
+    e.key === 'F12' ||
+    (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) ||
+    (e.ctrlKey && e.key === 'U')
+  ) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+});
+
+function castCurrentVideo() {
+  const video = document.getElementById("video");
+
+  // ✅ Obtener instancia de Video.js
+  const player = video?.player || videojs.getPlayer ? videojs.getPlayer("video") : null;
+
+  if (!player) {
+    alert("No se encontró el reproductor.");
+    return;
+  }
+
+  const currentSrc = player.currentSrc();
+
+  if (!currentSrc) {
+    alert("No se encontró el enlace del video.");
+    return;
+  }
+
+  const appLink = "wvc-x-callback://open?url=" + encodeURIComponent(currentSrc);
+  const storeLink = "https://play.google.com/store/apps/details?id=com.instantbits.cast.webvideo";
+
+  const transmitLink = document.createElement('a');
+  transmitLink.href = appLink;
+  transmitLink.style.display = 'none';
+  document.body.appendChild(transmitLink);
+
+  let appOpened = false;
+  transmitLink.click();
+
+  setTimeout(() => {
+    if (!appOpened) {
+      window.location.href = storeLink;
+    }
+    document.body.removeChild(transmitLink);
+  }, 1000);
+
+  window.addEventListener("blur", () => {
+    appOpened = true;
+  }, { once: true });
+}
+
+
+const mainTitle = document.querySelector(".title").textContent.trim();
+const subTitle = document.getElementById("episodeSubtitle").textContent.trim();
+const moviePoster = document.getElementById("favoritoImagen").src;
+const movieLink = document.getElementById("favoritoEnlace").href;
+
+// Guarda automáticamente al actualizar el tiempo
+video.addEventListener("timeupdate", () => {
+    const currentTime = video.currentTime;
+    const duration = video.duration || 1;
+
+    // Guarda datos individuales (para posibles usos futuros)
+    localStorage.setItem(`progress_${movieId}`, currentTime);
+    localStorage.setItem(`duration_${movieId}`, duration);
+
+    // Guarda el objeto completo para la sección "Continuar Viendo"
+    const movieData = {
+        title: mainTitle || 'Sin título',
+        subtitle: subTitle || '',
+        poster: moviePoster || '',
+        link: movieLink || '',
+        progress: currentTime,
+        duration: duration
+    };
+
+    localStorage.setItem(`movie_${movieId}`, JSON.stringify(movieData));
+});
+
+
+
+
+// Detectar teclas y mover el foco
+document.addEventListener('keydown', function(e) {
+  const focusable = Array.from(document.querySelectorAll('[tabindex]:not([disabled])'));
+
+  const current = document.activeElement;
+  const currentIndex = focusable.indexOf(current);
+
+  switch(e.key) {
+    case 'ArrowLeft':
+    case 'ArrowUp':
+      if (currentIndex > 0) {
+        focusable[currentIndex - 1].focus();
+      }
+      e.preventDefault();
+      break;
+    case 'ArrowRight':
+    case 'ArrowDown':
+      if (currentIndex < focusable.length - 1) {
+        focusable[currentIndex + 1].focus();
+      }
+      e.preventDefault();
+      break;
+    case 'Enter':
+    case 'OK':
+      if (document.activeElement) {
+        document.activeElement.click();
+      }
+      e.preventDefault();
+      break;
+  }
+});
+
+// Botón Backspace / Back
+window.addEventListener('keydown', function(e) {
+  if(e.key === 'Backspace' || e.key === 'BrowserBack') {
+    history.back();
+    e.preventDefault();
+  }
+});
+
+
+
+</script>
+
+<script type="module" src="../player-peliculas-module.js"></script>
+</body>
+</html>

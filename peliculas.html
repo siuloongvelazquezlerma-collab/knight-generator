@@ -1,0 +1,2162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DC Liga De Supermascotas </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-ChzD5StK818vBAQZL5n94vJUmJl+jz1Ro8AiyOsd0GWIT6saFOY+zG+VVM/LMxltwGPplT7tI9On7kVCXkmVc=" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://od.lk/s/M18zMTIxODI5MjJf/logo%202025.png">
+   <link href="https://vjs.zencdn.net/8.5.2/video-js.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: black;
+      height: 100%;
+      font-family: 'Roboto', sans-serif;
+      color: white;
+    }
+
+     /* Estilo general para el header */
+  #header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0); /* Fondo del header transparente al inicio */
+    display: flex;
+    justify-content: space-between; /* Mantiene espacio entre la flecha y otros elementos */
+    align-items: center;
+    padding: 10px;
+    z-index: 3000; /* Asegura que el header esté por encima de otros elementos */
+    transition: background-color 0.3s ease; /* Transición suave del fondo */
+}
+
+/* Estilo de los enlaces */
+.icon-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff; /* Color del ícono */
+    text-decoration: none; /* Quitar subrayado */
+    z-index: 3001;
+}
+
+/* Flecha a la izquierda */
+#back-link .material-icons {
+    background-color: rgba(100, 100, 100, 0.2); /* Fondo semitransparente */
+    border-radius: 50%; /* Hace el fondo circular */
+    width: 36px; /* Tamaño del círculo */
+    height: 36px;
+    font-size: 35px!important; /* Tamaño del ícono */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+#page-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+    opacity: 0; /* Lo ocultamos por defecto */
+    transition: opacity 0.3s ease-in-out; /* Transición suave */
+}
+
+
+
+/* Hover efectos */
+.icon-link:hover {
+    opacity: 0.8; /* Ligera transparencia al hacer hover */
+}
+
+    .cover {
+      position: relative;
+  width: 100%;
+  height: 100vh;
+  background: url("https://images.cdn.prd.api.discomax.com/2023/11/13/a8f5912d-f315-3a55-8bc3-ce2f4cdd7a6d.jpeg") no-repeat center top;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.cover::before,
+.cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cover::before {
+  background: linear-gradient(to bottom, rgb(0, 0, 0), transparent 20%);
+}
+
+.cover::after {
+  background: linear-gradient(to top, rgb(0, 0, 0), rgb(0, 0, 0), rgba(0, 0, 0, 0.863), transparent 50%);
+}
+
+.cover-landscape {
+  position: absolute;
+  inset: 0;
+  background: url("https://images.cdn.prd.api.discomax.com/2023/02/01/6af4f5d7-4f62-31d0-921e-a40747f3e5f0.jpeg") no-repeat center top;
+  background-size: cover;
+  z-index: 0; /* <- Esto es clave para que se vea debajo del contenido, pero por encima del fondo negro */
+  display: none;
+}
+
+/* Gradiente en la parte superior en landscape */
+.cover-landscape::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.822) 10%, transparent 40%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Nuevo gradiente en la parte inferior en landscape */
+.cover-landscape::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.747) 10%, transparent 40%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.cover-landscape-shadow-left {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1000px; /* Ajusta según qué tan ancho quieres el gradiente */
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.863), rgba(0, 0, 0, 0.623),rgba(0, 0, 0, 0.425), transparent);
+  pointer-events: none;
+  z-index: 2;
+}
+
+
+/* Ocultar sombras en landscape */
+@media screen and (orientation: landscape) {
+  .cover::before,
+  .cover::after {
+    display: none;
+  }
+
+  .cover-landscape {
+    display: block;
+  }
+}
+
+
+
+
+/* Mostrar landscape solo en modo horizontal */
+@media screen and (orientation: landscape) {
+  .cover {
+    background: none;
+  }
+
+  .cover-landscape {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  .cover-content {
+    padding-top: 70px; /* Ajusta según el tamaño de tu #header */
+  }
+}
+
+
+/* General: espacio para header fijo en pantallas pequeñas */
+@media screen and (max-width: 1024px) {
+  .cover-content {
+    padding-top: 80px; /* deja espacio para el header fijo */
+  }
+}
+
+/* Móviles en portrait */
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  .cover-content {
+    padding-top: 90px; /* un poco más de espacio en modo vertical */
+  }
+
+  .cover {
+    padding-top: 0; /* el padding se maneja dentro de .cover-content */
+  }
+}
+
+/* Móviles en landscape (horizontal) */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .cover-content {
+    padding-top: 60px;
+  }
+}
+
+/* Tablets en cualquier orientación */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .cover-content {
+    padding-top: 70px;
+  }
+}
+
+/* PC: sin padding adicional */
+@media screen and (min-width: 1025px) {
+  .cover-content {
+    padding-top: 0;
+  }
+}
+
+.cover-content {
+  position: relative;
+  z-index: 2;
+}
+    .meta {
+      font-size: 12px;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    #video-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px; /* espacio vertical entre botones */
+}
+
+
+
+.watch-button {
+  background: white;
+  color: black;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 95vw; /* ⬅️ Usa el 95% del ancho del viewport */
+  margin: 0 auto 0px auto;
+  padding: 10px 20px;
+}
+
+.watch-text-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.watch-progress-bar {
+  width: 100%;
+  height: 3px;
+  background-color: #666;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: -1px;
+  display: none;
+}
+
+.watch-progress-bar > div {
+  height: 100%;
+  width: 0%;
+  background-color: rgb(240, 7, 7);
+  transition: width 0.3s ease;
+}
+
+/* Reiniciar con espacio reservado (no empuja al aparecer) */
+/* Reiniciar: inicialmente oculto, sin reservar espacio */
+.restart-button {
+  background: #0643759c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  display: none; /* esto es clave */
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 95vw;
+  padding: 10px 20px;
+  margin: 0 auto 0px auto;
+  transition: all 0.3s ease;
+}
+
+.restart-button.shown {
+  display: flex; /* aparece y empuja lo de abajo */
+}
+
+
+
+/* Íconos */
+.material-icons {
+  font-size: 22px;
+}
+
+.cover-content img.logo {
+  width: 300px;
+  margin-bottom: 12px;
+}
+
+/* NUEVO estilo para iconos de acción */
+.iconos {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1rem 0;
+  align-items: center;
+}
+
+.iconos button,
+.iconos .action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.iconos .material-icons-outlined {
+  font-size: 23px;
+  margin-bottom: 5px;
+}
+
+.iconos button:focus {
+  outline: none;
+}
+
+/* Si quieres mantener el estilo de descarga similar */
+.download-action a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+.download-action .material-icons {
+  font-size: 23px;
+  margin-bottom: 5px;
+}
+
+.download-action .underline {
+  width: 15px;
+  height: 2px;
+  background-color: white;
+  margin-top: -6px;
+  margin-bottom: 3px;
+}
+
+
+.notificacion {
+  position: fixed;
+  bottom: -100px; /* Oculto fuera de vista */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  transition: bottom 0.4s ease-in-out;
+  z-index: 9999;
+  pointer-events: none; /* para que no interfiera con clicks */
+}
+
+.notificacion-icono {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(49, 13, 250, 0.89);
+  border-radius: 50%;
+}
+
+.description {
+  font-size: 0.95em;
+  color: #ccc;
+  margin-top: 15px;
+  max-width: 500px;
+  line-height: 1.4;
+}
+
+.sugerencias-section {
+  padding: 1.5rem 1rem 1rem;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.sugerencias-header {
+  position: relative;
+  border-bottom: 1px solid #555; /* línea gris horizontal */
+  margin-bottom: 1rem;
+}
+
+.sugerencias-titulo {
+  color: white;
+  font-size: 1.05rem;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 0.3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.sugerencias-titulo::after {
+  content: "";
+  display: block;
+  height: 2px;
+  background-color: white;
+  width: 100%; /* del mismo ancho que el texto */
+  margin-top: 2px;
+  margin-bottom: -6px;
+}
+
+.sugerencias-tabs-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: #555; /* línea gris */
+  z-index: 1;
+}
+
+.sugerencias-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Siempre 2 columnas */
+  gap: 1rem;
+  margin-bottom: 70px;
+}
+
+.sugerencias-grid a {
+  width: 100%;
+  display: block;
+  text-align: left;
+}
+
+.sugerencia-item img {
+  width: 100%; /* Hace que la imagen ocupe el 100% del contenedor */
+  height: auto;
+  aspect-ratio: 2 / 3; /* Proporción vertical consistente */
+  object-fit: contain; /* No recorta ni deforma la imagen */
+  background-color: #000;
+  border-radius: 6px;
+  display: block;
+  margin: 0 auto;
+}
+
+
+
+/* Ajustes para cada item dentro de la grid */
+.sugerencia-item {
+  display: block;
+  text-decoration: none;
+  color: white;
+}
+
+.sugerencia-titulo {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-top: 0.4rem;
+}
+
+.sugerencia-sub {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-top: 0.1rem;
+}
+
+.suggested-item img:hover {
+  transform: scale(1.03);
+  transition: transform 0.3s ease;
+}
+
+
+
+@media (orientation: landscape) {
+  .cover-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 2.5rem 2rem;
+    gap: 1rem;
+    min-height: 100vh;
+    height: auto;
+    max-width: 100vw;
+  }
+
+  .cover-content img.logo {
+    width: 240px;
+    margin-bottom: 12px;
+  }
+
+  .cover-meta-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    max-width: 600px;
+  }
+
+  .meta {
+    font-size: 13px;
+    color: #ccc;
+    margin: 0;
+  }
+
+  .watch-button {
+    max-width: 280px;
+    padding: 12px 16px;
+    font-size: 1.05em;
+    margin: 0;
+    margin-bottom:10px;
+  }
+
+  /* NUEVO estilo para iconos de acción */
+  .iconos {
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    align-items: center;
+  }
+
+  .iconos button,
+  .iconos .action-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+
+  .iconos .material-icons-outlined {
+    font-size: 24px; /* reducido */
+    margin-bottom: 4px;
+  }
+
+  .iconos button:focus {
+    outline: none;
+  }
+
+  /* Estilo adaptado para descarga en landscape */
+  .download-action a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    font-size: 0.75rem;
+  }
+
+  .download-action .material-icons {
+    font-size: 24px; /* reducido como los demás */
+    margin-bottom: 4px;
+  }
+
+  .download-action .underline {
+    width: 18px;
+    height: 2px;
+    background-color: white;
+    margin-top: -5px;
+    margin-bottom: 3px;
+  }
+
+  .description {
+    font-size: 0.95em;
+    color: #ccc;
+    line-height: 1.4;
+    max-width: 600px;
+    margin: 0;
+  }
+
+  .sugerencias-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    gap: 0.75rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 70px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .sugerencia-item {
+    flex: 0 0 auto !important;
+    width: 230px !important; /* Ahora sí, mucho más pequeño */
+    scroll-snap-align: start;
+  }
+
+  .sugerencias-grid a img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 2 / 3 !important;
+    object-fit: cover !important;
+    border-radius: 6px;
+    background-color: #000;
+    display: block;
+  }
+
+  .sugerencia-titulo {
+    font-size: 0.9rem !important;
+    text-align: left;
+    margin-top: 0.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sugerencia-sub {
+    font-size: 0.8rem !important;
+    text-align: left;
+    color: #aaa;
+    margin-top: 0.1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cover-content {
+    padding: 4rem 3rem;
+    gap: 2rem;
+    max-width: 100vw;
+    align-items: flex-start;
+    
+  }
+
+  .cover-content img.logo {
+    margin-top: 380px;
+    width: 420px;
+    margin-bottom: 0px;
+  }
+
+  .cover-meta-buttons {
+  max-width: 700px !important;
+  width: 100%;
+}
+
+
+  .meta {
+    font-size: 16px;
+  }
+
+  #video-controls {
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 1.2rem;
+    justify-content: flex-start;
+  }
+
+  .watch-button,
+  .restart-button {
+    flex: 0 1 auto;
+    padding: 10px 20px;
+    font-size: 1.3em;
+    font-weight: bold;
+    max-width: 600px;
+    width: 800px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .watch-button {
+    background: white;
+    color: black;
+  }
+
+  .restart-button {
+    background: rgba(6, 67, 117, 0.8);
+    color: white;
+  }
+
+
+
+  .iconos {
+    gap: 2rem;
+  }
+
+  .iconos button,
+  .iconos .action-item {
+    font-size: 0.9rem;
+  }
+
+  .iconos .material-icons-outlined,
+  .download-action .material-icons {
+    font-size: 28px;
+  }
+
+  .download-action a {
+    font-size: 0.85rem;
+  }
+
+  .description {
+    font-size: 18px;
+    max-width: 700px;
+  }
+
+  .suggested-item {
+    width: 260px; /* más grandes en escritorio */
+  }
+
+  .suggested-item img {
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+  }
+} 
+
+@media (min-width: 1024px) {
+  .restart-button {
+    display: none;
+  }
+
+  .restart-button.shown {
+    display: flex;
+  }
+
+  .footer {
+    display: none !important;
+  }
+
+  
+}
+
+
+ 
+
+    /* --- PLAYER --- */
+
+    .video-js .vjs-control-bar,
+.video-js .vjs-big-play-button,
+.video-js .vjs-loading-spinner,
+.video-js .vjs-error-display {
+  display: none !important;
+}
+
+
+.player {
+  display: none; /* ⬅️ Esto es clave */
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: black;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: black;
+}
+
+.video-js {
+  width: 100% !important;
+  height: 100% !important;
+  background-color: black !important;
+}
+
+.video-js video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+  background-color: black;
+}
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+
+    .overlay.visible {
+      opacity: 1;
+    }
+
+    .controls {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 1;
+      transition: opacity 0.5s;
+      pointer-events: none;
+    }
+
+    .controls.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .top-bar, .bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      pointer-events: auto;
+    }
+
+    .top-bar {
+      position: absolute;
+      top: 0; width: 100%;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0; width: 100%;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    #episodeHeader .title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+#episodeHeader .subtitle {
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+    .center-controls {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      pointer-events: auto;
+    }
+
+    .btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2.5em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn .material-icons {
+      font-size: 55px;
+    }
+
+    .progress-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .progress {
+      flex: 1;
+      appearance: none;
+      height: 5px;
+      background: #666;
+      border-radius: 3px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .progress::-webkit-slider-thumb {
+      appearance: none;
+      height: 15px;
+      width: 15px;
+      border-radius: 50%;
+      background: rgb(255, 255, 255);
+      border: none;
+    }
+
+    .time {
+      font-size: 0.9em;
+      color: #ccc;
+      white-space: nowrap;
+    }
+
+    .icon-btn {
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .extra-controls {
+  display: flex;
+  justify-content: center;
+  gap: 300px;
+  width: 100%;
+  pointer-events: auto;
+  margin-bottom: 10px;
+}
+
+.extra-controls .btn {
+  flex-direction: row;
+  gap: 8px;
+  font-size: 19px; /* Antes era 1.2em */
+}
+
+.extra-controls .btn .material-icons {
+  font-size: 20px;
+}
+
+.extra-controls .btn .label {
+  font-size: 13px; /* Antes era 1em */
+  color: white;
+}
+
+    .footer {
+display: flex;
+align-items: center;
+position: fixed;
+bottom: 0;
+left: 0;
+width: 100%;
+background-color: rgba(27, 27, 27, 0.877);
+padding: 10px 0;
+height: 60px;
+z-index: 1000;
+justify-content: space-around;
+transition: transform 0.3s ease-in-out;
+}
+
+.footer.hidden {
+  transform: translateY(100%);
+}
+
+.footer.hidden {
+  transform: translateY(100%);
+}
+
+.footer-icon {
+  color: #bbb; /* Icono gris cuando está inactivo */
+  text-align: center;
+  text-decoration: none;
+  font-size: 35px; /* Tamaño aumentado para los iconos */
+  flex: 1; /* Ocupa el mismo espacio cada icono */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease; /* Animación suave al pasar el cursor */
+}
+
+/* Para asegurarnos de que los iconos aumenten correctamente */
+.footer-icon .material-icons, .footer-icon .material-icons-outlined {
+  font-size: inherit; /* Heredar el tamaño de fuente del contenedor */
+  transition: font-size 0.3s ease;
+}
+
+.footer-icon:hover {
+  color: #fff; /* Cambia a blanco al pasar el cursor */
+}
+
+.footer-icon.active {
+  color: #fff; /* Cambiar a blanco cuando está activo */
+}
+
+.footer-icon.active .material-icons-outlined {
+  display: none; /* Oculta el icono outline cuando está activo */
+}
+
+.footer-icon.active .material-icons {
+  display: inline-block; /* Muestra el icono normal cuando está activo */
+}
+
+/* Oculta los iconos normales por defecto */
+.footer-icon .material-icons {
+  display: none;
+}
+
+/* Iconos outline por defecto */
+.footer-icon .material-icons-outlined {
+  display: inline-block;
+}
+
+/* Estilos para el icono de perfil */
+.profile-icon-footer {
+  width: 35px; /* Tamaño de la imagen de perfil */
+  height: 35px; /* Tamaño de la imagen de perfil */
+  border-radius: 50%; /* Hacer la imagen circular */
+  border: 2px solid #fff; /* Borde blanco alrededor de la imagen */
+  object-fit: cover; /* Asegura que la imagen se recorte bien */
+}
+
+/* Cambiar color de iconos inactivos */
+.footer-icon.inactive .material-icons-outlined,
+.footer-icon.inactive .material-icons {
+  color: #bbb; /* Gris para iconos inactivos */
+}
+
+.nav__icon {
+  font-size: 20px; /* Ajusta el tamaño del icono aquí */
+}
+
+
+
+  /* Deshabilitar selección de texto e interacciones */
+body, img, a, button, select, textarea {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE10+/Edge */
+            user-select: none; /* estándar */
+        }
+
+        /* Deshabilitar resaltado en elementos interactivos */
+        a, button, select, textarea {
+            -webkit-tap-highlight-color: transparent; /* Safari */
+        
+        }
+
+        /* Deshabilitar el arrastre de imágenes */
+        img {
+            pointer-events: none; /* Desactiva interacciones del puntero en imágenes */
+        }
+
+        .video-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 90deg,
+        #0066ff21 0%,
+        #0066ff 60%,
+        #ffffff 80%,
+        #afafaf00 30%
+  );
+  mask: radial-gradient(farthest-side, transparent calc(100% - 8px), black);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 8px), black);
+  animation: spin 1.2s linear infinite, shine 2s ease-in-out infinite;
+  opacity: 1 !important;
+  transition: opacity 3s ease-out;
+}
+
+/* Oculto */
+.hidden {
+  display: none !important;
+}
+
+/* Animación de rotación */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* Animación de brillo */
+@keyframes shine {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.8);
+  }
+}
+
+        /* Overlay para oscurecer la página */
+.overlay-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0); /* Oscurecimiento semitransparente */
+    z-index: 9999; /* Asegura que esté encima de todos los elementos */
+    opacity: 1;
+    transition: opacity 0.8s ease-out; /* Cambia de 2s a 0.8s */
+    display: block; /* Asegura que el overlay esté visible inicialmente */
+}
+
+/* Cuando se ocultará */
+.overlay-loader.hidden {
+    opacity: 0; /* Se desvanece */
+    pointer-events: none; /* Evita interacciones mientras está oculto */
+}
+
+/* Loader */
+/* Loader de página */
+#loader {
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 90deg,
+        #0066ff21 0%,
+        #0066ff 60%,
+        #ffffff 80%,
+        #afafaf00 30%
+  );
+  mask: radial-gradient(farthest-side, transparent calc(100% - 8px), black);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 8px), black);
+  animation: page-spin 1.2s linear infinite, page-shine 2s ease-in-out infinite;
+  opacity: 1 !important;
+  transition: opacity 3s ease-out;
+  z-index: 600000;
+}
+
+/* Animaciones únicas para loader de página */
+@keyframes page-spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes page-shine {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.8); }
+}
+    *:focus {
+  outline: 3px solid #00f7ff;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Ocultar focus en móviles (pantallas pequeñas) */
+@media (max-width: 768px) {
+  *:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Mostrar focus en pantallas grandes (TV, PC) */
+@media (min-width: 769px) {
+  *:focus {
+    outline: 3px solid #00f7ff;
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+}
+
+
+.tabs-secondary {
+  display: none;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 0;
+  background-color: #11111111;
+  border-bottom: 1px solid #44444400;
+  z-index: 3010;
+}
+
+.tabs-secondary .tab {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 6px 12px;
+  transition: background 0.3s ease;
+  z-index: 3010;
+}
+
+.tabs-secondary .tab:hover {
+  background-color: #81818179;
+  border-radius: 8px;
+}
+
+@media screen and (min-width: 1024px) {
+  .tabs-secondary {
+    display: flex;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  /* Tabs grandes en pantallas grandes */
+  .tabs-secondary {
+    gap: 10px;
+    padding: 16px 40px;
+  }
+
+  .tabs-secondary .tab {
+    font-size: 22px;
+    padding: 12px 10px 8px;
+  }
+
+  .tabs-secondary .tab.active::after {
+    content: "";
+    display: block;
+    height: 4px;
+    background-color: white;
+    margin-top: 4px;
+    border-radius: 2px;
+  }
+}
+
+
+
+
+    </style>
+</head>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+  <div id="loader" class="loader"></div>
+  <div class="overlay-loader"></div>
+  <header id="header">
+    <a href="javascript:history.back();" id="back-link" class="icon-link" tabindex="1">
+        <span class="material-icons">chevron_left</span>
+    </a>
+    <span id="page-title" class="page-title">DC Liga De Supermascotas </span> <!-- Título oculto por defecto -->
+</header>
+
+<!-- Tabs para pantallas grandes -->
+<div class="tabs tabs-secondary">
+  <a href="../main.html#inicio" class="tab">Inicio</a>
+  <a href="../main.html#series" class="tab">Películas</a>
+  <a href="../main.html#peliculas" class="tab">Series</a>
+  <a href="../main.html#hbo" class="tab">Anime</a>
+  <a href="../main.html#documentales" class="tab">Familia</a>
+  <a href="../main.html#mi-lista" class="tab">Doramas</a>
+</div>
+
+
+<!-- COVER / PORTADA -->
+<div class="cover" id="cover">
+    <!-- FONDO LANDSCAPE SOLO PARA MODO HORIZONTAL -->
+    <div class="cover-landscape">
+      <div class="cover-landscape-shadow-left"></div>
+    </div>
+  
+    <div class="cover-content">
+      <img src="https://od.lk/s/M18zMDI0NjQxOTVf/mascotas.png" alt="DC Liga De Supermascotas  "class="logo" tabindex="2">
+      <div class="meta">7+ &nbsp;&nbsp;1h 45m&nbsp;&nbsp;2022&nbsp;&nbsp;Dob Lat</div>
+   
+  
+      <div class="bloque-botones">
+        <div id="video-controls">
+          <button id="watchButton" class="watch-button" onclick="showPlayer()">
+            <span class="material-icons">play_arrow</span>
+            <div class="watch-text-wrapper">
+              <span id="watchButtonText">Ver ahora</span>
+              <div id="watchProgressBar" class="watch-progress-bar">
+                <div></div>
+              </div>
+            </div>
+          </button>
+      
+          <button id="restartButton" class="restart-button" onclick="restartMovie()"> 
+            <span class="material-icons">restart_alt</span> Reiniciar
+          </button>
+      
+          <!-- Espacio opcional si quieres animar la separación (no obligatorio) -->
+          <!-- <div id="restartSpacer" style="height: 0px; transition: height 0.3s ease;"></div> -->
+        </div>
+      
+        <div class="iconos">
+          <!-- Botón de Favoritos -->
+          <button id="favoritoBtn" data-identificador="DC Liga De Supermascotas " onclick="toggleFavorito()" tabindex="4">
+            <span id="favoritoIcon" class="material-icons-outlined">add</span>
+            <p id="favoritoText">Favoritos</p>
+          </button>
+          
+      
+         <!-- Info oculta para localStorage -->
+         <div id="favoritoData" style="display: none;">
+          <img id="favoritoImagen" class="poster" src="https://image.tmdb.org/t/p/original/saTEPV5GudjTt5QB5i6CIQgk3Bb.jpg" alt="Poster de la Película">
+          <a id="favoritoEnlace" href="DC Liga De Supermascotas (2022).html"></a>
+          <span id="nombre">DC Liga De Supermascotas (2022)</span>
+        </div>
+
+      
+          <!-- Notificación tipo "añadido a favoritos" -->
+          <div id="notificacion" class="notificacion" style="bottom: -100px;">
+            <span id="notificacionTexto">Añadido a favoritos</span>
+            <span class="notificacion-icono material-icons-outlined">check</span>
+          </div>
+      
+          <!-- Botón de Compartir -->
+          <div class="action-item" id="compartirBtn" onclick="window.location.href='http://action_share';" tabindex="5">
+            <span class="material-icons-outlined">share</span>
+            <p>Compartir</p>
+          </div>
+      
+          <!-- Botón de Descargar -->
+<div class="download-action">
+  <a href="https://od.lk/d/M18zMDI1MjA5Njdf/Supermascotas.mp4" download>
+    <i class="material-icons">arrow_downward</i>
+    <span class="underline"></span>
+    Descargar
+  </a>
+</div>
+
+        </div>
+      </div>
+      
+      <div class="description">
+        Krypto debe convencer a una banda de refugiados a dominar sus propios poderes recién descubiertos y ayudarlo a rescatar a los superhéroes.
+      </div>
+    </div>
+  </div>
+
+ <!-- QUIZÁ TAMBIÉN TE GUSTE -->
+ <div class="sugerencias-section">
+  <div class="sugerencias-header">
+    <h2 class="sugerencias-titulo">Quizá también te guste</h2>
+    <div class="sugerencias-tabs-line"></div>
+  </div>
+  <div class="sugerencias-grid">
+
+    <a href="Liga de la Justicia (2017).html" class="sugerencia-item">
+      <img src="https://image.tmdb.org/t/p/original/fF94rvT1kJpVzIE2aSYgYj9B3pc.jpg" alt="Liga de la Justicia (2017)">
+      <p class="sugerencia-titulo">Liga de la Justicia (2017)</p>
+      <p class="sugerencia-sub">Dob | Lat</p>
+    </a>
+    
+    <a href="La Liga de la Justicia de Zack Snyder (2021).html" class="sugerencia-item">
+      <img src="https://image.tmdb.org/t/p/original/wcIJgChypo0s6ILm9Dkr13rV5q0.jpg" alt="La Liga de la Justicia de Zack Snyder (2021)">
+      <p class="sugerencia-titulo">Zack Snyder's Justice League</p>
+      <p class="sugerencia-sub">Dob | Lat</p>
+    </a>
+    
+    <a href="Mujer Maravilla 1984 (2020).html" class="sugerencia-item">
+      <img src="https://image.tmdb.org/t/p/original/5mHNs3o8bYoehGi5sF3hqOwPGbk.jpg" alt="Mujer Maravilla 1984 (2020)">
+      <p class="sugerencia-titulo">Mujer Maravilla 1984</p>
+      <p class="sugerencia-sub">Dob | Lat</p>
+    </a>
+    
+    <a href="El Hombre de Acero (2013).html" class="sugerencia-item">
+      <img src="https://image.tmdb.org/t/p/original/js7cN75bbBnNeQScT0jTRfIkTAa.jpg" alt="El Hombre de Acero (2013)">
+      <p class="sugerencia-titulo">El Hombre de Acero</p>
+      <p class="sugerencia-sub">Dob | Lat</p>
+    </a>
+    
+    <a href="El Hombre de Acero (2013).html" class="sugerencia-item">
+      <img src="https://image.tmdb.org/t/p/original/xXmeyKpWW14Ao52gq6Ccz0YYY5A.jpg" alt="El Hombre de Acero (2013)">
+      <p class="sugerencia-titulo">El Hombre de Acero (Alt)</p>
+      <p class="sugerencia-sub">Dob | Lat</p>
+    </a>
+    
+    
+    
+    
+        </div>
+      </div>
+
+  
+  
+  
+<!-- PLAYER -->
+<div class="player" id="player">
+  <video
+  id="video"
+  class="video-js vjs-default-skin"
+  preload="auto"
+  width="100%"
+  height="100%"
+  poster="https://wallpapercave.com/wp/wp5415042.jpg"
+  data-setup='{"controls": false, "autoplay": false, "preload": "auto"}'>
+  <source src="https://od.lk/s/M18zMDI1MjA5Njdf/Supermascotas.mp4" type="video/mp4" />
+</video>
+ <!-- Loader -->
+ <div class="video-loader hidden" id="videoLoader">
+  <div class="spinner"></div>
+</div>
+
+    <!-- Aspect Ratio Label -->
+    <div id="aspectLabel" style="
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 16px;
+      display: none;
+      z-index: 9999;
+    ">
+      cover
+    </div>
+  
+    <div class="overlay" id="overlay"></div>
+  
+   
+    <div class="controls" id="controls">
+      <div class="top-bar">
+        <div class="icon-btn material-icons" onclick="goBack()">chevron_left</div>
+        <div style="display: flex; gap: 15px;">
+            <div class="icon-btn material-icons" onclick="castCurrentVideo()">cast</div>
+          <div class="icon-btn material-icons" onclick="toggleAspectRatio()">aspect_ratio</div>
+        </div>
+      </div>
+  
+      <div class="center-controls">
+        <button class="btn" onclick="skip(-10)">
+          <span class="material-icons">replay_10</span>
+        </button>
+        <button class="btn" id="playPauseBtn" onclick="togglePlay()">
+          <span class="material-icons">play_arrow</span>
+        </button>
+        <button class="btn" onclick="skip(10)">
+          <span class="material-icons">forward_10</span>
+        </button>
+      </div>
+  
+      <div class="bottom-bar">
+        <div id="episodeHeader">
+          <div class="title">DC Liga De Supermascotas </div>
+          <div class="subtitle" id="episodeSubtitle"></div>
+        </div>
+   
+      
+  
+        <div class="progress-container">
+          <input type="range" class="progress" id="progress" value="0" max="100">
+          <div class="time" id="duration">- 00:00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <a href="../main.html" class="footer-icon" tabindex="14">
+        <span class="material-icons-outlined">home</span>
+        <span class="material-icons">home</span>
+    </a>
+    <a href="../new favoritos 2025.html" class="footer-icon" tabindex="15">
+        <span class="material-icons-outlined">bookmark_border</span>
+        <span class="material-icons">bookmark</span>
+    </a>
+    <a href="../New search page 2025.html" class="footer-icon" tabindex="16">
+        <span class="material-icons-outlined">search</span>
+        <span class="material-icons">search</span>
+    </a>
+    <a href="../perfil digital Knight 2025.html" class="footer-icon" tabindex="17">
+        <img src="https://od.lk/s/M18zMDc1MjMzOTdf/DIGITAL%20KNIGHT2.png" alt="Icono de Perfil" id="footerIconImg" class="profile-icon-footer">
+    </a>
+</footer>
+
+  <script src="https://vjs.zencdn.net/8.5.2/video.min.js"></script>
+<script>
+
+const movieId = "dc-liga-de-supermascotas"; // cambia por el ID único que desees
+
+// Prevenir gestos táctiles no deseados
+document.addEventListener('touchmove', function (event) {
+  if (event.touches.length > 1) {
+    event.preventDefault();
+  }
+}, { passive: false });
+
+window.addEventListener('load', function () {
+  const overlay = document.querySelector('.overlay-loader');
+  const loader = document.getElementById('loader');
+
+  setTimeout(() => {
+    loader.style.opacity = '0'; // Fade out loader spinner
+
+    // Espera a que el spinner se desvanezca
+    setTimeout(() => {
+      loader.style.display = 'none'; // Oculta spinner
+
+      overlay.classList.add('hidden'); // Aplica opacity: 0 al overlay
+
+      // 🆕 Espera la transición antes de ocultar por completo
+      setTimeout(() => {
+        overlay.style.display = 'none'; // Remueve del flujo visual después del fade
+      }, 800); // Igual al tiempo de la transición CSS
+    }, 300); // fade-out del spinner
+  }, 1000); // espera inicial
+});
+
+
+const video = document.getElementById('video');
+const controls = document.getElementById('controls');
+const overlay = document.getElementById('overlay');
+const player = document.getElementById('player');
+const progress = document.getElementById('progress');
+const duration = document.getElementById('duration');
+const playPauseBtn = document.getElementById('playPauseBtn').querySelector('.material-icons');
+const cover = document.getElementById('cover');
+
+// NUEVO: Elementos para "Reanudar" y "Reinicia"
+const watchButtonText = document.getElementById('watchButtonText');
+const restartButton = document.getElementById('restartButton');
+
+// NUEVO: Barra visual de progreso
+const progressBar = document.getElementById('watchProgressBar');
+
+let hideControlsTimeout;
+
+// Reanudar desde donde se dejó
+video.addEventListener('loadedmetadata', () => {
+  const savedTime = localStorage.getItem(`progress_${movieId}`);
+  if (savedTime) {
+    video.currentTime = parseFloat(savedTime);
+  }
+  updateProgress();
+
+  // ✅ INSERTADO: Mostrar barra y botón si aplica
+  if (video.currentTime > 5 && video.currentTime < video.duration - 5) {
+    progressBar.style.display = "block";
+    showRestartButton();
+    watchButtonText.textContent = "Continuar viendo";
+  }
+});
+
+// Guardar progreso en localStorage
+video.addEventListener('timeupdate', () => {
+  updateProgress();
+  localStorage.setItem(`progress_${movieId}`, video.currentTime);
+
+  // ✅ Actualizar barra visual de progreso en portada
+  if (progressBar && video.duration) {
+    const percent = (video.currentTime / video.duration) * 100;
+    progressBar.firstElementChild?.style.setProperty("width", `${percent}%`);
+
+    if (video.currentTime > 5 && video.currentTime < video.duration - 0.5) {
+      if (progressBar.style.display !== "block") {
+        progressBar.style.display = "block";
+      }
+    }
+  }
+
+  // ✅ Mostrar botón "Reinicia" si ya pasaron 5s y no ha terminado
+  if (video.currentTime > 5 && video.currentTime < video.duration - 5) {
+    if (!restartButton.classList.contains('shown')) {
+      showRestartButton();
+    }
+    localStorage.setItem(`hasStarted_${movieId}`, 'true');
+  }
+
+  // Cambiar el texto del botón "Ver ahora"
+  if (video.currentTime > 10 && watchButtonText.textContent !== "Continuar viendo") {
+    watchButtonText.textContent = "Continuar viendo";
+  }
+
+  // Ocultar botón y reiniciar estado si terminó la película
+  if (video.currentTime >= video.duration - 0.3) {
+  hideRestartButton(); // esta función ya hace display = 'none' y quita la clase
+  localStorage.removeItem(`hasStarted_${movieId}`);
+  localStorage.removeItem(`progress_${movieId}`);
+
+  // Restaurar texto y ocultar barra de progreso
+  watchButtonText.textContent = "Ver ahora";
+  progressBar.style.display = "none";
+  progressBar.firstElementChild.style.width = "0%";
+}
+
+});
+
+// Mostrar botón y cambiar texto si hay progreso
+const savedTime = localStorage.getItem(`progress_${movieId}`);
+if (savedTime && parseFloat(savedTime) > 10) {
+  watchButtonText.textContent = "Continuar viendo";
+  restartButton.style.display = "inline-flex";
+
+  const percent = (parseFloat(savedTime) / video.duration) * 100;
+  progressBar.style.display = "block";
+  progressBar.firstElementChild.style.width = `${percent}%`;
+}
+
+// Reiniciar desde el principio
+function restartMovie() {
+  localStorage.removeItem(`progress_${movieId}`);
+  video.currentTime = 0;
+  showPlayer();
+}
+
+function togglePlay() {
+  if (video.paused) {
+    video.play();
+    playPauseBtn.textContent = 'pause';
+    overlay.classList.remove('visible');
+  } else {
+    video.pause();
+    playPauseBtn.textContent = 'play_arrow';
+    overlay.classList.add('visible');
+  }
+}
+
+function skip(seconds) {
+  video.currentTime += seconds;
+}
+
+function goBack() {
+  if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+    exitFullscreen();
+  }
+
+  player.style.display = 'none';
+  cover.style.display = 'flex';
+  video.pause();
+  playPauseBtn.textContent = 'play_arrow';
+}
+
+function updateProgress() {
+  if (video.duration) {
+    const remaining = video.duration - video.currentTime;
+
+    const hours = Math.floor(remaining / 3600);
+    const minutes = Math.floor((remaining % 3600) / 60);
+    const seconds = Math.floor(remaining % 60).toString().padStart(2, '0');
+
+    const formattedTime = hours > 0
+      ? `- ${hours}:${minutes.toString().padStart(2, '0')}:${seconds}`
+      : `- ${minutes}:${seconds}`;
+
+    duration.textContent = formattedTime;
+
+    const percent = (video.currentTime / video.duration) * 100;
+    progress.value = percent;
+    progress.style.background = `linear-gradient(to right, white ${percent}%, #666 ${percent}%)`;
+  }
+}
+
+progress.addEventListener('input', () => {
+  video.currentTime = (progress.value / 100) * video.duration;
+});
+
+function showControls() {
+  controls.classList.remove('hidden');
+  overlay.classList.add('visible');
+  clearTimeout(hideControlsTimeout);
+  hideControlsTimeout = setTimeout(() => {
+    controls.classList.add('hidden');
+    overlay.classList.remove('visible');
+  }, 7000);
+}
+
+// 🔒 Bloquea la orientación en horizontal
+function lockOrientationLandscape() {
+  if (screen.orientation && screen.orientation.lock) {
+    screen.orientation.lock('landscape').catch((err) => {
+      console.warn('No se pudo bloquear la orientación:', err);
+    });
+  }
+}
+
+
+function showPlayer() {
+  cover.style.display = 'none';
+  player.style.display = 'flex';
+  video.play();
+  playPauseBtn.textContent = 'pause';
+  showControls();
+  enterFullscreen();
+
+  // 🔒 Bloquear orientación horizontal
+  lockOrientationLandscape();
+
+  // ✅ Mostrar barra y botón si ya pasaron 5 segundos
+  if (video.currentTime > 5 && video.currentTime < video.duration - 5) {
+    progressBar.style.display = "block";
+    showRestartButton();
+  }
+}
+
+player.addEventListener('mousemove', showControls);
+player.addEventListener('click', showControls);
+player.addEventListener('touchstart', showControls);
+
+function enterFullscreen() {
+  if (player.requestFullscreen) {
+    player.requestFullscreen();
+  } else if (player.webkitRequestFullscreen) {
+    player.webkitRequestFullscreen();
+  } else if (player.msRequestFullscreen) {
+    player.msRequestFullscreen();
+  }
+}
+
+function exitFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  }
+}
+
+document.addEventListener('fullscreenchange', () => {
+  const isFullscreen = document.fullscreenElement;
+  if (!isFullscreen) {
+    if (!video.paused) {
+      video.pause();
+    }
+    playPauseBtn.textContent = 'play_arrow';
+    player.style.display = 'none';
+    cover.style.display = 'flex';
+
+    // 🔓 Intentar desbloquear orientación (opcional)
+    if (screen.orientation && screen.orientation.unlock) {
+      screen.orientation.unlock();
+    }
+  }
+});
+
+
+let hasStarted = false;
+let reiniciaTimer = null;
+
+video.addEventListener('play', () => {
+  if (!hasStarted && video.currentTime < video.duration - 5) {
+    hasStarted = true;
+
+    reiniciaTimer = setTimeout(() => {
+      if (video.currentTime > 5 && video.currentTime < video.duration - 5) {
+        showRestartButton();
+        localStorage.setItem(`hasStarted_${movieId}`, 'true');
+
+        // ✅ Mostrar barra también al reproducir
+        progressBar.style.display = "block";
+      }
+    }, 5000);
+  }
+});
+
+// Función para mostrar el botón de "Reinicia"
+function showRestartButton() {
+  restartButton.style.display = 'flex';
+  restartButton.classList.add('shown');
+  document.getElementById('restartSpacer').style.height = '60px'; // ajusta según el alto del botón
+}
+
+function hideRestartButton() {
+  restartButton.style.display = 'none';
+  restartButton.classList.remove('shown');
+  document.getElementById('restartSpacer').style.height = '0px';
+}
+
+
+
+// Restaurar estado al cargar la página
+window.addEventListener('DOMContentLoaded', () => {
+  const progress = parseFloat(localStorage.getItem(`progress_${movieId}`) || 0);
+  const hasStartedFlag = localStorage.getItem(`hasStarted_${movieId}`);
+
+  if (progress > 0 && hasStartedFlag === 'true') {
+    showRestartButton();
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const header = document.getElementById('header');
+  const pageTitle = document.getElementById('page-title');
+
+  if (!header || !pageTitle) return;
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const maxScroll = 300;
+
+    const opacity = Math.min(scrollY / maxScroll, 1);
+    const titleOpacity = scrollY > 150 ? Math.min(scrollY / maxScroll, 1) : 0;
+
+    header.style.backgroundColor = `rgba(0, 0, 0, ${opacity})`;
+    pageTitle.style.opacity = titleOpacity;
+  });
+});
+
+const favoritoBtn = document.getElementById('favoritoBtn');
+const favoritoIcon = document.getElementById('favoritoIcon'); // Ícono
+const identificador = favoritoBtn.getAttribute('data-identificador');
+
+// Función para manejar el favorito
+function toggleFavorito() {
+    const favoritoEnlace = document.getElementById('favoritoEnlace');
+    const imagen = document.getElementById('favoritoImagen');
+    const nombre = document.getElementById('nombre').textContent; // Obtener el texto del span
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+
+    const encontrado = favoritos.some(favorito => favorito.identificador === identificador);
+
+    if (encontrado) {
+        // Eliminar de favoritos
+        const nuevosFavoritos = favoritos.filter(favorito => favorito.identificador !== identificador);
+        localStorage.setItem('favoritos', JSON.stringify(nuevosFavoritos));
+
+        // Cambiar solo el ícono
+        favoritoIcon.innerText = 'add';
+
+        mostrarNotificacion('Se eliminó de favoritos');
+    } else {
+        // Agregar a favoritos
+        favoritos.push({
+            identificador: identificador,
+            imagen: imagen.outerHTML,
+            enlace: favoritoEnlace.href,
+            nombre: nombre, // Agregar el nombre al objeto
+        });
+        localStorage.setItem('favoritos', JSON.stringify(favoritos));
+
+        // Cambiar solo el ícono
+        favoritoIcon.innerText = 'check';
+
+        mostrarNotificacion('Se añadió a favoritos');
+    }
+}
+
+// Función para cargar el estado inicial del botón de favoritos
+function cargarEstadoFavorito() {
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+    const encontrado = favoritos.some(favorito => favorito.identificador === identificador);
+
+    if (encontrado) {
+        // Si está en favoritos, cambia solo el ícono
+        favoritoIcon.innerText = 'check';
+    } else {
+        // Si no está en favoritos, deja el ícono por defecto
+        favoritoIcon.innerText = 'add';
+    }
+}
+
+// Llamar a la función al cargar la página
+document.addEventListener('DOMContentLoaded', cargarEstadoFavorito);
+
+function mostrarNotificacion(mensaje) {
+  const notificacion = document.getElementById('notificacion');
+  const notificacionTexto = document.getElementById('notificacionTexto');
+
+  notificacionTexto.innerText = mensaje;
+  notificacion.style.bottom = "80px"; // Justo encima del footer
+
+  setTimeout(() => {
+    notificacion.style.bottom = "-200px"; // Oculta fuera del viewport
+  }, 3000);
+}
+
+// Gestión de imágenes de perfil
+const footerProfileIcon = document.getElementById("footerIconImg");
+const profileImage = document.getElementById("profileImage");
+const profilePageImage = document.getElementById("profilePageImage");
+
+const defaultProfileIcon = document.getElementById("defaultProfileIcon"); // Icono de perfil en el footer
+const defaultProfileIconAlt = document.getElementById("defaultProfileIconAlt"); // Icono alternativo de perfil
+
+// Función para cambiar todas las imágenes de perfil
+function updateProfileImage(src) {
+profileImage.src = src;
+profilePageImage.src = src;
+footerProfileIcon.src = src;
+defaultProfileIcon.style.display = 'none'; // Ocultar el icono de perfil
+defaultProfileIconAlt.style.display = 'none'; // Ocultar el icono alternativo
+localStorage.setItem('profileImage', src); // Guardar la imagen en el almacenamiento local
+}
+
+// Restaurar la imagen de perfil guardada al cargar la página
+window.addEventListener('load', function () {
+  const storedProfileImage = localStorage.getItem('profileImage');
+  if (storedProfileImage) {
+    footerProfileIcon.src = storedProfileImage;
+    profileImage.src = storedProfileImage;
+    profilePageImage.src = storedProfileImage;
+    defaultProfileIcon.style.display = 'none'; // Ocultar el icono de perfil
+    defaultProfileIconAlt.style.display = 'none'; // Ocultar el icono alternativo
+  }
+});
+
+var lastScrollTop = 0;
+    var footer = document.querySelector(".footer");
+
+    window.addEventListener("scroll", function () {
+        var currentScroll = window.scrollY;
+
+        if (currentScroll > lastScrollTop) {
+            // Desliza hacia abajo -> Ocultar footer
+            footer.classList.add("hidden");
+        } else {
+            // Desliza hacia arriba -> Mostrar footer
+            footer.classList.remove("hidden");
+        }
+
+        lastScrollTop = currentScroll;
+    });
+
+
+
+const aspectModes = ['cover', 'fill', 'contain', 'fit-height', 'fit-width', 'scale-down'];
+let currentAspectIndex = 0;
+
+function toggleAspectRatio() {
+  currentAspectIndex = (currentAspectIndex + 1) % aspectModes.length;
+  const mode = aspectModes[currentAspectIndex];
+
+  // Aplica el modo al video
+  video.style.objectFit = mode.includes('fit-') ? 'contain' : mode;
+
+  // Controla altura y ancho según modo
+  switch (mode) {
+    case 'fit-height':
+      video.style.width = 'auto';
+      video.style.height = '100%';
+      break;
+    case 'fit-width':
+      video.style.width = '100%';
+      video.style.height = 'auto';
+      break;
+    default:
+      video.style.width = '100%';
+      video.style.height = '100%';
+      break;
+  }
+
+  // Muestra etiqueta en pantalla
+  const label = document.getElementById('aspectLabel');
+  label.textContent = mode;
+  label.style.display = 'block';
+
+  clearTimeout(label._hideTimeout);
+  label._hideTimeout = setTimeout(() => {
+    label.style.display = 'none';
+  }, 1500);
+}
+
+const loader = document.getElementById('videoLoader');
+
+// Mostrar loader mientras se carga o busca
+video.addEventListener('waiting', () => {
+  loader.classList.remove('hidden');
+});
+
+// Ocultar loader cuando comience a reproducirse
+video.addEventListener('playing', () => {
+  loader.classList.add('hidden');
+});
+
+// También al cambiar manualmente de episodio o al adelantar
+video.addEventListener('seeking', () => {
+  loader.classList.remove('hidden');
+});
+
+video.addEventListener('seeked', () => {
+  loader.classList.add('hidden');
+});
+
+// Bloquear teclas comunes de desarrollo
+document.addEventListener('keydown', function(e) {
+  if (
+    e.key === 'F12' ||
+    (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) ||
+    (e.ctrlKey && e.key === 'U')
+  ) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+});
+
+function castCurrentVideo() {
+  const video = document.getElementById("video");
+  let currentSrc = video?.currentSrc;
+
+  // Si currentSrc está vacío, intenta obtenerlo del <source>
+  if (!currentSrc) {
+    const sourceEl = video.querySelector('source');
+    currentSrc = sourceEl ? sourceEl.src : null;
+  }
+
+  if (!currentSrc) {
+    alert("No se encontró el enlace del video.");
+    return;
+  }
+
+  const appLink = "wvc-x-callback://open?url=" + encodeURIComponent(currentSrc);
+  const storeLink = "https://play.google.com/store/apps/details?id=com.instantbits.cast.webvideo";
+
+  const transmitLink = document.createElement('a');
+  transmitLink.href = appLink;
+  transmitLink.style.display = 'none';
+  document.body.appendChild(transmitLink);
+
+  let appOpened = false;
+  transmitLink.click();
+
+  setTimeout(() => {
+    if (!appOpened) {
+      window.location.href = storeLink;
+    }
+    document.body.removeChild(transmitLink);
+  }, 1000);
+
+  window.addEventListener("blur", () => {
+    appOpened = true;
+  }, { once: true });
+}
+
+
+const mainTitle = document.querySelector(".title").textContent.trim();
+const subTitle = document.getElementById("episodeSubtitle").textContent.trim();
+const moviePoster = document.getElementById("favoritoImagen").src;
+const movieLink = document.getElementById("favoritoEnlace").href;
+
+// Guarda automáticamente al actualizar el tiempo
+video.addEventListener("timeupdate", () => {
+    const currentTime = video.currentTime;
+    const duration = video.duration || 1;
+
+    // Guarda datos individuales (para posibles usos futuros)
+    localStorage.setItem(`progress_${movieId}`, currentTime);
+    localStorage.setItem(`duration_${movieId}`, duration);
+
+    // Guarda el objeto completo para la sección "Continuar Viendo"
+    const movieData = {
+        title: mainTitle || 'Sin título',
+        subtitle: subTitle || '',
+        poster: moviePoster || '',
+        link: movieLink || '',
+        progress: currentTime,
+        duration: duration
+    };
+
+    localStorage.setItem(`movie_${movieId}`, JSON.stringify(movieData));
+});
+
+
+
+
+// Detectar teclas y mover el foco
+document.addEventListener('keydown', function(e) {
+  const focusable = Array.from(document.querySelectorAll('[tabindex]:not([disabled])'));
+
+  const current = document.activeElement;
+  const currentIndex = focusable.indexOf(current);
+
+  switch(e.key) {
+    case 'ArrowLeft':
+    case 'ArrowUp':
+      if (currentIndex > 0) {
+        focusable[currentIndex - 1].focus();
+      }
+      e.preventDefault();
+      break;
+    case 'ArrowRight':
+    case 'ArrowDown':
+      if (currentIndex < focusable.length - 1) {
+        focusable[currentIndex + 1].focus();
+      }
+      e.preventDefault();
+      break;
+    case 'Enter':
+    case 'OK':
+      if (document.activeElement) {
+        document.activeElement.click();
+      }
+      e.preventDefault();
+      break;
+  }
+});
+
+// Botón Backspace / Back
+window.addEventListener('keydown', function(e) {
+  if(e.key === 'Backspace' || e.key === 'BrowserBack') {
+    history.back();
+    e.preventDefault();
+  }
+});
+
+
+
+// Detectar teclas y mover el foco
+document.addEventListener('keydown', function(e) {
+  const focusable = Array.from(document.querySelectorAll('[tabindex]:not([disabled])'));
+
+  const current = document.activeElement;
+  const currentIndex = focusable.indexOf(current);
+
+  switch(e.key) {
+    case 'ArrowLeft':
+    case 'ArrowUp':
+      if (currentIndex > 0) {
+        focusable[currentIndex - 1].focus();
+      }
+      e.preventDefault();
+      break;
+    case 'ArrowRight':
+    case 'ArrowDown':
+      if (currentIndex < focusable.length - 1) {
+        focusable[currentIndex + 1].focus();
+      }
+      e.preventDefault();
+      break;
+    case 'Enter':
+    case 'OK':
+      if (document.activeElement) {
+        document.activeElement.click();
+      }
+      e.preventDefault();
+      break;
+  }
+});
+
+// Botón Backspace / Back
+window.addEventListener('keydown', function(e) {
+  if(e.key === 'Backspace' || e.key === 'BrowserBack') {
+    history.back();
+    e.preventDefault();
+  }
+});
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

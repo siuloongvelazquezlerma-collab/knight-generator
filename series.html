@@ -1,0 +1,3543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Slayers</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-ChzD5StK818vBAQZL5n94vJUmJl+jz1Ro8AiyOsd0GWIT6saFOY+zG+VVM/LMxltwGPplT7tI9On7kVCXkmVc=" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+   <link rel="icon" type="image/png" sizes="32x32" href="https://od.lk/d/M18zMTIxODI5MjJf/logo%202025.png">
+   <link href="https://vjs.zencdn.net/8.5.2/video-js.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: black;
+      height: 100%;
+      font-family: 'Roboto', sans-serif;
+      color: white;
+    }
+
+    /* Estilo general para el header */
+  #header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0); /* Fondo del header transparente al inicio */
+    display: flex;
+    justify-content: space-between; /* Mantiene espacio entre la flecha y otros elementos */
+    align-items: center;
+    padding: 10px;
+    z-index: 3000; /* Asegura que el header esté por encima de otros elementos */
+    transition: background-color 0.3s ease; /* Transición suave del fondo */
+}
+
+/* Estilo de los enlaces */
+.icon-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff; /* Color del ícono */
+    text-decoration: none; /* Quitar subrayado */
+    z-index: 3001;
+}
+
+/* Flecha a la izquierda */
+#back-link {
+    background-color: rgba(0, 0, 0, 0.2); /* Fondo semitransparente */
+    border-radius: 50%; /* Hace el fondo circular */
+    width: 36px; /* Tamaño del círculo */
+    height: 36px;
+    font-size: 20px; /* Tamaño del ícono */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#page-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+    opacity: 0; /* Lo ocultamos por defecto */
+    transition: opacity 0.3s ease-in-out; /* Transición suave */
+}
+
+
+
+/* Hover efectos */
+.icon-link:hover {
+    opacity: 0.8; /* Ligera transparencia al hacer hover */
+}
+
+.cover {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: url("https://od.lk/s/M18zMTgxNzU5MDBf/slayers%20poster.jpg") no-repeat center top;
+  background-size: contain;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.cover::before,
+.cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cover::before {
+  background: linear-gradient(to bottom, rgb(0, 0, 0), transparent 20%);
+}
+
+.cover::after {
+  background: linear-gradient(to top, rgb(0, 0, 0), rgb(0, 0, 0), rgba(0, 0, 0, 0.863), transparent 50%);
+}
+
+.cover-landscape {
+  position: absolute;
+  inset: 0;
+  background: url("https://image.tmdb.org/t/p/original/9M97xCfMuYAxRt4Yy3UTF3e7JGP.jpg") no-repeat center top;
+  background-size: cover;
+  z-index: 0; /* <- Esto es clave para que se vea debajo del contenido, pero por encima del fondo negro */
+  display: none;
+}
+
+.cover::backdrop,
+.cover-landscape::backdrop {
+  transition: none;
+}
+
+.cover::before,
+.cover::after,
+.cover-landscape::before,
+.cover-landscape::after {
+  transition: none; /* No tocamos tus gradientes */
+}
+
+.cover-image-overlay,
+.cover-landscape-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.4s ease;
+  z-index: 0.5; /* justo encima del fondo, pero debajo de contenido y gradientes */
+  pointer-events: none;
+}
+
+
+/* Gradiente en la parte superior en landscape */
+.cover-landscape::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.822) 10%, transparent 40%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Nuevo gradiente en la parte inferior en landscape */
+.cover-landscape::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.747) 10%, transparent 40%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.cover-landscape-shadow-left {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1000px; /* Ajusta según qué tan ancho quieres el gradiente */
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.863), rgba(0, 0, 0, 0.623),rgba(0, 0, 0, 0.425), transparent);
+  pointer-events: none;
+  z-index: 2;
+}
+
+
+/* Ocultar sombras en landscape */
+@media screen and (orientation: landscape) {
+  .cover::before,
+  .cover::after {
+    display: none;
+  }
+
+  .cover-landscape {
+    display: block;
+  }
+}
+
+.cover-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Mostrar landscape solo en modo horizontal */
+@media screen and (orientation: landscape) {
+  .cover {
+    background: none;
+  }
+
+  .cover-landscape {
+    display: block;
+  }
+}
+
+
+
+
+    .meta {
+      font-size: 12px;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    .watch-button {
+  background: white;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 25px auto;
+}
+
+/* Envuelve el contenido internamente con columna */
+.resume-text-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.text-with-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 4px;
+}
+
+.resume-label {
+  line-height: 1.2;
+}
+
+.resume-progress-track {
+  width: 100%;
+  height: 3px;
+  background-color: rgba(0, 0, 0, 0.192);
+  margin-top: 2px; /* más pegado al texto */
+  border-radius: 2px;
+}
+
+.resume-progress-bar {
+  height: 100%;
+  background-color: #ff0000;
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+
+
+.cover-content img.logo {
+  width: 220px;
+  margin-bottom: 12px;
+}
+
+.iconos {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1rem 0;
+  align-items: center;
+}
+
+.iconos button,
+.iconos .action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.iconos .material-icons-outlined {
+  font-size: 30px; /* Tamaño más grande para los íconos */
+  margin-bottom: 5px; /* Espacio entre el ícono y el texto */
+}
+
+.iconos button:focus {
+  outline: none;
+}
+
+.description {
+  font-size: 0.95em;
+  color: #ccc;
+  margin-top: 15px;
+  max-width: 500px;
+  line-height: 1.4;
+}
+
+    .cover-actions div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .cover-actions i {
+      font-size: 28px;
+    }
+
+   @media (orientation: landscape) {
+  .cover-content {
+    display: flex;
+    flex-direction: column; /* ⬅️ Organización vertical */
+    align-items: flex-start; /* ⬅️ Alineado a la izquierda */
+    justify-content: flex-start; /* ⬅️ Pegado arriba */
+    padding: 2rem;
+    gap: 0.8rem; /* Espaciado vertical entre elementos */
+    height: 100vh; /* Para que aproveche bien el alto */
+  }
+
+  .cover-content img.logo {
+    width: 220px;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .cover-meta-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    max-width: 500px;
+  }
+
+  .meta {
+    font-size: 12px;
+    color: #ccc;
+    margin: 0;
+  }
+
+  .watch-button {
+    max-width: 240px;
+    padding: 10px 14px;
+    font-size: 1em;
+    margin: 0;
+  }
+
+  .iconos {
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+  }
+
+  .description {
+    font-size: 0.95em;
+    color: #ccc;
+    line-height: 1.4;
+    max-width: 500px;
+    margin: 0;
+  }
+}
+
+
+@media (min-width: 1200px) {
+  .cover-content img.logo {
+    margin-top: 380px;
+    width: 420px;
+    margin-bottom: 0px;
+  }
+
+  .meta {
+    font-size: 16px;
+  }
+
+  .watch-button {
+    max-width: 380px;
+    padding: 14px 20px;
+    font-size: 1.2em;
+  }
+
+  .iconos {
+    gap: 3rem;
+  }
+
+  .iconos button,
+  .iconos .action-item {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .iconos .material-icons-outlined {
+    margin-top: 10px;
+    font-size: 30px;
+    margin-bottom: 6px;
+  }
+
+  .description {
+    font-size: 1.1em;
+    max-width: 800px;
+  }
+}
+
+
+
+
+   
+
+   /* TABS (alineadas a la izquierda como Netflix) */
+.tabs {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 20px;
+  padding: 0 16px;
+  border-bottom: 1px solid #444;
+  gap: 20px;
+}
+
+.tab {
+  padding: 10px 0;
+  background: none;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  color: #aaa;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+}
+
+.tab.active {
+  color: white;
+  border-bottom: 3px solid white;
+}
+
+/* SEASON SELECTOR estilo tarjeta con icono expand_more */
+.season-selector {
+  padding: 16px;
+}
+
+#seasonSelect {
+  width: 100%;
+  padding: 16px 16px;
+  background-color: #064375;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  appearance: none;
+  position: relative;
+  font-weight: bold;
+}
+
+/* Agregar ícono con posicionamiento */
+.season-selector {
+  position: relative;
+}
+
+.season-selector::after {
+  content: "expand_more";
+  font-family: 'Material Icons';
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  pointer-events: none;
+  font-size: 24px;
+}
+
+/* EPISODES */
+#episodeList {
+  padding-top: 0;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: 60px; /* o 80px, ajusta según lo que necesites */
+}
+
+
+.episode {
+  display: flex;
+  margin-bottom: 10px;
+  background-color: #11111100;
+  border-radius: 0px;
+  overflow: hidden;
+  position: relative;
+}
+
+.episode img {
+  width: 140px;
+  height: 80px; /* Fuerza altura uniforme */
+  object-fit: cover; /* Rellena y recorta si es necesario */
+  border-radius: 0;
+  flex-shrink: 0;
+}
+
+
+.episode-details {
+  padding: 10px 0 10px 15px;
+  color: white;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.episode-title {
+  font-size: 11px;
+  font-weight: bold;
+  margin-top: -20px;
+}
+
+.episode-meta {
+  font-size: 10px;
+  color: #aaa;
+  margin: 4px 0;
+}
+
+.episode-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  cursor: pointer;
+  margin-top: 25px;
+}
+
+.download-icon {
+  font-family: 'Material Icons';
+  font-size: 20px;
+  color: white;
+  user-select: none;
+}
+
+.download-line {
+  width: 17px;
+  height: 2px;
+  background-color: white;
+  margin-top: 2px;
+  border-radius: 1px;
+}
+
+@media (orientation: landscape) {
+
+  .tabs {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: -10px!important; /* ⬆️ más arriba */
+    margin-bottom: 0.5rem;
+    padding: 0 2rem; /* ⬅️ alineado con el resto del contenido */
+    border-bottom: 1px solid #444;
+    gap: 20px;
+    z-index: 9999;
+  }
+  .tab-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 2rem;           /* elimina el top padding */
+    margin-top: -0px!important;             /* elimina cualquier margin superior */
+    gap: 0.5rem;
+                  /* control del espaciado vertical */
+  }
+
+  .season-selector {
+    position: relative;
+    margin: 0;                /* quita margen extra */
+    padding: 0;
+    width: 200px;
+  }
+
+  #seasonSelect {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: #064375;
+    color: white;
+    font-size: 14px;
+    border: none;
+    border-radius: 10px;
+    appearance: none;
+    font-weight: bold;
+  }
+
+  .season-selector::after {
+    content: "expand_more";
+    font-family: 'Material Icons';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    pointer-events: none;
+    font-size: 20px;
+  }
+
+  #episodeList {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 20px;
+    padding: 0;               /* ajusta altura total */
+    width: 100%;
+    margin-bottom: 60px!important; 
+  }
+
+  .episode {
+    flex: 0 0 auto;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .episode img {
+    width: 100%;
+    height: 125px;
+    object-fit: cover;
+  }
+
+  .episode-details {
+    padding: 6px 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: white;
+  }
+
+  .episode-title {
+    font-size: 13px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .download-icon {
+    font-family: 'Material Icons';
+    font-size: 18px;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .download-line,
+  .episode-actions {
+    display: none;
+  }
+
+   .episode-meta {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 4px;
+  }
+}
+@media (min-width: 1024px) {
+
+  .footer {
+    display: none !important;
+  }
+
+}
+
+ /* --- PLAYER --- */
+
+ .video-js .vjs-control-bar,
+.video-js .vjs-big-play-button,
+.video-js .vjs-loading-spinner,
+.video-js .vjs-error-display {
+  display: none !important;
+}
+
+
+.player {
+  display: none; /* ⬅️ Esto es clave */
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: black;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: black;
+}
+
+.video-js {
+  width: 100% !important;
+  height: 100% !important;
+  background-color: black !important;
+}
+
+.video-js video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+  background-color: black;
+}
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+
+    .overlay.visible {
+      opacity: 1;
+    }
+
+    .controls {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 1;
+      transition: opacity 0.5s;
+      pointer-events: none;
+    }
+
+    .controls.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Estado inicial: oculto con opacidad */
+.controls,
+.overlay {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* Estado visible: opacidad completa */
+.controls.visible,
+.overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+    .top-bar, .bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      pointer-events: auto;
+    }
+
+    .top-bar {
+      position: absolute;
+      top: 0; width: 100%;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      bottom: 0; width: 100%;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    #episodeHeader .title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+#episodeHeader .subtitle {
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+    .center-controls {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      pointer-events: auto;
+    }
+
+    .btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2.5em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn .material-icons {
+      font-size: 55px;
+    }
+
+    .progress-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .progress {
+      flex: 1;
+      appearance: none;
+      height: 5px;
+      background: #666;
+      border-radius: 3px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .progress::-webkit-slider-thumb {
+      appearance: none;
+      height: 15px;
+      width: 15px;
+      border-radius: 50%;
+      background: rgb(255, 255, 255);
+      border: none;
+    }
+
+    .time {
+      font-size: 0.9em;
+      color: #ccc;
+      white-space: nowrap;
+    }
+
+    .icon-btn {
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .extra-controls {
+  display: flex;
+  justify-content: center;
+  gap: 150px;
+  width: 100%;
+  pointer-events: auto;
+  margin-bottom: 10px;
+}
+
+.extra-controls .btn {
+  flex-direction: row;
+  gap: 8px;
+  font-size: 19px; /* Antes era 1.2em */
+}
+
+.extra-controls .btn .material-icons {
+  font-size: 20px;
+}
+
+.extra-controls .btn .label {
+  font-size: 13px; /* Antes era 1em */
+  color: white;
+}
+
+
+
+/* Overlay semitransparente */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Menú deslizable desde abajo */
+.season-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #13161b;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding: 16px;
+  z-index: 1100;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.season-menu.show {
+  transform: translateY(0%);
+}
+
+.season-menu-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.menu-drag-indicator {
+  width: 40px;
+  height: 4px;
+  background-color: #666;
+  border-radius: 2px;
+  margin: 12px auto;
+  touch-action: none;
+}
+
+/* Opciones de temporada */
+#seasonOptions .season-option {
+  padding: 12px 16px;
+  color: white;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#seasonOptions .season-option:hover {
+  background-color: #33333300;
+}
+
+#seasonOptions .season-option.selected {
+  background-color: #064375;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#seasonOptions .season-option.selected::after {
+  content: "done";
+  font-family: 'Material Icons';
+  color: white;
+  font-size: 20px;
+}
+
+.thumbnail-container {
+  position: relative;
+}
+
+.progress-track {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.3); /* fondo semitransparente */
+}
+
+.progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background-color: rgb(255, 0, 0);
+  width: 0%;
+}
+
+.skip-intro {
+  position: absolute;
+  right: 20px;
+  bottom: 90px;
+  background: #ffffff;
+  color: #000000;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  padding: 6px 14px 6px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 9999;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.skip-intro.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(20px);
+}
+
+.skip-intro .material-icons {
+  font-size: 22px;
+  margin-right: 8px;
+}
+
+
+.next-episode {
+  position: absolute;
+  right: 20px;
+  bottom: 90px;
+  background: #ffffff;
+  color: #000000;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  padding: 6px 14px 6px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 9999;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.next-episode.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(20px);
+}
+
+.next-episode .icon-container {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.next-episode .play-icon {
+  position: absolute;
+  font-size: 20px;
+  left: 2px;
+  top: 2px;
+  color: black;
+}
+
+.circle-timer {
+  width: 24px;
+  height: 24px;
+  transform: rotate(-90deg);
+}
+
+.circle-bg {
+  fill: none;
+  stroke: #ddd;
+  stroke-width: 3;
+}
+
+.circle-fill {
+  fill: none;
+  stroke: #000;
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.3s ease;
+}
+
+.next-episode .close-btn {
+  font-size: 18px;
+  margin-right: 8px;
+  cursor: pointer;
+  color: #000;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.footer {
+display: flex;
+align-items: center;
+position: fixed;
+bottom: 0;
+left: 0;
+width: 100%;
+background-color: rgba(27, 27, 27, 0.877);
+padding: 10px 0;
+height: 60px;
+z-index: 1000;
+justify-content: space-around;
+transition: transform 0.3s ease-in-out;
+}
+
+.footer.hidden {
+  transform: translateY(100%);
+}
+
+.footer.hidden {
+  transform: translateY(100%);
+}
+
+.footer-icon {
+  color: #bbb; /* Icono gris cuando está inactivo */
+  text-align: center;
+  text-decoration: none;
+  font-size: 35px; /* Tamaño aumentado para los iconos */
+  flex: 1; /* Ocupa el mismo espacio cada icono */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease; /* Animación suave al pasar el cursor */
+}
+
+/* Para asegurarnos de que los iconos aumenten correctamente */
+.footer-icon .material-icons, .footer-icon .material-icons-outlined {
+  font-size: inherit; /* Heredar el tamaño de fuente del contenedor */
+  transition: font-size 0.3s ease;
+}
+
+.footer-icon:hover {
+  color: #fff; /* Cambia a blanco al pasar el cursor */
+}
+
+.footer-icon.active {
+  color: #fff; /* Cambiar a blanco cuando está activo */
+}
+
+.footer-icon.active .material-icons-outlined {
+  display: none; /* Oculta el icono outline cuando está activo */
+}
+
+.footer-icon.active .material-icons {
+  display: inline-block; /* Muestra el icono normal cuando está activo */
+}
+
+/* Oculta los iconos normales por defecto */
+.footer-icon .material-icons {
+  display: none;
+}
+
+/* Iconos outline por defecto */
+.footer-icon .material-icons-outlined {
+  display: inline-block;
+}
+
+/* Estilos para el icono de perfil */
+.profile-icon-footer {
+  width: 35px; /* Tamaño de la imagen de perfil */
+  height: 35px; /* Tamaño de la imagen de perfil */
+  border-radius: 50%; /* Hacer la imagen circular */
+  border: 2px solid #fff; /* Borde blanco alrededor de la imagen */
+  object-fit: cover; /* Asegura que la imagen se recorte bien */
+}
+
+/* Cambiar color de iconos inactivos */
+.footer-icon.inactive .material-icons-outlined,
+.footer-icon.inactive .material-icons {
+  color: #bbb; /* Gris para iconos inactivos */
+}
+
+.nav__icon {
+  font-size: 20px; /* Ajusta el tamaño del icono aquí */
+}
+
+.notificacion {
+  position: fixed;
+  bottom: -100px; /* Oculto fuera de vista */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  transition: bottom 0.4s ease-in-out;
+  z-index: 9999;
+  pointer-events: none; /* para que no interfiera con clicks */
+}
+
+.notificacion-icono {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(49, 13, 250, 0.89);
+  border-radius: 50%;
+}
+
+/* Estilo general para celular (portrait) */
+/* 📱 Vertical (modo móvil o pantallas pequeñas) */
+.suggested-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;      /* 🔁 Dos columnas exactas */
+  gap: 16px;
+  padding: 16px;
+  margin-bottom: 0;
+}
+
+.suggested-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.suggested-item img {
+  width: 100%;
+  aspect-ratio: 2 / 3;                 /* 🖼️ Forma póster */
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.suggested-info {
+  margin-top: 6px;
+  color: white;
+}
+
+.suggested-info .title {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #aaa;
+  margin-bottom: 0;
+}
+
+#suggested {
+  padding-bottom: 60px;
+}
+
+
+@media (orientation: landscape) {
+  .suggested-grid {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 16px;
+    padding: 1rem 2rem 4rem 2rem;
+  }
+
+  .suggested-item {
+    flex: 0 0 auto;
+    width: 140px;                      /* 🔁 Uniforme en scroll horizontal */
+  }
+
+  .suggested-item img {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+}
+
+.video-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 90deg,
+        #0066ff21 0%,
+        #0066ff 60%,
+        #ffffff 80%,
+        #afafaf00 30%
+  );
+  mask: radial-gradient(farthest-side, transparent calc(100% - 8px), black);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 8px), black);
+  animation: spin 1.2s linear infinite, shine 2s ease-in-out infinite;
+  opacity: 1 !important;
+  transition: opacity 3s ease-out;
+}
+
+/* Oculto */
+.hidden {
+  display: none !important;
+}
+
+/* Animación de rotación */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* Animación de brillo */
+@keyframes shine {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.8);
+  }
+}
+
+
+/* Overlay para oscurecer la página */
+.overlay-loader-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0); /* Oscurecimiento semitransparente */
+    z-index: 9999; /* Asegura que sté encima de todos los elementos */
+    opacity: 1;
+    transition: opacity 2s ease-out; /* Cambio lento en opacidad */
+    display: block; /* Asegura que el overlay esté visible inicialmente */
+}
+
+/* Cuando se ocultará */
+.overlay-loader.hidden {
+    opacity: 0; /* Se desvanece */
+    pointer-events: none; /* Evita interacciones mientras está oculto */
+}
+
+/* Loader */
+/* Loader de página */
+#loader {
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 90deg,
+        #0066ff21 0%,
+        #0066ff 60%,
+        #ffffff 80%,
+        #afafaf00 30%
+  );
+  mask: radial-gradient(farthest-side, transparent calc(100% - 8px), black);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 8px), black);
+  animation: page-spin 1.2s linear infinite, page-shine 2s ease-in-out infinite;
+  opacity: 1 !important;
+  transition: opacity 3s ease-out;
+  z-index: 600000;
+}
+
+/* Animaciones únicas para loader de página */
+@keyframes page-spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes page-shine {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.8); }
+}
+
+/* Deshabilitar selección de texto e interacciones */
+body, img, a, button, select, textarea {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE10+/Edge */
+            user-select: none; /* estándar */
+        }
+
+        /* Deshabilitar resaltado en elementos interactivos */
+        a, button, select, textarea {
+            -webkit-tap-highlight-color: transparent; /* Safari */
+        
+        }
+
+        /* Deshabilitar el arrastre de imágenes */
+        img {
+            pointer-events: none; /* Desactiva interacciones del puntero en imágenes */
+        }
+    *:focus {
+  outline: 3px solid #00f7ff;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Ocultar focus en móviles (pantallas pequeñas) */
+@media (max-width: 768px) {
+  *:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Mostrar focus en pantallas grandes (TV, PC) */
+@media (min-width: 769px) {
+  *:focus {
+    outline: 3px solid #00f7ff;
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+}
+
+
+.tabs-secondary {
+  display: none;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 0;
+  background-color: #11111111;
+  border-bottom: 1px solid #44444400;
+  z-index: 3010;
+}
+
+.tabs-secondary .tab {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 6px 12px;
+  transition: background 0.3s ease;
+  z-index: 3010;
+}
+
+.tabs-secondary .tab:hover {
+  background-color: #81818179;
+  border-radius: 8px;
+}
+
+@media screen and (min-width: 1024px) {
+  .tabs-secondary {
+    display: flex;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  /* Tabs grandes en pantallas grandes */
+  .tabs-secondary {
+    gap: 10px;
+    padding: 16px 40px;
+  }
+
+  .tabs-secondary .tab {
+    font-size: 22px;
+    padding: 12px 10px 8px;
+  }
+
+  .tabs-secondary .tab.active::after {
+    content: "";
+    display: block;
+    height: 4px;
+    background-color: white;
+    margin-top: 4px;
+    border-radius: 2px;
+  }
+}
+
+
+    </style>
+</head>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+  <div id="loader" class="loader"></div>
+  <div class="overlay-loader-page"></div>
+    <header id="header">
+        <a href="javascript:history.back();" id="back-link" class="icon-link" tabindex="1">
+            <span class="material-icons">chevron_left</span>
+        </a>
+        <span id="page-title" class="page-title">The Slayers</span> <!-- Título oculto por defecto -->
+    </header>
+<!-- Tabs para pantallas grandes -->
+<div class="tabs tabs-secondary">
+  <a href="../main.html#inicio" class="tab">Inicio</a>
+  <a href="../main.html#series" class="tab">Películas</a>
+  <a href="../main.html#peliculas" class="tab">Series</a>
+  <a href="../main.html#hbo" class="tab">Anime</a>
+  <a href="../main.html#documentales" class="tab">Familia</a>
+  <a href="../main.html#mi-lista" class="tab">Doramas</a>
+</div>
+<!-- COVER / PORTADA -->
+<div class="cover" id="cover">
+  <!-- FONDO LANDSCAPE SOLO PARA MODO HORIZONTAL -->
+  <div class="cover-landscape">
+    <div class="cover-landscape-image-overlay"></div> <!-- Overlay para imagen landscape -->
+    <div class="cover-landscape-shadow-left"></div>
+  </div>
+
+  <div class="cover-image-overlay"></div> <!-- Overlay para imagen portrait -->
+  
+  <div class="cover-content">
+    <img src="https://od.lk/s/M18zMTgxNzU5NTJf/slayers%20logo.png" alt="The Slayers Logo "class="logo" oncontextmenu="return false" draggable="false">
+    <div class="meta">13+&nbsp;&nbsp;5 temporadas&nbsp;&nbsp;1996&nbsp;&nbsp;Dob Lat</div>
+  
+      <button id="resumeButton" class="watch-button" onclick="playLastWatchedEpisode()" tabindex="3">
+        <span class="material-icons">play_arrow</span> Mira T1 E1
+      </button>
+  
+      <!-- NUEVO BLOQUE DE ICONOS -->
+      <div class="iconos">
+        <!-- Botón de Favoritos -->
+        <button id="favoritoBtn" data-identificador="The Slayers" onclick="toggleFavorito()">
+          <span id="favoritoIcon" class="material-icons-outlined">add</span>
+          <p id="favoritoText">Favoritos</p>
+        </button>
+  
+        <!-- Info oculta para localStorage -->
+        <div id="favoritoData" style="display: none;">
+          <img id="favoritoImagen" class="poster" src="https://image.tmdb.org/t/p/original/cRDpthbbgthW5y78dETzWvv4PWX.jpg" alt="Poster de la Película">
+          <a id="favoritoEnlace" href="The Slayers.html"></a>
+          <span id="nombre">The Slayers</span>
+        </div>
+  
+        <!-- Notificación tipo "añadido a favoritos" -->
+        <div id="notificacion" class="notificacion" style="bottom: -100px;">
+          <span id="notificacionTexto">Añadido a favoritos</span>
+          <span class="notificacion-icono material-icons-outlined">check</span>
+        </div>
+  
+        <!-- Botón de Compartir -->
+        <div class="action-item" id="compartirBtn" onclick="window.location.href='http://action_share';">
+          <span class="material-icons-outlined">share</span>
+          <p>Compartir</p>
+        </div>
+      </div>
+  
+      <div class="description">
+        Un día una banda de ladrones a la que había derrotado Reena vuelve para vengarse de ella, y cuando ven que no la pueden derrotar le piden que se una a ellos.      
+</div>
+    </div>
+  </div>
+  
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('episodes')">Episodios</button>
+    <button class="tab" onclick="showTab('suggested')">Quizá también te guste</button>
+  </div>
+  
+  <div id="episodes" class="tab-content">
+    <div class="season-selector">
+      <select id="seasonSelect" onchange="renderEpisodes()"></select>
+    </div>
+    <div id="episodeList"></div>
+  </div>
+  
+  <div id="suggested" class="tab-content" style="display: none;">
+    <div class="suggested-grid">
+
+      <div class="suggested-item">
+        <a href="my-hero-academia.html">
+          <img src="https://image.tmdb.org/t/p/w300/phuYuzqWW9ru8EA3HVjE9W2Rr3M.jpg" alt="My Hero Academia" oncontextmenu="return false" draggable="false">
+        </a>
+        <div class="suggested-info">
+          <div class="title">My Hero Academia</div>
+          <div class="meta-row">
+            <span class="meta">Dob | Lat</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="suggested-item">
+        <a href="attack-on-titan.html">
+          <img src="https://image.tmdb.org/t/p/w300/yFPQ4JhhirnCVe2UIKGMYX7TOGZ.jpg" alt="Attack on Titan" oncontextmenu="return false" draggable="false">
+        </a>
+        <div class="suggested-info">
+          <div class="title">Attack on Titan</div>
+          <div class="meta-row">
+            <span class="meta">Dob | Lat</span>
+          </div>
+        </div>
+      </div>
+    
+      <div class="suggested-item">
+        <a href="Las Guerreras Mágicas.html">
+          <img src="https://image.tmdb.org/t/p/original/pm3hODqtNDLqucDVvakky8FrhMx.jpg" alt="Las Guerreras Mágicas (1994)" oncontextmenu="return false" draggable="false">
+        </a>
+        <div class="suggested-info">
+          <div class="title">Las Guerreras Mágicas (1994)</div>
+          <div class="meta-row">
+            <span class="meta">Dob | Lat</span>
+          </div>
+        </div>
+      </div>
+    
+      <div class="suggested-item">
+        <a href="Los Caballeros del Zodiaco.html">
+          <img src="https://image.tmdb.org/t/p/original/r6zH9uZkgnMGGNRkWZag36Jafmn.jpg" alt="Los Caballeros del Zodiaco (1986)" oncontextmenu="return false" draggable="false">
+        </a>
+        <div class="suggested-info">
+          <div class="title">Los Caballeros del Zodiaco (1986)</div>
+          <div class="meta-row">
+            <span class="meta">Dob | Lat</span>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+    
+    
+  </div>
+    
+
+  
+  <!-- OVERLAY -->
+<div id="menuOverlay" class="menu-overlay hidden" onclick="closeSeasonMenu()"></div>
+
+<!-- MENÚ DESLIZANTE DE TEMPORADAS -->
+<div id="seasonMenu" class="season-menu hidden">
+  <div class="season-menu-header">
+    <div class="menu-drag-indicator"></div>
+  </div>
+  <div id="seasonOptions"></div>
+</div>
+
+  
+  
+<!-- PLAYER -->
+<div class="player" id="player">
+  <video
+    id="video"
+    class="video-js vjs-default-skin"
+    preload="auto"
+    width="100%"
+    height="100%"
+    poster="https://wallpapercave.com/wp/wp5415042.jpg"
+    data-setup='{"controls": false, "autoplay": false, "preload": "auto"}'>
+    <source src="https://od.lk/d/M18zMDI4MDUzNTNf/RK%2001.mp4" type="video/mp4" />
+  </video>
+
+  <!-- Loader -->
+  <div class="video-loader hidden" id="videoLoader">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Aspect Ratio Label -->
+  <div id="aspectLabel" style="
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 16px;
+    display: none;
+    z-index: 9999;
+  ">
+    cover
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Botón Omitir Intro -->
+  <div class="skip-intro hidden" id="skipIntroBtn" onclick="skipIntro()">
+    <span class="material-icons">fast_forward</span>
+    <span class="label">Omitir intro</span>
+  </div>
+
+  <!-- Botón Siguiente Episodio -->
+  <div class="next-episode hidden" id="nextEpisodeBtn" onclick="playNextEpisode()">
+    <div class="icon-container">
+      <svg class="circle-timer" viewBox="0 0 36 36">
+        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 1 1 0 31.831 a 15.9155 15.9155 0 1 1 0 -31.831"/>
+        <path class="circle-fill" id="circleProgress" stroke-dasharray="0, 100" d="M18 2.0845
+          a 15.9155 15.9155 0 1 1 0 31.831
+          a 15.9155 15.9155 0 1 1 0 -31.831"/>
+      </svg>
+      <span class="material-icons play-icon">play_arrow</span>
+    </div>
+    <span class="label" id="nextEpisodeLabel">Siguiente episodio</span>
+  </div>
+
+  <div class="controls" id="controls">
+    <div class="top-bar">
+      <div class="icon-btn material-icons" onclick="goBack()">chevron_left</div>
+      <div style="display: flex; gap: 15px;">
+        <div class="icon-btn material-icons" onclick="castCurrentVideo()">cast</div>
+        <div class="icon-btn material-icons" onclick="toggleAspectRatio()">aspect_ratio</div>
+      </div>
+    </div>
+
+    <div class="center-controls">
+      <button class="btn" onclick="skip(-10)">
+        <span class="material-icons">replay_10</span>
+      </button>
+      <button class="btn" id="playPauseBtn" onclick="togglePlay()">
+        <span class="material-icons">play_arrow</span>
+      </button>
+      <button class="btn" onclick="skip(10)">
+        <span class="material-icons">forward_10</span>
+      </button>
+    </div>
+
+    <div class="bottom-bar">
+      <div id="episodeHeader">
+        <div class="title">The Slayers</div>
+        <div class="subtitle" id="episodeSubtitle"></div>
+      </div>
+
+      <div class="progress-container">
+        <input type="range" class="progress" id="progress" value="0" max="100">
+        <div class="time" id="duration">- 00:00</div>
+      </div>
+
+      <!-- 🚀 Botones Extra (Reiniciar / Siguiente Episodio) -->
+      <div class="extra-controls">
+        <button class="btn" onclick="restartVideo()">
+          <span class="material-icons">skip_previous</span>
+          <span class="label">Reiniciar</span>
+        </button>
+        <button class="btn" onclick="playNextEpisode()">
+          <span class="material-icons">skip_next</span>
+          <span class="label">Sig. Epi</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+  
+<footer class="footer">
+  <a href="../main.html" class="footer-icon" tabindex="14">
+      <span class="material-icons-outlined">home</span>
+      <span class="material-icons">home</span>
+  </a>
+  <a href="../new favoritos 2025.html" class="footer-icon" tabindex="15">
+      <span class="material-icons-outlined">bookmark_border</span>
+      <span class="material-icons">bookmark</span>
+  </a>
+  <a href="../New search page 2025.html" class="footer-icon" tabindex="16">
+      <span class="material-icons-outlined">search</span>
+      <span class="material-icons">search</span>
+  </a>
+  <a href="../perfil digital Knight 2025.html" class="footer-icon" tabindex="17">
+      <img src="https://od.lk/d/M18zMDc1MjMzOTdf/DIGITAL%20KNIGHT2.png" alt="Icono de Perfil" id="footerIconImg" class="profile-icon-footer">
+  </a>
+</footer>
+
+  <script src="https://vjs.zencdn.net/8.5.2/video.min.js"></script>
+<script>
+
+const seriesId = "Oh-My-Goddess";
+
+// Prevenir gestos táctiles no deseados
+document.addEventListener('touchmove', function (event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+
+        window.addEventListener('load', function () {
+  const overlay = document.querySelector('.overlay-loader-page');
+  const loader = document.getElementById('loader');
+
+  // Se mantiene el loader visible por 1 segundo
+  setTimeout(() => {
+    loader.style.opacity = '0'; // Corrige esto: '2' no tiene efecto visual
+    setTimeout(() => {
+      loader.style.display = 'none';
+      overlay.classList.add('hidden');
+    }, 300);
+  }, 1000);
+});
+
+// 🛡️ Respaldo por si 'load' nunca se dispara
+setTimeout(() => {
+  const overlay = document.querySelector('.overlay-loader-page');
+  const loader = document.getElementById('loader');
+
+  if (loader && overlay && !overlay.classList.contains('hidden')) {
+    loader.style.display = 'none';
+    overlay.classList.add('hidden');
+    console.warn("Loader forzado a ocultarse después de 8 segundos.");
+  }
+}, 8000);
+
+  
+const video = videojs('video'); // Video.js instance
+const videoElement = video.el().getElementsByTagName('video')[0];
+const controls = document.getElementById('controls');
+const overlay = document.getElementById('overlay');
+const player = document.getElementById('player');
+const progress = document.getElementById('progress');
+const duration = document.getElementById('duration');
+const playPauseBtn = document.getElementById('playPauseBtn').querySelector('.material-icons');
+const cover = document.getElementById('cover');
+let hideControlsTimeout;
+
+
+function togglePlay() {
+  if (video.paused()) {
+    video.play();
+    playPauseBtn.textContent = 'pause';
+    overlay.classList.remove('visible');
+  } else {
+    video.pause();
+    playPauseBtn.textContent = 'play_arrow';
+    overlay.classList.add('visible');
+  }
+}
+
+
+function skip(seconds) {
+  video.currentTime(video.currentTime() + seconds);
+}
+
+
+function goBack() {
+  if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+    exitFullscreen(); // sale del modo pantalla completa si está activado
+  }
+
+  player.style.display = 'none';
+  cover.style.display = 'flex';
+  video.pause();
+  playPauseBtn.textContent = 'play_arrow';
+}
+
+function restartVideo() {
+  video.currentTime(0);
+  video.play();
+  playPauseBtn.textContent = 'pause';
+}
+
+
+
+function updateProgress() {
+  if (video.duration()) {
+    const remaining = video.duration() - video.currentTime();
+    const mins = Math.floor(remaining / 60);
+    const secs = Math.floor(remaining % 60).toString().padStart(2, '0');
+    duration.textContent = `- ${mins}:${secs}`;
+    const percent = (video.currentTime() / video.duration()) * 100;
+    progress.value = percent;
+    progress.style.background = `linear-gradient(to right, white ${percent}%, #666 ${percent}%)`;
+  }
+}
+
+
+progress.addEventListener('input', () => {
+  const newTime = (progress.value / 100) * video.duration();
+  video.currentTime(newTime);
+});
+
+
+function showControls() {
+  controls.classList.add('visible');
+  overlay.classList.add('visible');
+
+  clearTimeout(hideControlsTimeout);
+  hideControlsTimeout = setTimeout(() => {
+    controls.classList.remove('visible');
+    overlay.classList.remove('visible');
+  }, 7000);
+}
+
+
+function showPlayer() {
+  cover.style.display = 'none';
+  player.style.display = 'flex';
+  video.play();
+  playPauseBtn.textContent = 'pause';
+  showControls();
+  enterFullscreen();
+}
+
+video.on('timeupdate', updateProgress);
+video.on('loadedmetadata', updateProgress);
+player.addEventListener('mousemove', showControls);
+player.addEventListener('click', showControls);
+player.addEventListener('touchstart', showControls);
+
+function enterFullscreen() {
+  if (player.requestFullscreen) {
+    player.requestFullscreen();
+  } else if (player.webkitRequestFullscreen) {
+    player.webkitRequestFullscreen();
+  } else if (player.msRequestFullscreen) {
+    player.msRequestFullscreen();
+  }
+}
+
+function exitFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  }
+}
+
+document.addEventListener('fullscreenchange', () => {
+  const isFullscreen = document.fullscreenElement;
+  if (!isFullscreen) {
+    if (!video.paused()) {
+      video.pause();
+    }
+    playPauseBtn.textContent = 'play_arrow';
+    player.style.display = 'none';
+    cover.style.display = 'flex';
+  }
+});
+
+
+
+// --- PLAYLIST ---
+const playlist = [
+{
+    "season": "Temporada 1",
+    "episodes": [
+      {
+        "title": "E1: Aquí llega una bella exorcista",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/cHK6W3XRSM7dfIavQ8Vrd1AN9yS.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E1: Aquí llega una bella exorcista",
+        "hiddenCode": "T1 E1",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E2: Mikami la Cazafantasmas 1x2",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/6l6ojrP71kHIIswoxty3rh1Oan2.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E2: Mikami la Cazafantasmas 1x2",
+        "hiddenCode": "T1 E2",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E3: La maldición de las muñecas",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/7XsZWbX4UTHZCKHaNZcCjGJbTyo.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E3: La maldición de las muñecas",
+        "hiddenCode": "T1 E3",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E4: En contra del fantasma espacial",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/1gtlk9Tj3KYcxzbRr3pmJfgijI6.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E4: En contra del fantasma espacial",
+        "hiddenCode": "T1 E4",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E5: El aullido de la casa embrujada",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/hIxZgaMeRCsSRLdtLghIENUjdVO.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E5: El aullido de la casa embrujada",
+        "hiddenCode": "T1 E5",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E6: ¿Ah?¿Otra cazafantasmas?",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/fvNoLMzKW9fFnLoHfTjQLvbUExn.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E6: ¿Ah?¿Otra cazafantasmas?",
+        "hiddenCode": "T1 E6",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E7: El desafío del Dr. Caos",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/j0p4ey0BYckspzPSQQdFTtbmBNT.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E7: El desafío del Dr. Caos",
+        "hiddenCode": "T1 E7",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E8: Veneno mágico",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/a4n65Lvl7pZknCdUvMbMiHx1r4b.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E8: Veneno mágico",
+        "hiddenCode": "T1 E8",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E9: Bésame",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/5l8bJSJzxbPYwNCAyVE2jNfomLz.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E9: Bésame",
+        "hiddenCode": "T1 E9",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E10: Ha desaparecido un shiki-shin",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/b5CyOGD6Za8S9uYF8nu3AWoOoHI.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E10: Ha desaparecido un shiki-shin",
+        "hiddenCode": "T1 E10",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E11: El tren fantasma ¡Vámonos!",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/7DkirQtTHuZGxeNTyB6qvhntsH6.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E11: El tren fantasma ¡Vámonos!",
+        "hiddenCode": "T1 E11",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E12: Cuidado con el Yakuchin",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/x3JKMRR0MdfbrY6N9HPLBnd71qi.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E12: Cuidado con el Yakuchin",
+        "hiddenCode": "T1 E12",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E13: La trampa de una antigua enemiga",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/elAtwpRPE8VOGvEGjSQRwqngeIV.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E13: La trampa de una antigua enemiga",
+        "hiddenCode": "T1 E13",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E14: Un verano peligroso",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/v1bOeAxBAFFn3CC8HrcSUsxkv1g.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E14: Un verano peligroso",
+        "hiddenCode": "T1 E14",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E15: Pesadilla en el mediterráneo",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/3rCrluZYnSdh2QGkQIzjiSxgIoy.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E15: Pesadilla en el mediterráneo",
+        "hiddenCode": "T1 E15",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E16: Muerdan al vampiro",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/p68zTjrbaWLMNCcH5lVhFH1TdiE.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E16: Muerdan al vampiro",
+        "hiddenCode": "T1 E16",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E17: Misterio en el mar",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/d77optfibPvWpWxPfnIbcjyS9Rr.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E17: Misterio en el mar",
+        "hiddenCode": "T1 E17",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E18: La diminuta mikami",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/blHGQBAYtIPEH6tp4uC5olJCYlY.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E18: La diminuta mikami",
+        "hiddenCode": "T1 E18",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E19: El submarino fantasma",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/nyR8Dv09A5h3EPSIcEbjNLU0ND3.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E19: El submarino fantasma",
+        "hiddenCode": "T1 E19",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E20: Madam elefante",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/zFTAqeA7LkfdTQSGwWozRaXmTg4.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E20: Madam elefante",
+        "hiddenCode": "T1 E20",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E21: Niños otra vez",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/9lvEHrOxgS6FaAsvILDJDNwnus9.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E21: Niños otra vez",
+        "hiddenCode": "T1 E21",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E22: El flautista diabólico contraataca",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/waWlG99BvIZqnt9dl9OGOa5PeeA.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E22: El flautista diabólico contraataca",
+        "hiddenCode": "T1 E22",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E23: Camino al Dragón",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/bGXQunLRtoAmnzh3H6SBQlpd3kM.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E23: Camino al Dragón",
+        "hiddenCode": "T1 E23",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E24: El regreso del Dragón",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/A4j1E60LyaKuegvR10LuuUbZktm.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E24: El regreso del Dragón",
+        "hiddenCode": "T1 E24",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E25: Convocando a Himiko",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/xR14e1XJXgPqFyc3wmB8c9cAKp8.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E25: Convocando a Himiko",
+        "hiddenCode": "T1 E25",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E26: Las aventuras de la valiente Mikami",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/eovd7q7sTKJAU7pBb6XexZE9QJX.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E26: Las aventuras de la valiente Mikami",
+        "hiddenCode": "T1 E26",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E27: El inocente amor de Maria",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/3phhsyXQg6dQHByxGnjqqEkkpxB.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E27: El inocente amor de Maria",
+        "hiddenCode": "T1 E27",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E28: El príncipe Ten-Ryu",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/zo75gVq0rnsLrdb1efapRMPnhLa.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E28: El príncipe Ten-Ryu",
+        "hiddenCode": "T1 E28",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E29: El poder divino de Ten-Ryu",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/c8Y9mDb23ReeFRB9UZR1c1KWBs8.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E29: El poder divino de Ten-Ryu",
+        "hiddenCode": "T1 E29",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E30: El cortador maldito",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/fYAx5EpRMzhVfnr42XGrdZkXuM5.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E30: El cortador maldito",
+        "hiddenCode": "T1 E30",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E31: Las escobas mágicas",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/xswrhNKKIYtMaQDXStWEnEfkDs5.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E31: Las escobas mágicas",
+        "hiddenCode": "T1 E31",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E32: Matrimonio para Mikami",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/okCsjezPMHPz3xi4jsbLy1YdycM.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E32: Matrimonio para Mikami",
+        "hiddenCode": "T1 E32",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E33: El fabricante de maniquíes",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/psNLixmCp4qBqKjScT8t29rn6tq.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E33: El fabricante de maniquíes",
+        "hiddenCode": "T1 E33",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E34: El duende de la escuela",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/mSx6SKWam7jeIVFkb5waGLdM8hX.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E34: El duende de la escuela",
+        "hiddenCode": "T1 E34",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E35: ¡Santa Claus, regresa!",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/naHCjHvARj3WPDJ10RGbBF926CP.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E35: ¡Santa Claus, regresa!",
+        "hiddenCode": "T1 E35",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E36: La navidad de Okinu",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/4l9yF4Xvm9Sp9h3czAQOKdFYOwN.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E36: La navidad de Okinu",
+        "hiddenCode": "T1 E36",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E37: La carrera del año nuevo",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/oSqMWXUDalOrEnQnvyFqOhduvex.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E37: La carrera del año nuevo",
+        "hiddenCode": "T1 E37",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E38: Huí Yuyui,¡El examen!",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/2o1ICtcqTslxGUfDvKtTjcLwhrU.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E38: Huí Yuyui,¡El examen!",
+        "hiddenCode": "T1 E38",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E39: La hermana de María",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/kVko9Ib1g1MzTTlz24PySfSPYDi.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E39: La hermana de María",
+        "hiddenCode": "T1 E39",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E40: María Vs Teresa",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/GlhFCrKQCmr4fRmrXsLv8h7cML.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E40: María Vs Teresa",
+        "hiddenCode": "T1 E40",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E41: Guerra contra la reina de las nieves",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/9IGNxdNcKRzCi1tTSwIN9L4zr0v.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E41: Guerra contra la reina de las nieves",
+        "hiddenCode": "T1 E41",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E42: Chocolate fobia",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/y4Jwi3YAv3rztI8KiwcVR8tbwb4.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E42: Chocolate fobia",
+        "hiddenCode": "T1 E42",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E43: En tus sueños",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/49e1eS4wLFMX1dBz8ird7WdXCp2.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E43: En tus sueños",
+        "hiddenCode": "T1 E43",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E44: Cuatro Mikamis y una pesadilla",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/arDT9mXL2glmsMej3KnZgYWwZdN.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E44: Cuatro Mikamis y una pesadilla",
+        "hiddenCode": "T1 E44",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E45: El fantasma del cine",
+        "meta": "13+ · 24m · 1993",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/gR3B7CGsvAYMdw3AUg1P0Ulkvsf.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E45: El fantasma del cine",
+        "hiddenCode": "T1 E45",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      }
+      
+    ]
+  }
+
+];
+
+
+// --- PESTAÑAS ---
+function showTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById(tabId).style.display = 'block';
+  event.target.classList.add('active');
+}
+
+// --- TEMPORADAS ---
+function populateSeasons() {
+  const seasonSelect = document.getElementById("seasonSelect");
+  seasonSelect.innerHTML = "";
+
+  const savedIndex = parseInt(localStorage.getItem(`selected-season-${seriesId}`)) || 0;
+
+  playlist.forEach((seasonObj, index) => {
+    const option = document.createElement("option");
+    option.value = index;
+    option.textContent = seasonObj.season;
+    if (index === savedIndex) {
+      option.selected = true;
+    }
+    seasonSelect.appendChild(option);
+  });
+}
+
+
+async function renderEpisodes() {
+  const seasonIndex = document.getElementById("seasonSelect").value;
+  const episodesContainer = document.getElementById("episodeList");
+  const season = playlist[seasonIndex];
+
+  episodesContainer.innerHTML = "";
+
+  const progressKey = `progress-${seriesId}`;
+  const progressData = JSON.parse(localStorage.getItem(progressKey)) || {};
+
+  const DURATION_SECONDS = 1380; // 23 minutos
+
+  const episodeHTMLs = season.episodes.map(ep => {
+    const progress = progressData[ep.videoUrl];
+    const isComplete = progress === -1;
+    const safeProgress = isComplete ? DURATION_SECONDS : (progress || 0);
+    const percent = Math.min((safeProgress / DURATION_SECONDS) * 100, 100);
+    const showProgress = progress !== undefined;
+
+    return `
+  <div class="episode" data-url="${ep.videoUrl}" onclick="playEpisode('${ep.videoUrl}')" tabindex="0">
+  <div class="thumbnail-container">
+    <img src="${ep.thumbnail}" alt="${ep.title}"
+         oncontextmenu="return false"
+         ondragstart="return false"
+         onmousedown="return false"
+         ontouchstart="event.preventDefault()">
+    ${showProgress ? `
+      <div class="progress-track">
+        <div class="progress-bar" style="width: ${percent}%;"></div>
+      </div>
+    ` : ''}
+  </div>
+  <div class="episode-details">
+    <div class="episode-title">${ep.title}</div>
+    <div class="episode-meta">${ep.meta}</div>
+  </div>
+  <div class="episode-actions">
+    <div class="material-icons download-icon" onclick="event.stopPropagation(); window.open('${ep.downloadUrl}', '_blank')" tabindex="0">arrow_downward</div>
+    <div class="download-line"></div>
+  </div>
+</div>
+`;
+
+  });
+
+  episodesContainer.innerHTML = episodeHTMLs.join('');
+  updateResumeButton();
+}
+
+
+// --- MENÚ DESLIZANTE DE TEMPORADAS ---
+function fillSeasonMenu() {
+  const seasonOptionsContainer = document.getElementById("seasonOptions");
+  seasonOptionsContainer.innerHTML = "";
+  const currentSeason = parseInt(document.getElementById("seasonSelect").value);
+  playlist.forEach((season, index) => {
+    const option = document.createElement("div");
+    option.classList.add("season-option");
+    if (index === currentSeason) option.classList.add("selected");
+    option.textContent = season.season;
+    option.onclick = () => {
+  document.getElementById("seasonSelect").value = index;
+  localStorage.setItem(`selected-season-${seriesId}`, index); // ✅ Guardar selección
+  renderEpisodes();
+  closeSeasonMenu();
+};
+    seasonOptionsContainer.appendChild(option);
+  });
+}
+
+
+
+// --- BLOQUEAR/DESBLOQUEAR SCROLL ---
+function disableBodyScroll() {
+  document.body.style.overflow = 'hidden';
+}
+
+function enableBodyScroll() {
+  document.body.style.overflow = '';
+}
+
+// --- ABRIR Y CERRAR MENÚ CON CONTROL DE SCROLL ---
+function openSeasonMenu() {
+  document.getElementById("menuOverlay").classList.remove("hidden");
+  document.getElementById("seasonMenu").classList.remove("hidden");
+  requestAnimationFrame(() => {
+    document.getElementById("seasonMenu").classList.add("show");
+  });
+  disableBodyScroll();
+}
+
+function closeSeasonMenu() {
+  document.getElementById("menuOverlay").classList.add("hidden");
+  const menu = document.getElementById("seasonMenu");
+  menu.classList.remove("show");
+  setTimeout(() => {
+    menu.classList.add("hidden");
+    enableBodyScroll();
+  }, 300);
+}
+
+// --- GESTO DE ARRASTRE HACIA ABAJO EN TODO EL MENÚ ---
+const seasonMenu = document.getElementById("seasonMenu");
+
+let startY = 0;
+let currentY = 0;
+let isDragging = false;
+
+function onStart(e) {
+  isDragging = true;
+  startY = e.touches ? e.touches[0].clientY : e.clientY;
+}
+
+function onMove(e) {
+  if (!isDragging) return;
+  currentY = e.touches ? e.touches[0].clientY : e.clientY;
+  const deltaY = currentY - startY;
+  if (deltaY > 30) {
+    closeSeasonMenu();
+    isDragging = false;
+  }
+}
+
+function onEnd() {
+  isDragging = false;
+}
+
+// Para mouse y touch en TODO el menú
+seasonMenu.addEventListener('mousedown', onStart);
+seasonMenu.addEventListener('mousemove', onMove);
+seasonMenu.addEventListener('mouseup', onEnd);
+seasonMenu.addEventListener('mouseleave', onEnd); // cerrar si suelta fuera
+
+seasonMenu.addEventListener('touchstart', onStart);
+seasonMenu.addEventListener('touchmove', onMove);
+seasonMenu.addEventListener('touchend', onEnd);
+
+// --- DESACTIVAR MENÚ NATIVO Y USAR MENÚ PERSONALIZADO ---
+document.getElementById("seasonSelect").addEventListener("mousedown", e => e.preventDefault());
+document.getElementById("seasonSelect").addEventListener("click", () => {
+  fillSeasonMenu();
+  openSeasonMenu();
+});
+
+// Inicializar
+populateSeasons();
+renderEpisodes();
+
+// Guardar y cargar progreso
+function saveProgress(videoUrl, currentTime) {
+  const key = `progress-${seriesId}`;
+  const data = JSON.parse(localStorage.getItem(key)) || {};
+  data[videoUrl] = currentTime;
+  localStorage.setItem(key, JSON.stringify(data));
+
+  const duration = video.duration() || 1;
+  const progressKey = `progress_${seriesId}_${videoUrl}`;
+  const durationKey = `duration_${seriesId}_${videoUrl}`;
+  const episodeData = findEpisodeData(videoUrl);
+
+  if (!episodeData) return;
+
+  const { episodeCode, thumbnail } = episodeData;
+  const seriesTitle = document.getElementById('page-title')?.textContent || 'Serie';
+  const seriesLink = document.getElementById('favoritoEnlace')?.href || window.location.href;
+
+  localStorage.setItem(progressKey, currentTime || 0);
+  localStorage.setItem(durationKey, duration);
+
+  localStorage.setItem(`continue_${seriesId}`, JSON.stringify({
+    seriesId: seriesId,
+    seriesTitle: seriesTitle,
+    episodeTitle: episodeCode,
+    poster: thumbnail,
+    link: seriesLink,
+    progress: currentTime || 0,
+    duration: duration,
+    videoUrl: videoUrl
+  }));
+
+  localStorage.setItem('justReturnedFromSeries', 'true');
+}
+
+// Helper para buscar datos del episodio
+function findEpisodeData(videoUrl) {
+  for (let season of playlist) {
+    const episode = season.episodes.find(ep => ep.videoUrl === videoUrl);
+    if (episode) {
+      return { episodeCode: episode.episodeCode, thumbnail: episode.thumbnail };
+    }
+  }
+  return null;
+}
+
+
+
+
+
+
+function loadProgress(videoUrl) {
+  const key = `progress-${seriesId}`;
+  const data = JSON.parse(localStorage.getItem(key)) || {};
+  const value = data[videoUrl];
+  if (value === -1) return 0; // Si está marcado como terminado, empieza de nuevo
+  return value || 0;
+}
+
+
+// Buscar siguiente episodio
+function findNextEpisode(currentUrl) {
+  for (let seasonIndex = 0; seasonIndex < playlist.length; seasonIndex++) {
+    const season = playlist[seasonIndex];
+    for (let i = 0; i < season.episodes.length; i++) {
+      if (season.episodes[i].videoUrl === currentUrl) {
+        // Si hay un siguiente episodio en la misma temporada
+        if (season.episodes[i + 1]) {
+          return season.episodes[i + 1].videoUrl;
+        }
+        // Si no, buscar el primer episodio de la siguiente temporada
+        if (playlist[seasonIndex + 1] && playlist[seasonIndex + 1].episodes.length > 0) {
+          return playlist[seasonIndex + 1].episodes[0].videoUrl;
+        }
+      }
+    }
+  }
+   return null; // Si no hay más episodios ni temporadas
+}
+
+// Función para bloquear la orientación en landscape
+function lockOrientationLandscape() {
+  if (screen.orientation && screen.orientation.lock) {
+    screen.orientation.lock('landscape').catch((err) => {
+      console.warn('No se pudo bloquear la orientación:', err);
+    });
+  }
+}
+
+
+
+
+
+// Modifica playEpisode para guardar progreso
+function playEpisode(videoUrl) {
+  localStorage.setItem(`last-episode-${seriesId}`, videoUrl);
+
+  video.src({ type: 'video/mp4', src: videoUrl });
+
+  const progress = loadProgress(videoUrl);
+
+  function setTimeOnce() {
+    video.off("loadedmetadata", setTimeOnce);
+    const isFinished = progress >= video.duration() - 5;
+    video.currentTime(isFinished ? 0 : progress);
+    updateResumeButton();
+
+    // ✅ Actualizar UI una vez cargado el video
+    updateEpisodeUI(videoUrl);
+  }
+
+  video.on("loadedmetadata", setTimeOnce);
+
+  showPlayer();
+
+  // 🔒 Forzar orientación horizontal al reproducir
+  video.on('play', () => {
+    lockOrientationLandscape();
+
+    // ✅ Pantalla completa al reproducir
+    const playerContainer = document.getElementById('player');
+    if (playerContainer?.requestFullscreen) {
+      playerContainer.requestFullscreen().catch(console.warn);
+    }
+  });
+}
+
+
+function updateEpisodeUI(videoUrl) {
+  let found = false;
+
+  for (let seasonIndex = 0; seasonIndex < playlist.length; seasonIndex++) {
+    const season = playlist[seasonIndex];
+    const episode = season.episodes.find(ep => ep.videoUrl === videoUrl);
+
+    if (episode) {
+      // 🟢 Actualizar subtítulo
+      document.getElementById("episodeSubtitle").textContent = episode.episodeCode;
+
+      // 🟢 Forzar selección de temporada y renderizado de episodios
+      document.getElementById("seasonSelect").value = seasonIndex;
+      localStorage.setItem(`selected-season-${seriesId}`, seasonIndex);
+
+      // 🟢 Renderizar episodios y actualizar menú
+      renderEpisodes();
+      fillSeasonMenu();
+
+      // 🟢 Resaltar el episodio actual en la UI
+      setTimeout(() => {
+        const currentEpEl = document.querySelector(`.episode[data-url="${videoUrl}"]`);
+        if (currentEpEl) {
+          currentEpEl.classList.add("active");
+        }
+      }, 100);
+
+      // 🟢 Configurar intro
+      if (episode.intro) {
+        skipIntroStart = episode.intro.start;
+        skipIntroEnd = episode.intro.end;
+        document.getElementById('skipIntroBtn').classList.remove('hidden');
+      } else {
+        skipIntroStart = skipIntroEnd = null;
+        document.getElementById('skipIntroBtn').classList.add('hidden');
+      }
+
+      updateResumeButton();
+      updateNextEpisodeLabel?.();
+
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    console.warn("No se encontró el episodio en el playlist.");
+  }
+}
+
+
+// Mostrar/ocultar el botón durante el tiempo del intro
+// Variables de control
+let skipIntroTimeoutId = null;
+let lastIntroState = false;
+
+// Evento para mostrar/ocultar el botón durante el intro
+video.on('timeupdate', () => {
+  const btn = document.getElementById('skipIntroBtn');
+
+  // Validación estricta para evitar parpadeos o mostrar cuando no debe
+  if (
+    typeof skipIntroStart !== 'number' ||
+    typeof skipIntroEnd !== 'number' ||
+    skipIntroStart <= 0 ||
+    skipIntroEnd <= 0 ||
+    skipIntroEnd <= skipIntroStart ||
+    video.readyState < 1 // El video no ha cargado contenido aún
+  ) {
+    btn.classList.add('hidden');
+    clearTimeout(skipIntroTimeoutId);
+    lastIntroState = false;
+    return;
+  }
+
+  const inIntroWindow = video.currentTime() >= skipIntroStart && video.currentTime() < skipIntroEnd;
+
+  if (inIntroWindow) {
+    if (!lastIntroState) {
+      btn.classList.remove('hidden');
+
+      clearTimeout(skipIntroTimeoutId);
+      skipIntroTimeoutId = setTimeout(() => {
+        btn.classList.add('hidden');
+      }, 20000); // Ocultar tras 20 segundos si no se presiona
+    }
+
+    lastIntroState = true;
+  } else {
+    btn.classList.add('hidden');
+    clearTimeout(skipIntroTimeoutId);
+    lastIntroState = false;
+  }
+});
+
+// Ocultar botón al comenzar a cargar nuevo video (evita parpadeos)
+video.on('loadstart', () => {
+  const btn = document.getElementById('skipIntroBtn');
+  btn.classList.add('hidden');
+  clearTimeout(skipIntroTimeoutId);
+  lastIntroState = false;
+});
+
+// Acción del botón para saltar intro
+function skipIntro() {
+  if (typeof skipIntroEnd === 'number' && skipIntroEnd > 0) {
+    video.currentTime(skipIntroEnd);
+    document.getElementById('skipIntroBtn').classList.add('hidden');
+  }
+}
+
+
+// Al terminar el video, guarda el progreso y pasa al siguiente episodio
+video.on('ended', () => {
+  const currentSrc = video.currentSrc();
+  const progressKey = `progress-${seriesId}`;
+  const data = JSON.parse(localStorage.getItem(progressKey)) || {};
+  data[currentSrc] = -1;
+  localStorage.setItem(progressKey, JSON.stringify(data));
+
+  const nextUrl = findNextEpisode(currentSrc);
+
+  if (nextUrl) {
+    // Actualizar el continue_{seriesId} al siguiente episodio
+    const episodeData = findEpisodeData(nextUrl);
+    if (episodeData) {
+      const duration = video.duration() || 1;
+      const seriesTitle = document.getElementById('page-title')?.textContent || 'Serie';
+      const seriesLink = document.getElementById('favoritoEnlace')?.href || window.location.href;
+
+      localStorage.setItem(`continue_${seriesId}`, JSON.stringify({
+        seriesId: seriesId,
+        seriesTitle: seriesTitle,
+        episodeTitle: episodeData.episodeCode,
+        poster: episodeData.thumbnail,
+        link: seriesLink,
+        progress: 0,
+        duration: duration,
+        videoUrl: nextUrl
+      }));
+    }
+
+    playEpisode(nextUrl);
+  } else {
+    localStorage.removeItem(`continue_${seriesId}`);
+    goBack();
+  }
+});
+
+
+
+
+// Guarda el progreso periódicamente
+video.on('timeupdate', () => {
+  saveProgress(video.currentSrc(), video.currentTime());
+
+  updateResumeButton();
+
+  const DURATION_SECONDS = 1380;
+  const percent = Math.min((video.currentTime() / DURATION_SECONDS) * 100, 100);
+const episodeElement = document.querySelector(`.episode[data-url="${video.currentSrc()}"]`);
+
+  if (!episodeElement) return;
+
+  let bar = episodeElement.querySelector('.progress-bar');
+  if (!bar) {
+    const track = document.createElement('div');
+    track.className = 'progress-track';
+    bar = document.createElement('div');
+    bar.className = 'progress-bar';
+    track.appendChild(bar);
+    episodeElement.querySelector('.thumbnail-container').appendChild(track);
+  }
+
+  bar.style.width = `${percent}%`;
+});
+
+
+
+
+function playLastWatchedEpisode() {
+  const lastKey = `last-episode-${seriesId}`;
+  const progressKey = `progress-${seriesId}`;
+  const lastUrl = localStorage.getItem(lastKey);
+  const progressData = JSON.parse(localStorage.getItem(progressKey)) || {};
+
+  if (lastUrl) {
+    const lastTime = progressData[lastUrl] || 0;
+    const safeTime = lastTime < 5 ? 0 : lastTime;
+
+    video.src({ type: 'video/mp4', src: lastUrl });
+
+    video.ready(function () {
+      video.currentTime(safeTime);
+
+      // ✅ Pantalla completa
+      const playerContainer = document.getElementById('player');
+      if (playerContainer?.requestFullscreen) {
+        playerContainer.requestFullscreen().catch(console.warn);
+      }
+
+      // 🔒 Orientación horizontal
+      lockOrientationLandscape();
+    });
+
+    showPlayer();
+
+    for (let seasonIndex = 0; seasonIndex < playlist.length; seasonIndex++) {
+      const season = playlist[seasonIndex];
+      const episode = season.episodes.find(ep => ep.videoUrl === lastUrl);
+      if (episode) {
+        document.getElementById("seasonSelect").value = seasonIndex;
+        document.getElementById("episodeSubtitle").textContent = episode.episodeCode;
+
+        if (episode.intro) {
+          skipIntroStart = episode.intro.start;
+          skipIntroEnd = episode.intro.end;
+          document.getElementById('skipIntroBtn').classList.remove('hidden');
+        } else {
+          skipIntroStart = skipIntroEnd = null;
+          document.getElementById('skipIntroBtn').classList.add('hidden');
+        }
+
+        break;
+      }
+    }
+
+    return;
+  }
+
+  // No hay último guardado: reproducir el primero
+  const firstUrl = playlist[0].episodes[0].videoUrl;
+  video.src({ type: 'video/mp4', src: firstUrl });
+  localStorage.setItem(`last-episode-${seriesId}`, firstUrl);
+
+  video.ready(function () {
+    video.currentTime(0);
+
+    // ✅ Pantalla completa
+    const playerContainer = document.getElementById('player');
+    if (playerContainer?.requestFullscreen) {
+      playerContainer.requestFullscreen().catch(console.warn);
+    }
+
+    // 🔒 Orientación horizontal
+    lockOrientationLandscape();
+  });
+
+  showPlayer();
+
+  document.getElementById("seasonSelect").value = 0;
+  document.getElementById("episodeSubtitle").textContent = playlist[0].episodes[0].episodeCode;
+
+  const episode = playlist[0].episodes[0];
+  if (episode.intro) {
+    skipIntroStart = episode.intro.start;
+    skipIntroEnd = episode.intro.end;
+    document.getElementById('skipIntroBtn').classList.remove('hidden');
+  } else {
+    skipIntroStart = skipIntroEnd = null;
+    document.getElementById('skipIntroBtn').classList.add('hidden');
+  }
+
+  updateResumeButton();
+}
+
+
+
+function updateResumeButton() {
+  const button = document.getElementById('resumeButton');
+  if (!button) return;
+
+  const key = `last-episode-${seriesId}`;
+  const progressKey = `progress-${seriesId}`;
+  const lastUrl = localStorage.getItem(key);
+  const progressData = JSON.parse(localStorage.getItem(progressKey)) || {};
+
+  if (lastUrl) {
+    const lastTime = progressData[lastUrl] || 0;
+
+    for (const season of playlist) {
+      for (const ep of season.episodes) {
+        if (ep.videoUrl === lastUrl) {
+          const isComplete = lastTime === -1;
+          const label = isComplete ? 'Mira' : 'Continuar';
+          const DURATION_SECONDS = ep.duration || 1380;
+          const percent = Math.min((lastTime / DURATION_SECONDS) * 100, 100);
+
+          button.innerHTML = `
+            <div class="resume-text-wrapper">
+              <span class="material-icons">play_arrow</span>
+              <div class="text-with-bar">
+                <div class="resume-label">${label} ${ep.hiddenCode}</div>
+                ${percent > 0 ? `
+                <div class="resume-progress-track">
+                  <div class="resume-progress-bar" style="width: ${percent}%;"></div>
+                </div>` : ''}
+              </div>
+            </div>
+          `;
+          return;
+        }
+      }
+    }
+  }
+
+  // Si no hay último episodio, mostrar el primero como predeterminado (sin barra)
+  const first = playlist[0].episodes[0];
+  button.innerHTML = `
+    <div class="resume-text-wrapper">
+      <span class="material-icons">play_arrow</span>
+      <div class="text-with-bar">
+        <div class="resume-label">Mira ${first.hiddenCode}</div>
+      </div>
+    </div>
+  `;
+}
+
+updateResumeButton();
+
+
+
+
+
+let nextEpisodeTimeout = null;
+let circleAnimationInterval = null;
+let circleProgress = 0;
+
+function playNextEpisode() {
+  // Marcar el episodio actual como completado
+  const progressKey = `progress-${seriesId}`;
+  const data = JSON.parse(localStorage.getItem(progressKey)) || {};
+  const currentUrl = video.currentSrc();
+data[currentUrl] = -1;
+  localStorage.setItem(progressKey, JSON.stringify(data));
+
+  // Cambiar al siguiente episodio
+  const nextUrl = findNextEpisode(currentUrl);
+  if (nextUrl) playEpisode(nextUrl);
+}
+
+
+function updateNextEpisodeLabel() {
+  const nextUrl = findNextEpisode(video.currentSrc());
+
+  if (!nextUrl) return;
+  for (const season of playlist) {
+    for (const ep of season.episodes) {
+      if (ep.videoUrl === nextUrl) {
+        document.getElementById('nextEpisodeLabel').textContent = `Siguiente episodio ${ep.hiddenCode}`;
+        return;
+      }
+    }
+  }
+}
+
+// Mostrar botón 20s antes del final
+video.on('timeupdate', () => {
+  const remaining = video.duration() - video.currentTime();
+  const nextBtn = document.getElementById('nextEpisodeBtn');
+  const nextUrl = findNextEpisode(video.currentSrc());
+
+  if (remaining <= 20 && nextUrl) {
+    if (nextBtn.classList.contains('hidden')) {
+      nextBtn.classList.remove('hidden');
+      updateNextEpisodeLabel();
+      startCircleAnimation();
+    }
+  } else {
+    nextBtn.classList.add('hidden');
+    stopCircleAnimation();
+  }
+});
+
+
+// Círculo de cuenta regresiva de 10s en bucle
+function startCircleAnimation() {
+  circleProgress = 0;
+  const circle = document.getElementById('circleProgress');
+  clearInterval(circleAnimationInterval);
+
+  circleAnimationInterval = setInterval(() => {
+    circleProgress += 1;
+    if (circleProgress > 100) circleProgress = 0;
+    circle.setAttribute('stroke-dasharray', `${circleProgress}, 100`);
+  }, 100); // 100ms × 100 = 10s
+}
+
+function stopCircleAnimation() {
+  clearInterval(circleAnimationInterval);
+  document.getElementById('circleProgress').setAttribute('stroke-dasharray', '0, 100');
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const header = document.getElementById('header');
+    const pageTitle = document.getElementById('page-title');
+
+    if (!header || !pageTitle) return;
+
+    window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        const maxScroll = 300;
+
+        const opacity = Math.min(scrollY / maxScroll, 1); // Gradiente del header
+        const titleOpacity = scrollY > 150 ? Math.min(scrollY / maxScroll, 1) : 0; // El título aparece después de 150px
+
+        header.style.backgroundColor = `rgba(0, 0, 0, ${opacity})`;
+        pageTitle.style.opacity = titleOpacity;
+    });
+});
+
+// Gestión de imágenes de perfil
+const footerProfileIcon = document.getElementById("footerIconImg");
+const profileImage = document.getElementById("profileImage");
+const profilePageImage = document.getElementById("profilePageImage");
+
+const defaultProfileIcon = document.getElementById("defaultProfileIcon"); // Icono de perfil en el footer
+const defaultProfileIconAlt = document.getElementById("defaultProfileIconAlt"); // Icono alternativo de perfil
+
+// Función para cambiar todas las imágenes de perfil
+function updateProfileImage(src) {
+  profileImage.src = src;
+  profilePageImage.src = src;
+  footerProfileIcon.src = src;
+  defaultProfileIcon.style.display = 'none'; // Ocultar el icono de perfil
+  defaultProfileIconAlt.style.display = 'none'; // Ocultar el icono alternativo
+  localStorage.setItem('profileImage', src); // Guardar la imagen en el almacenamiento local
+}
+
+// Restaurar la imagen de perfil guardada al cargar la página
+window.addEventListener('load', function () {
+  const storedProfileImage = localStorage.getItem('profileImage');
+  if (storedProfileImage) {
+    footerProfileIcon.src = storedProfileImage;
+    profileImage.src = storedProfileImage;
+    profilePageImage.src = storedProfileImage;
+    defaultProfileIcon.style.display = 'none'; // Ocultar el icono de perfil
+    defaultProfileIconAlt.style.display = 'none'; // Ocultar el icono alternativo
+  }
+});
+
+var lastScrollTop = 0;
+    var footer = document.querySelector(".footer");
+
+    window.addEventListener("scroll", function () {
+        var currentScroll = window.scrollY;
+
+        if (currentScroll > lastScrollTop) {
+            // Desliza hacia abajo -> Ocultar footer
+            footer.classList.add("hidden");
+        } else {
+            // Desliza hacia arriba -> Mostrar footer
+            footer.classList.remove("hidden");
+        }
+
+        lastScrollTop = currentScroll;
+    });
+
+const favoritoBtn = document.getElementById('favoritoBtn');
+const favoritoIcon = document.getElementById('favoritoIcon'); // Ícono
+const identificador = favoritoBtn.getAttribute('data-identificador');
+
+// Función para manejar el favorito
+function toggleFavorito() {
+    const favoritoEnlace = document.getElementById('favoritoEnlace');
+    const imagen = document.getElementById('favoritoImagen');
+    const nombre = document.getElementById('nombre').textContent; // Obtener el texto del span
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+
+    const encontrado = favoritos.some(favorito => favorito.identificador === identificador);
+
+    if (encontrado) {
+        // Eliminar de favoritos
+        const nuevosFavoritos = favoritos.filter(favorito => favorito.identificador !== identificador);
+        localStorage.setItem('favoritos', JSON.stringify(nuevosFavoritos));
+
+        // Cambiar solo el ícono
+        favoritoIcon.innerText = 'add';
+
+        mostrarNotificacion('Se eliminó de favoritos');
+    } else {
+        // Agregar a favoritos
+        favoritos.push({
+            identificador: identificador,
+            imagen: imagen.outerHTML,
+            enlace: favoritoEnlace.href,
+            nombre: nombre, // Agregar el nombre al objeto
+        });
+        localStorage.setItem('favoritos', JSON.stringify(favoritos));
+
+        // Cambiar solo el ícono
+        favoritoIcon.innerText = 'check';
+
+        mostrarNotificacion('Se añadió a favoritos');
+    }
+}
+
+// Función para cargar el estado inicial del botón de favoritos
+function cargarEstadoFavorito() {
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+    const encontrado = favoritos.some(favorito => favorito.identificador === identificador);
+
+    if (encontrado) {
+        // Si está en favoritos, cambia solo el ícono
+        favoritoIcon.innerText = 'check';
+    } else {
+        // Si no está en favoritos, deja el ícono por defecto
+        favoritoIcon.innerText = 'add';
+    }
+}
+
+// Llamar a la función al cargar la página
+document.addEventListener('DOMContentLoaded', cargarEstadoFavorito);
+
+function mostrarNotificacion(mensaje) {
+  const notificacion = document.getElementById('notificacion');
+  const notificacionTexto = document.getElementById('notificacionTexto');
+
+  notificacionTexto.innerText = mensaje;
+  notificacion.style.bottom = "80px"; // Justo encima del footer
+
+  setTimeout(() => {
+    notificacion.style.bottom = "-200px"; // Oculta fuera del viewport
+  }, 3000);
+}
+
+const aspectModes = ['cover', 'fill', 'contain', 'fit-height', 'fit-width', 'scale-down'];
+let currentAspectIndex = 0;
+
+function toggleAspectRatio() {
+  currentAspectIndex = (currentAspectIndex + 1) % aspectModes.length;
+  const mode = aspectModes[currentAspectIndex];
+
+  // Asegura que usamos el elemento de video real
+  const videoElement = video.el().getElementsByTagName('video')[0];
+
+  // Aplica el modo
+  videoElement.style.objectFit = mode.includes('fit-') ? 'contain' : mode;
+
+  switch (mode) {
+    case 'fit-height':
+      videoElement.style.width = 'auto';
+      videoElement.style.height = '100%';
+      break;
+    case 'fit-width':
+      videoElement.style.width = '100%';
+      videoElement.style.height = 'auto';
+      break;
+    default:
+      videoElement.style.width = '100%';
+      videoElement.style.height = '100%';
+      break;
+  }
+
+  const label = document.getElementById('aspectLabel');
+  label.textContent = mode;
+  label.style.display = 'block';
+
+  clearTimeout(label._hideTimeout);
+  label._hideTimeout = setTimeout(() => {
+    label.style.display = 'none';
+  }, 1500);
+}
+
+
+function castCurrentVideo() {
+  const currentSrc = video.currentSrc(); // usa método
+
+  let videoUrl = null;
+
+  // Buscar el episodio actual en el playlist
+  outerLoop:
+  for (const season of playlist) {
+    for (const episode of season.episodes) {
+      if (episode.videoUrl === currentSrc) {
+        videoUrl = episode.videoUrl;
+        break outerLoop;
+      }
+    }
+  }
+
+  if (videoUrl) {
+    const appLink = "wvc-x-callback://open?url=" + encodeURIComponent(videoUrl);
+    const storeLink = "https://play.google.com/store/apps/details?id=com.instantbits.cast.webvideo";
+
+    // Crear enlace temporal invisible
+    const transmitLink = document.createElement('a');
+    transmitLink.href = appLink;
+    transmitLink.style.display = 'none';
+    document.body.appendChild(transmitLink);
+
+    let appOpened = false;
+    transmitLink.click();
+
+    // Si la app no se abre, redirige a la Play Store
+    setTimeout(() => {
+      if (!appOpened) {
+        window.location.href = storeLink;
+      }
+      document.body.removeChild(transmitLink);
+    }, 1000);
+
+    // Si se pierde el foco, asumimos que se abrió la app
+    window.addEventListener("blur", () => {
+      appOpened = true;
+    }, { once: true });
+
+  } else {
+    alert("No se pudo obtener el enlace del episodio actual.");
+  }
+}
+
+
+const loader = document.getElementById('videoLoader');
+
+// Mostrar loader mientras se carga o busca
+video.on('waiting', () => {
+  loader.classList.remove('hidden');
+});
+
+// Ocultar loader cuando comience a reproducirse
+video.on('playing', () => {
+  loader.classList.add('hidden');
+});
+
+// También al cambiar manualmente de episodio o al adelantar
+video.on('seeking', () => {
+  loader.classList.remove('hidden');
+});
+
+video.on('seeked', () => {
+  loader.classList.add('hidden');
+});
+
+// Bloquear teclas comunes de desarrollo
+document.addEventListener('keydown', function(e) {
+  if (
+    e.key === 'F12' ||
+    (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) ||
+    (e.ctrlKey && e.key === 'U')
+  ) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+});
+
+
+const coverImageOverlay = document.querySelector('.cover-image-overlay');
+const landscapeImageOverlay = document.querySelector('.cover-landscape-image-overlay');
+
+let lastScroll = window.scrollY;
+
+function updateOverlayOpacity() {
+  const currentScroll = window.scrollY;
+  const scrollingUp = currentScroll < lastScroll;
+
+  const rect = cover.getBoundingClientRect();
+  const visibleHeight = Math.max(0, Math.min(window.innerHeight, rect.bottom));
+  const totalHeight = cover.offsetHeight;
+  const hiddenRatio = 1 - (visibleHeight / totalHeight);
+  const opacity = Math.min(hiddenRatio * 1.5, 1.0); // puedes ajustar el 1.5 y 0.5
+
+  if (scrollingUp) {
+    if (coverImageOverlay) coverImageOverlay.style.background = `rgba(0, 0, 0, ${opacity})`;
+    if (landscapeImageOverlay) landscapeImageOverlay.style.background = `rgba(0, 0, 0, ${opacity})`;
+  } else {
+    // Al bajar, se limpia
+    if (coverImageOverlay) coverImageOverlay.style.background = 'rgba(0, 0, 0, 0)';
+    if (landscapeImageOverlay) landscapeImageOverlay.style.background = 'rgba(0, 0, 0, 0)';
+  }
+
+  lastScroll = currentScroll;
+}
+
+window.addEventListener('scroll', updateOverlayOpacity);
+
+// Detectar teclas y mover el foco
+document.addEventListener('keydown', function(e) {
+  const focusable = Array.from(document.querySelectorAll('[tabindex]:not([disabled])'));
+
+  const current = document.activeElement;
+  const currentIndex = focusable.indexOf(current);
+
+  switch(e.key) {
+    case 'ArrowLeft':
+    case 'ArrowUp':
+      if (currentIndex > 0) {
+        focusable[currentIndex - 1].focus();
+      }
+      e.preventDefault();
+      break;
+    case 'ArrowRight':
+    case 'ArrowDown':
+      if (currentIndex < focusable.length - 1) {
+        focusable[currentIndex + 1].focus();
+      }
+      e.preventDefault();
+      break;
+    case 'Enter':
+    case 'OK':
+      if (document.activeElement) {
+        document.activeElement.click();
+      }
+      e.preventDefault();
+      break;
+  }
+});
+
+// Botón Backspace / Back
+window.addEventListener('keydown', function(e) {
+  if(e.key === 'Backspace' || e.key === 'BrowserBack') {
+    history.back();
+    e.preventDefault();
+  }
+});
+
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/logo-2025.png" type="image/png">
+<link rel="apple-touch-icon" href="/logo-2025.png">
+<link rel="manifest" href="/manifest.json">
+ <link rel="icon" type="image/png" sizes="32x32" href="https://od.lk/s/M18zMTIxODI5MjJf/logo%202025.png">
+    <link rel="manifest" href="/manifest.json">
+
+    <title>Digital Knight</title>
+    <style>
+
+        html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    touch-action: none; /* evita scroll en móviles */
+}
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #0f0f44, #030320); /* Fondo con colores similares a la imagen */
+            overflow: hidden;
+        }
+        #content-opening {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+       /* Logo del Opening */
+#logo-opening {
+    width: 300px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: logoAnimation 1s ease-out forwards, logoDisappear 1s ease-out 6s forwards; /* Añadir el efecto de desaparecer */
+    position: relative;
+    top: -40px;
+    z-index: 10;
+}
+
+/* Animación original para la aparición del logo */
+@keyframes logoAnimation {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Nueva animación para hacer el logo más grande y desaparecer */
+@keyframes logoDisappear {
+    0% {
+        transform: scale(1); /* Mantener el tamaño final */
+        opacity: 1;
+    }
+    100% {
+        transform: scale(8); /* Hace el logo más grande */
+        opacity: 0; /* Desaparece el logo */
+    }
+}
+
+
+/* Loader del Opening */
+#loader-opening {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 90deg,
+        #0066ff21 0%,
+        #0066ff 60%,
+        #ffffff 80%,
+        #afafaf00 30%
+    );
+    mask: radial-gradient(farthest-side, transparent calc(100% - 8px), black);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 8px), black);
+    animation: spin 1.2s linear infinite, shineLoader 2s ease-in-out infinite;
+    z-index: 10000;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+
+/* Solo rotación sin afectar el centrado */
+@keyframes spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+
+
+/* Animación de rotación */
+@keyframes spin {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Animación de brillo */
+    @keyframes shine {
+        0%, 100% { filter: brightness(1); }
+        50% { filter: brightness(1.8); } /* Aumenta el brillo */
+    }
+
+
+    #dark-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    opacity: 0;
+    z-index: 9; /* Debajo del logo */
+    pointer-events: none;
+    animation: darkenScreen 2s ease-out 5.5s forwards; /* empieza a los 5.5s */
+}
+
+@keyframes darkenScreen {
+    0% { opacity: 0; }
+    100% { opacity: 0.98; } /* casi completamente oscuro */
+}
+
+
+   /* === Desactivar selección de texto globalmente === */
+   body, img, a, button, select, textarea {
+     user-select: none;
+     -webkit-user-select: none; /* Safari */
+     -moz-user-select: none;    /* Firefox */
+     -ms-user-select: none;     /* IE10+/Edge */
+   }
+   
+   /* === Quitar resaltado al tocar elementos interactivos en móviles === */
+   a, button, select, textarea {
+     -webkit-tap-highlight-color: transparent;
+   }
+   
+   
+   /* === Prevenir arrastre e interacciones con imágenes === */
+   img {
+     pointer-events: none;
+     -webkit-user-drag: none; /* WebKit: desactiva arrastre de imágenes */
+     
+   }
+   
+   html, body {
+     touch-action: manipulation; /* Mejora la respuesta en botones en móviles */
+   } 
+
+
+
+
+    </style>
+</head>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+    <div id="content-opening">
+        <div id="logo-container-opening">
+            <img id="logo-opening" src="https://od.lk/s/M18zMTIxODI5MjVf/Knight.png" alt="Logo-opening">
+        </div>
+        <div id="loader-opening"></div>
+    </div>
+    <div id="dark-overlay"></div>
+
+    <script>
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
+
+document.addEventListener('copy', function(event) {
+    event.preventDefault();
+});
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "F12" || 
+        (event.ctrlKey && event.shiftKey && event.key === "I") || 
+        (event.ctrlKey && event.key === "U") || 
+        (event.ctrlKey && event.key === "C")) {
+        event.preventDefault();
+    }
+});
+
+document.addEventListener("dragstart", function(event) {
+    event.preventDefault();
+});
+
+        setTimeout(() => {
+            window.location.href = "generador_pro.html"; // Cambia a la URL de la siguiente sección
+        }, 7000); // Tiempo en milisegundos
+        document.addEventListener("DOMContentLoaded", () => {
+    const openingScreen = document.getElementById("opening-screen");
+    const body = document.body;
+    const logoOpening = document.getElementById("logo-opening");
+
+    // Mostrar el opening y ocultar el contenido principal al inicio
+    body.classList.add("hidden-content");
+
+    // Hacer que el logo desaparezca 2 segundos antes de que termine el opening
+    setTimeout(() => {
+        logoOpening.style.animation = "logoDisappear 1s ease-out forwards"; // Iniciar animación de desaparición del logo
+    }, 7000); // Iniciar animación de desaparición a los 6 segundos (2 segundos antes de que termine)
+
+    // Esperar 8 segundos antes de ocultar el opening
+    setTimeout(() => {
+        openingScreen.style.opacity = "0"; // Fade-out del opening
+        setTimeout(() => {
+            openingScreen.style.display = "none"; // Ocultar completamente el opening
+            body.classList.remove("hidden-content"); // Mostrar el contenido principal
+        }, 2000); // Tiempo del fade-out
+    }, 8000); // Duración total del opening
+});
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('Service Worker registrado'))
+      .catch(err => console.error('Error al registrar el SW:', err));
+  });
+}
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+  if (document.documentElement.requestFullscreen) {
+    document.documentElement.requestFullscreen();
+  }
+});
+
+    </script>
+</body>
+</html>

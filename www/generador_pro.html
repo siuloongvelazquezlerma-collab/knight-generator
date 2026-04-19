@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generador TMDB PRO</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: #888; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+  </style>
+</head>
+<body class="bg-black text-white min-h-screen p-4 font-sans">
+  <h1 class="text-3xl font-bold mb-6 text-center">🎬 Generador TMDB PRO</h1>
+  <div class="max-w-3xl mx-auto space-y-4">
+
+    <div class="flex gap-2 items-center">
+      <select id="tipo" class="p-2 rounded bg-zinc-800 border border-zinc-600 w-36">
+        <option value="movie">Película</option>
+        <option value="tv">Serie</option>
+      </select>
+      <input type="text" id="searchInput" placeholder="Busca película o serie..."
+             class="flex-1 p-2 rounded bg-zinc-800 border border-zinc-600 placeholder-zinc-400" />
+      <button onclick="buscar()"
+              class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-bold">Buscar</button>
+    </div>
+
+    <div id="resultados" class="grid grid-cols-3 sm:grid-cols-4 gap-3"></div>
+
+    <div id="seleccion" class="hidden space-y-4">
+      <div class="text-center">
+        <img id="imagenSeleccion" class="mx-auto rounded max-w-xs w-full" alt="Seleccionado" />
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm mb-1">ID TMDB</label>
+          <input id="movieId" readonly class="w-full p-2 rounded bg-zinc-800 border border-zinc-600" />
+        </div>
+        <div>
+          <label class="block text-sm mb-1">Tipo</label>
+          <input id="tipoSeleccion" readonly class="w-full p-2 rounded bg-zinc-800 border border-zinc-600" />
+        </div>
+      </div>
+
+      <div id="temporadaBox" class="hidden">
+        <label class="block text-sm mb-1">Temporada</label>
+        <input id="temporada" type="number" value="1" min="1"
+               class="w-full p-2 rounded bg-zinc-800 border border-zinc-600"/>
+      </div>
+
+      <button onclick="generar()"
+              class="w-full mt-2 bg-green-600 hover:bg-green-700 px-4 py-3 rounded text-lg font-semibold">🎉 Generar HTML</button>
+      <button onclick="copiarTexto()"
+              class="w-full mt-2 bg-blue-600 hover:bg-blue-700 px-4 py-3 rounded text-lg font-semibold">📋 Copiar texto</button>
+
+      <textarea id="salida" readonly class="w-full mt-4 h-64 p-4 bg-zinc-900 border border-zinc-700 rounded resize-none font-mono text-sm"></textarea>
+    </div>
+  </div>
+
+  <script>
+   const API_KEY = '4b77886f6f12c73066c0d0509038df60';
+
+function escapeHTML(str) {
+  return str ? str.replace(/[&<>"']/g, m => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[m])) : '';
+}
+
+function generarSlug(str) {
+  return str.toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim().replace(/\s+/g, "-");
+}
+
+function rellenarPlantilla(plantilla, datos) {
+  return plantilla.replace(/\{\{(.*?)\}\}/g, (_, clave) => datos[clave.trim()] || '');
+}
+
+function limitarTexto(texto, maxCaracteres) {
+  if (!texto) return '';
+  return texto.length > maxCaracteres
+    ? texto.slice(0, maxCaracteres).trim() + '...'
+    : texto;
+}
+
+async function buscar() {
+  const query = document.getElementById('searchInput').value.trim();
+  const resultados = document.getElementById('resultados');
+  resultados.innerHTML = '';
+
+  if (!query) return alert("Escribe algo para buscar.");
+
+  const tipoSeleccionado = document.getElementById('tipo').value;
+
+  const res = await fetch(`https://api.themoviedb.org/3/search/${tipoSeleccionado}?query=${encodeURIComponent(query)}&api_key=${API_KEY}&language=es-MX`);
+  const data = await res.json();
+
+  if (!data.results || !data.results.length) {
+    resultados.innerHTML = '<p>No se encontraron resultados.</p>';
+    return;
+  }
+
+  data.results.forEach(item => {
+    const poster = item.poster_path
+      ? `https://image.tmdb.org/t/p/w154${item.poster_path}`
+      : 'https://via.placeholder.com/154x231?text=Sin+Imagen';
+    const nombre = item.title || item.name;
+
+    const div = document.createElement('div');
+    div.className = 'cursor-pointer text-center hover:opacity-80';
+    div.innerHTML = `
+      <img src="${poster}" alt="${nombre}" class="rounded w-full mb-1">
+      <p class="text-xs font-semibold">${nombre}</p>
+    `;
+    div.onclick = () => seleccionar(item, tipoSeleccionado);
+    resultados.appendChild(div);
+  });
+
+  document.getElementById('seleccion').classList.add('hidden');
+  document.getElementById('salida').value = '';
+}
+
+async function seleccionar(item, tipo) {
+  document.getElementById('resultados').innerHTML = '';
+
+  const seleccionDiv = document.getElementById('seleccion');
+  seleccionDiv.classList.remove('hidden');
+
+  const imgSrc = item.poster_path
+    ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+    : 'https://via.placeholder.com/500x750?text=Sin+Imagen';
+  const imagenSeleccion = document.getElementById('imagenSeleccion');
+  imagenSeleccion.src = imgSrc;
+  imagenSeleccion.alt = item.title || item.name;
+
+  document.getElementById('movieId').value = item.id;
+  document.getElementById('tipoSeleccion').value = tipo === 'movie' ? 'Película' : 'Serie';
+
+  document.getElementById('temporadaBox').classList.add('hidden');
+}
+
+async function generar() {
+  const id = document.getElementById('movieId').value.trim();
+  const tipoTexto = document.getElementById('tipoSeleccion').value.toLowerCase() === 'serie' ? 'tv' : 'movie';
+
+  if (!id) return alert("Selecciona una opción antes de generar.");
+
+  if (tipoTexto === 'tv') {
+  const dataSerie = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}&language=es-MX`).then(r => r.json());
+  const numeroTemporadas = dataSerie.number_of_seasons || 1;
+  const playlist = [];
+
+  for (let t = 1; t <= numeroTemporadas; t++) {
+    const temporadaData = await fetch(`https://api.themoviedb.org/3/tv/${id}/season/${t}?api_key=${API_KEY}&language=es-MX`).then(r => r.json());
+
+    const episodios = (temporadaData.episodes || []).map(ep => {
+      const title = `E${ep.episode_number}: ${ep.name || 'Sin título'}`;
+      const episodeCode = `T${t} E${ep.episode_number}: ${ep.name || 'Sin título'}`;
+      const hiddenCode = `T${t} E${ep.episode_number}`;
+
+      // 📌 Edad automática desde "content_ratings"
+      let edad = "NR";
+      if (dataSerie.content_ratings?.results) {
+        const mx = dataSerie.content_ratings.results.find(r => r.iso_3166_1 === "MX");
+        const us = dataSerie.content_ratings.results.find(r => r.iso_3166_1 === "US");
+        const certRaw = mx?.rating || us?.rating || "";
+        if (/^\d+$/.test(certRaw)) edad = `${certRaw}+`;
+        else if (/PG-?13/i.test(certRaw)) edad = "13+";
+        else if (/R|18/i.test(certRaw)) edad = "18+";
+        else if (/PG/i.test(certRaw)) edad = "10+";
+        else if (certRaw) edad = certRaw;
+      }
+
+      const duracion = ep.runtime
+        ? `${ep.runtime}m`
+        : (temporadaData.episodes[0]?.runtime ? `${temporadaData.episodes[0].runtime}m` : '??m');
+
+      const anio = dataSerie.first_air_date ? dataSerie.first_air_date.slice(0, 4) : '¿?';
+      const thumbnail = ep.still_path
+        ? `https://image.tmdb.org/t/p/w300${ep.still_path}`
+        : '';
+
+      return {
+        title,
+        meta: `${edad} · ${duracion} · ${anio}`,
+        thumbnail,
+        videoUrl: "",
+        downloadUrl: "",
+        episodeCode,
+        hiddenCode,
+        intro: { start: 0, end: 0 }
+      };
+    });
+
+    playlist.push({
+      season: `Temporada ${t}`,
+      episodes: episodios
+    });
+  }
+
+  const playlistJSON = JSON.stringify(playlist, null, 2);
+
+  const imagenes = await fetch(`https://api.themoviedb.org/3/tv/${id}/images?api_key=${API_KEY}`).then(r => r.json());
+  const poster = imagenes.posters[0]?.file_path ? `https://image.tmdb.org/t/p/w500${imagenes.posters[0].file_path}` : '';
+  const backdrop = imagenes.backdrops[0]?.file_path ? `https://image.tmdb.org/t/p/original${imagenes.backdrops[0].file_path}` : '';
+  const logo = imagenes.logos.find(l => l.iso_639_1 === 'es' || l.iso_639_1 === null)?.file_path;
+  const logoUrl = logo ? `https://image.tmdb.org/t/p/original${logo}` : '';
+
+  const title = dataSerie.name || 'Sin título';
+  const overview = dataSerie.overview || 'Sin descripción';
+  const descripcionCorta = limitarTexto(overview, 200);
+
+  // 📌 Función de normalización de clasificaciones
+function normalizarClasificacion(certRaw) {
+  if (!certRaw) return "NR";
+
+  if (/^AA$/i.test(certRaw)) return "7+";          // Infantil
+  if (/^A$/i.test(certRaw)) return "7+";
+  if (/^B$/i.test(certRaw)) return "13+";
+  if (/^B15$/i.test(certRaw)) return "15+";
+  if (/^C$/i.test(certRaw)) return "18+";
+  if (/^D$/i.test(certRaw)) return "18+ (Explícito)";
+  if (/^\d+$/.test(certRaw)) return `${certRaw}+`; // Solo número
+  if (/PG-?13/i.test(certRaw)) return "13+";
+  if (/R|18/i.test(certRaw)) return "18+";
+  if (/PG/i.test(certRaw)) return "10+";
+  if (/G/i.test(certRaw)) return "Todas las edades"; // USA G
+
+  return certRaw || "NR";
+}
+
+// 📌 Edad automática desde arriba
+let edad = "NR";
+if (dataSerie.content_ratings?.results) {
+  const mx = dataSerie.content_ratings.results.find(r => r.iso_3166_1 === "MX");
+  const us = dataSerie.content_ratings.results.find(r => r.iso_3166_1 === "US");
+  const certRaw = mx?.rating || us?.rating || "";
+  edad = normalizarClasificacion(certRaw);
+}
+
+const anio = dataSerie.first_air_date ? dataSerie.first_air_date.slice(0, 4) : "¿?";
+const temporadas = numeroTemporadas === 1 ? "1 temporada" : `${numeroTemporadas} temporadas`;
+
+// 📌 Meta final
+const meta = `${edad}   ${temporadas}   ${anio}   Dob Lat`;
+
+const logoFinal = logoUrl || "logo.png";
+const coverContent = `
+  <div class="cover-content">
+    <img src="${logoFinal}" alt="${title} Logo" class="logo" tabindex="2" oncontextmenu="return false" draggable="false">
+    <div class="meta">${meta}</div>
+  </div>`;
+
+const slug = generarSlug(title);
+
+
+
+    const recomendaciones = await fetch(`https://api.themoviedb.org/3/tv/${id}/recommendations?api_key=${API_KEY}&language=es-MX`).then(r => r.json());
+    const sugerenciasHTML = (recomendaciones.results || []).slice(0, 4).map(rec => {
+      const titulo = escapeHTML(rec.title || rec.name || 'Sin título');
+      const img = rec.poster_path
+        ? `https://image.tmdb.org/t/p/w300${rec.poster_path}`
+        : 'https://via.placeholder.com/300x450?text=Sin+Imagen';
+      const slugRec = generarSlug(titulo);
+      const archivo = `${slugRec}.html`;
+
+      return `
+      <div class="suggested-item">
+        <a href="${archivo}">
+          <img src="${img}" alt="${titulo}" oncontextmenu="return false" draggable="false">
+        </a>
+        <div class="suggested-info">
+          <div class="title">${titulo}</div>
+          <div class="meta-row">
+            <span class="meta">Dob | Lat</span>
+          </div>
+        </div>
+      </div>`;
+    }).join('\n');
+
+    const datos = {
+      titulo: title,
+      titulo_completo: title,
+      descripcion_corta: descripcionCorta,
+      fondo: poster,
+      fondo_landscape: backdrop,
+      archivo: `${slug}.html`,
+      descarga: poster,
+      meta: meta,
+      logo: logoUrl,
+      sugerencias: sugerenciasHTML,
+      playlist: playlistJSON,
+      seriesId: `${slug}-${id}` // 👈 Aquí lo agregas
+    };
+
+    const plantilla = await fetch("series.html").then(r => r.text());
+
+const playlistJSONSafe = JSON.stringify(playlist, null, 2)
+  .replace(/\\/g, "\\\\")
+  .replace(/`/g, "\\`")
+  .replace(/\$\{/g, "\\${")
+  .replace(/<\/script>/gi, "<\\/script>");
+
+const plantillaConPlaylist = plantilla.replace('{{playlist}}', playlistJSONSafe);
+
+const htmlFinal = plantillaConPlaylist.replace(
+  /<div class="suggested-grid">([\s\S]*?)<\/div>/,
+  `<div class="suggested-grid">\n${sugerenciasHTML}\n</div>`
+);
+
+const salidaFinal = rellenarPlantilla(htmlFinal, datos);
+document.getElementById('salida').value = salidaFinal;
+
+
+  } else {
+    // 📌 Películas
+const dataPeli = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=es-MX`).then(r => r.json());
+const imagenes = await fetch(`https://api.themoviedb.org/3/movie/${id}/images?api_key=${API_KEY}`).then(r => r.json());
+
+// 📌 Clasificación por edad (TMDB → normalizada)
+const releaseData = await fetch(`https://api.themoviedb.org/3/movie/${id}/release_dates?api_key=${API_KEY}`).then(r => r.json());
+let edad = '';
+
+if (releaseData.results) {
+  const mx = releaseData.results.find(r => r.iso_3166_1 === "MX");
+  const us = releaseData.results.find(r => r.iso_3166_1 === "US");
+
+  const certRaw =
+    mx?.release_dates?.[0]?.certification ||
+    us?.release_dates?.[0]?.certification ||
+    "";
+
+  // Normalización México y USA
+  if (/^AA$/i.test(certRaw)) {
+    edad = "7+"; // AA → Público infantil
+  } else if (/^A$/i.test(certRaw)) {
+    edad = "7+"; // A → Público general
+  } else if (/^B$/i.test(certRaw)) {
+    edad = "13+";
+  } else if (/^B15$/i.test(certRaw)) {
+    edad = "15+";
+  } else if (/^C$/i.test(certRaw)) {
+    edad = "18+";
+  } else if (/^D$/i.test(certRaw)) {
+    edad = "18+ (Explícito)";
+  } else if (/^\d+$/.test(certRaw)) {
+    edad = `${certRaw}+`; // Solo número
+  } else if (/PG-?13/i.test(certRaw)) {
+    edad = "13+";
+  } else if (/R|18/i.test(certRaw)) {
+    edad = "18+";
+  } else if (/PG/i.test(certRaw)) {
+    edad = "10+";
+  } else if (/G/i.test(certRaw)) {
+    edad = "Todas las edades"; // G (USA) → General
+  } else {
+    edad = certRaw !== "" ? certRaw : "NR";
+  }
+}
+
+
+// 📌 Duración (runtime viene en minutos)
+let duracion = '';
+if (dataPeli.runtime) {
+  const horas = Math.floor(dataPeli.runtime / 60);
+  const minutos = dataPeli.runtime % 60;
+  duracion = `${horas}h ${minutos}min`;
+}
+
+const poster = imagenes.posters[0]?.file_path ? `https://image.tmdb.org/t/p/w500${imagenes.posters[0].file_path}` : '';
+const backdrop = imagenes.backdrops[0]?.file_path ? `https://image.tmdb.org/t/p/original${imagenes.backdrops[0].file_path}` : '';
+const logo = imagenes.logos.find(l => l.iso_639_1 === 'es' || l.iso_639_1 === null)?.file_path;
+const logoUrl = logo ? `https://image.tmdb.org/t/p/original${logo}` : '';
+
+const title = dataPeli.title || 'Sin título';
+const overview = dataPeli.overview || 'Sin descripción';
+const descripcionCorta = limitarTexto(overview, 200);
+const anio = dataPeli.release_date ? dataPeli.release_date.slice(0, 4) : '¿?';
+
+// 📌 Meta ya automático 🎉
+const meta = `${edad}   ${duracion}   ${anio}   Dob Lat`;
+
+const slug = generarSlug(title);
+
+// 📌 Recomendaciones
+// 📌 Recomendaciones
+const recomendaciones = await fetch(`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${API_KEY}&language=es-MX`).then(r => r.json());
+const sugerenciasHTML = (recomendaciones.results || []).slice(0, 4).map(rec => {
+  const titulo = escapeHTML(rec.title || rec.name || 'Sin título');
+  const img = rec.poster_path
+    ? `https://image.tmdb.org/t/p/w300${rec.poster_path}`
+    : 'https://via.placeholder.com/300x450?text=Sin+Imagen';
+  const slugRec = generarSlug(titulo);
+  const archivo = `${slugRec}.html`;
+
+  return `
+      
+        <a href="${archivo}" class="sugerencia-item">
+    <img src="${img}" alt="${titulo}">
+    <p class="sugerencia-titulo">${titulo}</p>
+    <p class="sugerencia-sub">Dob | Lat</p>
+  </a>`;
+  }).join('\n');
+
+
+
+
+    const datos = {
+      titulo: title,
+      titulo_completo: title,
+      descripcion_corta: descripcionCorta,
+      fondo: poster,
+      fondo_landscape: backdrop,
+      archivo: `${slug}.html`,
+      descarga: poster,
+      meta: meta,
+      logo: logoUrl,
+      sugerencias: sugerenciasHTML,
+      playlist: "[]",
+      movieId: `${slug}-${id}`, // 👈 ID único para películas
+    };
+
+    const plantilla = await fetch("peliculas.html").then(r => r.text());
+    const htmlFinal = plantilla.replace(
+      /<div class="suggested-grid">([\s\S]*?)<\/div>/,
+      `<div class="suggested-grid">\n${sugerenciasHTML}\n</div>`
+    );
+    const salidaFinal = rellenarPlantilla(htmlFinal, datos);
+
+    document.getElementById('salida').value = salidaFinal;
+  }
+}
+
+function copiarTexto() {
+  const salida = document.getElementById('salida');
+  if (!salida.value.trim()) {
+    alert("No hay texto para copiar.");
+    return;
+  }
+  salida.select();
+  salida.setSelectionRange(0, 99999);
+  navigator.clipboard.writeText(salida.value).then(() => {
+    alert("Texto copiado al portapapeles.");
+  }).catch(() => {
+    alert("Error al copiar. Usa Ctrl+C.");
+  });
+}
+
+
+
+
+  </script>
+</body>
+</html>

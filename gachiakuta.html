@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+
+
+  <title>Gachiakuta</title>
+  <script src="../loader.min.js"></script>
+  <meta name="theme-color" content="#01011d">
+  <meta name="background-color" content="#01011d">
+<meta name="msapplication-navbutton-color" content="#01011d">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="theme-color" content="#01011d" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="" id="ogTitle">
+<meta property="og:description" content="" id="ogDesc">
+<meta property="og:image" content="" id="ogImage">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="" id="ogUrl">
+<meta property="og:type" content="video.movie">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="" id="twTitle">
+<meta name="twitter:description" content="" id="twDesc">
+<meta name="twitter:image" content="" id="twImage">
+
+
+  <script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool@latest"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-ChzD5StK818vBAQZL5n94vJUmJl+jz1Ro8AiyOsd0GWIT6saFOY+zG+VVM/LMxltwGPplT7tI9On7kVCXkmVc=" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+   <link rel="icon" type="image/png" sizes="32x32" href="../logo-2025.png">
+    <link rel="manifest" href="../manifest.json">
+   <link href="https://vjs.zencdn.net/8.5.2/video-js.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../anime.css">
+  <style>
+   
+
+.cover {
+  position: relative;
+  width: 100%;
+  
+
+  
+  background: url("https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=contain,format=auto,quality=94,width=840/CurationAssets/Gachiakuta/SEASON%201/ULTRA-WIDE/Gachiakuta-S1C1-KV1-(Character)-UW-Tall-Cropped.png") no-repeat center top;
+  background-size: contain;
+  background-position: center top;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.cover::before,
+.cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+
+.cover-landscape {
+  position: absolute;
+  inset: 0;
+  background: url("https://od.lk/s/M18zMTk5MzU1NjFf/Gachiakuta-S1C1-KV1-UW-LTR%281%29.png") no-repeat center top;
+  background-size: cover;
+  z-index: 0; /* <- Esto es clave para que se vea debajo del contenido, pero por encima del fondo negro */
+  display: none;
+}
+
+.cover::backdrop,
+.cover-landscape::backdrop {
+  transition: none;
+}
+
+.cover::before,
+.cover::after,
+.cover-landscape::before,
+.cover-landscape::after {
+  transition: none; /* No tocamos tus gradientes */
+}
+
+.cover-image-overlay,
+.cover-landscape-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.4s ease;
+  z-index: 0.5; /* justo encima del fondo, pero debajo de contenido y gradientes */
+  pointer-events: none;
+}
+
+
+
+
+
+/* Ocultar sombras en landscape */
+@media screen and (orientation: landscape) {
+  .cover::before,
+  .cover::after {
+    display: none;
+  }
+
+  .cover-landscape {
+    display: block;
+  }
+}
+
+.cover-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Mostrar landscape solo en modo horizontal */
+@media screen and (orientation: landscape) {
+  .cover {
+    background: none;
+  }
+
+  .cover-landscape {
+    display: block;
+  }
+}
+
+
+.cover-content img.logo {
+    width: 220px;
+    margin-bottom: 10px;
+  }
+
+  @media (orientation: landscape) {
+    
+  
+    .cover-content img.logo {
+      width: 120px;
+      margin: 0 0 0.5rem 0;
+    }
+  
+    
+  }
+  
+  
+  @media (min-width: 1200px) {
+    .cover-content img.logo {
+      margin-top: 380px;
+      width: 320px;
+      margin-bottom: 0px;
+    }
+  
+    
+  }
+
+    </style>
+</head>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+  <div id="loader" class="loader"></div>
+  <div class="overlay-loader-page"></div>
+  <div class="custom-top-bar">
+    <button onclick="window.history.back()">
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <button onclick="location.reload()">
+      <span class="material-icons">refresh</span>
+    </button>
+  </div>
+    <header id="header">
+        <a href="javascript:history.back();" id="back-link" class="icon-link" tabindex="1">
+            <span class="material-icons">chevron_left</span>
+        </a>
+        <span id="page-title" class="page-title">Gachiakuta</span> <!-- Título oculto por defecto -->
+    </header>
+    <!-- Tabs para pantallas grandes -->
+<div class="tabs tabs-secondary">
+  <!-- Logo a la izquierda -->
+  <a href="../main.html">
+    <img src="https://od.lk/s/M18zMTIxODI5MjVf/Knight.png" width="150px" class="logo" />
+  </a>
+
+  <!-- Tabs centradas -->
+  <div class="tabs-wrapper">
+    <a href="../main.html#inicio" class="tab">Inicio</a>
+    <a href="../main.html#series" class="tab">Películas</a>
+    <a href="../main.html#peliculas" class="tab">Series</a>
+    <a href="../main.html#hbo" class="tab">Anime</a>
+    <a href="../main.html#documentales" class="tab">Familia</a>
+    <a href="../main.html#mi-lista" class="tab">Doramas</a>
+  </div>
+
+  <!-- Íconos a la derecha -->
+  <div class="icons">
+    <!-- FAVORITOS -->
+    <a href="../new favoritos 2025.html" class="header-only">
+      <span class="material-icons-outlined">bookmark_border</span>
+    </a>
+
+    <!-- BUSCAR -->
+    <a href="../New search page 2025.html" class="header-only">
+      <span class="material-icons-outlined">search</span>
+    </a>
+
+    <!-- PERFIL -->
+    <a href="../perfil digital Knight 2025.html" class="header-only">
+      <img src="https://od.lk/s/M18zMTIxOTE0Mjlf/logo%202025.png" alt="Perfil" class="profile-icon-footer" id="headerProfileIcon" />
+    </a>
+  </div>
+</div>
+
+<!-- COVER / PORTADA -->
+<div class="cover" id="cover">
+  <!-- FONDO LANDSCAPE SOLO PARA MODO HORIZONTAL -->
+  <div class="cover-landscape">
+    <div class="cover-landscape-image-overlay"></div> <!-- Overlay para imagen landscape -->
+    <div class="cover-landscape-shadow-left"></div>
+  </div>
+
+  <div class="cover-image-overlay"></div> <!-- Overlay para imagen portrait -->
+  
+  <div class="cover-content">
+    <img src="https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=contain,format=auto,quality=85,width=600/CurationAssets/Gachiakuta/SEASON%201/ULTRA-WIDE/Gachiakuta-S1C1-KV1-UW-Logo-ENG.png" alt="Gachiakuta Logo "class="logo" oncontextmenu="return false" draggable="false">
+    <div class="meta">13+   1 temporada   2025   Dob Lat</div>
+  
+      <button id="resumeButton" class="watch-button" onclick="playLastWatchedEpisode()" tabindex="3">
+        <span class="material-icons">play_arrow</span> Mira T1 E1
+      </button>
+  
+      <!-- NUEVO BLOQUE DE ICONOS -->
+      <div class="iconos">
+        <!-- Botón de Favoritos -->
+        <button id="favoritoBtn" data-identificador="Gachiakuta" onclick="toggleFavorito()">
+          <span id="favoritoIcon" class="material-icons-outlined">add</span>
+          <p id="favoritoText">Favoritos</p>
+        </button>
+  
+        <!-- Info oculta para localStorage -->
+        <div id="favoritoData" style="display: none;">
+          <img id="favoritoImagen" class="poster" src="https://od.lk/s/M18zMjIzMzU0MTRf/gachiakuta-anime-1920x1080-22722.jpg" alt="Poster de la Película">
+          <a id="favoritoEnlace" href="gachiakuta.html"></a>
+          <span id="nombre">Gachiakuta</span>
+      </div>
+  
+        
+  
+        
+         <!-- Botón de Compartir -->
+         <div class="action-item" id="compartirBtn">
+          <span class="material-icons-outlined">share</span>
+          <p>Compartir</p>
+        </div>
+              </div>
+  
+      <div class="description">
+        En una ciudad flotante donde los ricos se deshacen de su basura y de las personas, a Ludo lo acusan de asesinato y lo
+        arrojan al Abismo, un infierno habitado por las bestias de la basura. Para sobrevi...  </div>
+    </div>
+  </div>
+  
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('episodes')">Episodios</button>
+    <button class="tab" onclick="showTab('suggested')">Quizá también te guste</button>
+  </div>
+  
+  <div id="episodes" class="tab-content">
+    <div class="season-selector">
+      <select id="seasonSelect" onchange="renderEpisodes()"></select>
+    </div>
+    <div id="episodeList"></div>
+  </div>
+  
+  <div id="suggested" class="tab-content" style="display: none;">
+    <div class="suggested-grid">
+
+      <div class="suggested-item">
+        <a href="the-water-magician.html">
+          <img src="https://image.tmdb.org/t/p/w300/9GWz3D9aBgtn6pMiu3DTZL3h5ua.jpg" alt="The Water Magician" oncontextmenu="return false" draggable="false">
+        </a>
+        <div class="suggested-info">
+          <div class="title">The Water Magician</div>
+          <div class="meta-row">
+            <span class="meta">Dob | Lat</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="suggested-item">
+        <a href="sakamoto-days.html">
+          <img src="https://image.tmdb.org/t/p/w300/wRpCqsJFyKNuh5FMegNPrhzp2NF.jpg" alt="Sakamoto Days" oncontextmenu="return false" draggable="false">
+        </a>
+        <div class="suggested-info">
+          <div class="title">Sakamoto Days</div>
+          <div class="meta-row">
+            <span class="meta">Dob | Lat</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="suggested-item">
+        <a href="tougen-anki.html">
+          <img src="https://image.tmdb.org/t/p/w300/vnasRNhwT5M3OvTAMzYn4i5fQcT.jpg" alt="Tougen Anki" oncontextmenu="return false" draggable="false">
+        </a>
+        <div class="suggested-info">
+          <div class="title">Tougen Anki</div>
+          <div class="meta-row">
+            <span class="meta">Dob | Lat</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="suggested-item">
+        <a href="milkysubway-the-galactic-limited-express.html">
+          <img src="https://image.tmdb.org/t/p/w300/uRQalzrXA5OTI6dDDi4eqrpIzbN.jpg" alt="Milky☆Subway: The Galactic Limited Express" oncontextmenu="return false" draggable="false">
+        </a>
+        <div class="suggested-info">
+          <div class="title">Milky☆Subway: The Galactic Limited Express</div>
+          <div class="meta-row">
+            <span class="meta">Dob | Lat</span>
+          </div>
+        </div>
+      </div>
+</div>
+        </div>
+    
+
+  
+  <!-- OVERLAY -->
+<div id="menuOverlay" class="menu-overlay hidden" onclick="closeSeasonMenu()"></div>
+
+<!-- MENÚ DESLIZANTE DE TEMPORADAS -->
+<div id="seasonMenu" class="season-menu hidden">
+  <div class="season-menu-header">
+    <div class="menu-drag-indicator"></div>
+  </div>
+  <div id="seasonOptions"></div>
+</div>
+
+  
+  
+<!-- PLAYER -->
+<div class="player" id="player">
+  <video playsinline webkit-playsinline
+    id="video"
+    class="video-js vjs-default-skin"
+    preload="auto"
+    width="100%"
+    height="100%"
+    poster="https://wallpapercave.com/wp/wp5415042.jpg"
+    data-setup='{"controls": false, "autoplay": false, "preload": "auto"}'>
+    <source id="videoSource" src="tu video.mp4" type="video/mp4" />
+  </video>
+
+  <!-- Loader -->
+  <div class="video-loader hidden" id="videoLoader">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Aspect Ratio Label -->
+  <div id="aspectLabel" style="
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 16px;
+    display: none;
+    z-index: 9999;
+  ">
+    cover
+  </div>
+
+ <div class="overlay-top" id="overlayTop"></div>
+<div class="overlay-bottom" id="overlayBottom"></div>
+
+    
+    <div class="overlay" id="overlay"></div>
+
+  <!-- Botón Omitir Intro -->
+  <div class="skip-intro hidden" id="skipIntroBtn" onclick="skipIntro()">
+    <span class="material-icons">fast_forward</span>
+    <span class="label">Omitir intro</span>
+  </div>
+
+  <!-- Botón Siguiente Episodio -->
+  <div class="next-episode hidden" id="nextEpisodeBtn" onclick="playNextEpisode()">
+    <div class="icon-container">
+      <svg class="circle-timer" viewBox="0 0 36 36">
+        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 1 1 0 31.831 a 15.9155 15.9155 0 1 1 0 -31.831"/>
+        <path class="circle-fill" id="circleProgress" stroke-dasharray="0, 100" d="M18 2.0845
+          a 15.9155 15.9155 0 1 1 0 31.831
+          a 15.9155 15.9155 0 1 1 0 -31.831"/>
+      </svg>
+      <span class="material-icons play-icon">play_arrow</span>
+    </div>
+    <span class="label" id="nextEpisodeLabel">Siguiente episodio</span>
+  </div>
+
+  <div class="controls" id="controls">
+    <div class="top-bar">
+      <div class="icon-btn material-icons" onclick="goBack()">chevron_left</div>
+      <div style="display: flex; gap: 15px;">
+        <div class="icon-btn material-icons" onclick="castCurrentVideo()">cast</div>
+        <div class="icon-btn material-icons" onclick="toggleAspectRatio()">aspect_ratio</div>
+      </div>
+    </div>
+
+    <div class="center-controls">
+      <button class="btn" onclick="skip(-10)">
+        <span class="material-icons">replay_10</span>
+      </button>
+      <button class="btn" id="playPauseBtn" onclick="togglePlay()">
+        <span class="material-icons">play_arrow</span>
+      </button>
+      <button class="btn" onclick="skip(10)">
+        <span class="material-icons">forward_10</span>
+      </button>
+    </div>
+
+    <div class="bottom-bar">
+      <div id="episodeHeader">
+        <div class="title">Gachiakuta</div>
+        <div class="subtitle" id="episodeSubtitle"></div>
+      </div>
+
+      <div class="progress-container">
+        <div class="buffer-bar" id="bufferBar"></div>
+        <input type="range" class="progress" id="progress" value="0" max="100">
+        <div class="time" id="duration">- 00:00</div>
+      </div>
+
+      <!-- 🚀 Botones Extra (Reiniciar / Siguiente Episodio) -->
+      <div class="extra-controls">
+        <button class="btn" onclick="restartVideo()">
+          <span class="material-icons">skip_previous</span>
+          <span class="label">Reiniciar</span>
+        </button>
+        <button class="btn" onclick="playNextEpisode()">
+          <span class="material-icons">skip_next</span>
+          <span class="label">Sig. Epi</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+  
+<footer class="footer">
+  <a href="../main.html" class="footer-icon" tabindex="14">
+      <span class="material-icons-outlined">home</span>
+      <span class="material-icons">home</span>
+  </a>
+  <a href="../new favoritos 2025.html" class="footer-icon" tabindex="15">
+      <span class="material-icons-outlined">bookmark_border</span>
+      <span class="material-icons">bookmark</span>
+  </a>
+  <a href="../New search page 2025.html" class="footer-icon" tabindex="16">
+      <span class="material-icons-outlined">search</span>
+      <span class="material-icons">search</span>
+  </a>
+  <a href="../perfil digital Knight 2025.html" class="footer-icon" tabindex="17">
+      <img src="https://od.lk/d/M18zMDc1MjMzOTdf/DIGITAL%20KNIGHT2.png" alt="Icono de Perfil" id="footerIconImg" class="profile-icon-footer">
+  </a>
+</footer>
+
+  <script src="https://vjs.zencdn.net/8.5.2/video.min.js"></script>
+  <script src="../share.js"></script>
+
+<script>
+
+  
+
+const seriesId = "gachiakuta-256721";
+window.seriesId = seriesId;
+
+// --- PLAYLIST ---
+const playlist = [
+{
+    "season": "Temporada 1",
+    "episodes": [
+      {
+        "title": "E1: La Esfera",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/gUg7D9CpjpCHUue0OAHVemG55Rs.jpg",
+        "videoUrl": "https://od.lk/d/M18zMjIyMDQwODFf/Gachiakuta%20ep%201.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDQwODFf/Gachiakuta%20ep%201.mp4",
+        "episodeCode": "T1 E1: La Esfera",
+        "hiddenCode": "T1 E1",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E2: Los habitantes",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/bx5BDggucxheJqYfmMYzNRU3zfx.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDM4NDhf/Gachiakuta%20ep2.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDM4NDhf/Gachiakuta%20ep2.mp4",
+        "episodeCode": "T1 E2: Los habitantes",
+        "hiddenCode": "T1 E2",
+        "intro": {
+          "start": 45,
+          "end": 130
+        }
+      },
+      {
+        "title": "E3: Terra",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/bmWMdGBlTLKOwbX7d5EQiOZBtFX.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDQzMTVf/Gachiakuta%20ep%203.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDQzMTVf/Gachiakuta%20ep%203.mp4",
+        "episodeCode": "T1 E3: Terra",
+        "hiddenCode": "T1 E3",
+        "intro": {
+          "start": 135,
+          "end": 215
+        }
+      },
+      {
+        "title": "E4: La central de los limpiadores",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/7Y3O7q3mOt9f4FSChUIFyAZyRGa.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDQxOTJf/Gachiakuta%20ep4.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDQxOTJf/Gachiakuta%20ep4.mp4",
+        "episodeCode": "T1 E4: La central de los limpiadores",
+        "hiddenCode": "T1 E4",
+        "intro": {
+          "start": 185,
+          "end": 275
+        }
+      },
+      {
+        "title": "E5: Raiders",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/ztEDVMzddKRUQtvExgKaOVd8pHw.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDM2NTRf/Gachiakuta%20ep5.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDM2NTRf/Gachiakuta%20ep5.mp4",
+        "episodeCode": "T1 E5: Raiders",
+        "hiddenCode": "T1 E5",
+        "intro": {
+          "start": 460,
+          "end": 550
+        }
+      },
+      {
+        "title": "E6: ¡Un golpe bien dado!",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/eWgtva5EavsnGIf3fRZD6Lxj7ge.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDM5NjJf/Gachiakuta%20ep6.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDM5NjJf/Gachiakuta%20ep6.mp4",
+        "episodeCode": "T1 E6: ¡Un golpe bien dado!",
+        "hiddenCode": "T1 E6",
+        "intro": {
+          "start": 290,
+          "end": 385
+        }
+      },
+      {
+        "title": "E7: Conclusión",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/ne5S6caYYa5hr3yuZR9ZkmPQ9qn.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDM1NTRf/Gachiakuta%20ep7.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDM1NTRf/Gachiakuta%20ep7.mp4",
+        "episodeCode": "T1 E7: Conclusión",
+        "hiddenCode": "T1 E7",
+        "intro": {
+          "start": 230,
+          "end": 320
+        }
+      },
+      {
+        "title": "E8: Hacia adelante",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/3caLcoFAgTPEA4QDMxJWUFIFR6g.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDM3MzJf/Gachiakuta%20ep8.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDM3MzJf/Gachiakuta%20ep8.mp4",
+        "episodeCode": "T1 E8: Hacia adelante",
+        "hiddenCode": "T1 E8",
+        "intro": {
+          "start": 425,
+          "end": 515
+        }
+      },
+      {
+        "title": "E9: La ciudad del grafiti",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/GW7HnVOLfjcCQRJRkt6bpqob5N.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjI1OTY3NzBf/Gachiakuta%20e9.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjI1OTY3NzBf/Gachiakuta%20e9.mp4",
+        "episodeCode": "T1 E9: La ciudad del grafiti",
+        "hiddenCode": "T1 E9",
+        "intro": {
+          "start": 120,
+          "end": 205
+        }
+      },
+      {
+        "title": "E10: Penta, la Zona Desértica Prohibida",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/e2iniIW4GZOfpzsYm3Gs9V3rrTa.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjI1OTY3NTBf/Gachiakuta%20Latino%20Ep%2010.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjI1OTY3NTBf/Gachiakuta%20Latino%20Ep%2010.mp4",
+        "episodeCode": "T1 E10: Penta, la Zona Desértica Prohibida",
+        "hiddenCode": "T1 E10",
+        "intro": {
+          "start": 420,
+          "end": 505
+        }
+      },
+      {
+        "title": "E11: La hospitalidad de Amo",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/a8FkL2y74TlH8T7FroXRVPn2O9a.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDMzNDJf/Gachiakuta%20ep11.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDMzNDJf/Gachiakuta%20ep11.mp4",
+        "episodeCode": "T1 E11: La hospitalidad de Amo",
+        "hiddenCode": "T1 E11",
+        "intro": {
+          "start": 420,
+          "end": 505
+        }
+      },
+      {
+        "title": "E12: Es algo como una maldición",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/iM9y3lJYQXifyvu9NPZIXW1qKGk.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDM0NTBf/Gachiakuta%20ep12.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDM0NTBf/Gachiakuta%20ep12.mp4",
+        "episodeCode": "T1 E12: Es algo como una maldición",
+        "hiddenCode": "T1 E12",
+        "intro": {
+          "start": 230,
+          "end": 315
+        }
+      },
+      {
+        "title": "E13: Ojos vacíos",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/f3Trs8OBxuxrGqh5qkDx6fJvTkX.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDMxMDVf/Gachiakuta%20ep13.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDMxMDVf/Gachiakuta%20ep13.mp4",
+        "episodeCode": "T1 E13: Ojos vacíos",
+        "hiddenCode": "T1 E13",
+        "intro": {
+          "start": 360,
+          "end": 445
+        }
+      },
+      {
+        "title": "E14: La tormenta antes de la tormenta",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/yw0TyWQ0A3W66OpO1NJBOBTJhOO.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDMyMjVf/Gachiakuta%20ep14.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDMyMjVf/Gachiakuta%20ep14.mp4",
+        "episodeCode": "T1 E14: La tormenta antes de la tormenta",
+        "hiddenCode": "T1 E14",
+        "intro": {
+          "start": 95,
+          "end": 180
+        }
+      },
+      {
+        "title": "E15: Oye, ¿es en serio?",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/1Qzvoq3MddBP6GigTKgHxp4l3pS.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDMwMTBf/Gachiakuta%20ep15.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDMwMTBf/Gachiakuta%20ep15.mp4",
+        "episodeCode": "T1 E15: Oye, ¿es en serio?",
+        "hiddenCode": "T1 E15",
+        "intro": {
+          "start": 315,
+          "end": 400
+        }
+      },
+      {
+        "title": "E16: Divino y ordinario",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/tKw1vSpYAYgQGPjzLFUj2R8QBXp.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDI3ODJf/Gachiakuta%20ep16.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDI3ODJf/Gachiakuta%20ep16.mp4",
+        "episodeCode": "T1 E16: Divino y ordinario",
+        "hiddenCode": "T1 E16",
+        "intro": {
+          "start": 255,
+          "end": 340
+        }
+      },
+      {
+        "title": "E17: Recuerdos mediocres",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/61tDXSY2BJqqFPN5LzoSzYJSjgF.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDI2Mzdf/Gachiakuta%20ep17.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDI2Mzdf/Gachiakuta%20ep17.mp4",
+        "episodeCode": "T1 E17: Recuerdos mediocres",
+        "hiddenCode": "T1 E17",
+        "intro": {
+          "start": 275,
+          "end": 360
+        }
+      },
+      {
+        "title": "E18: Es malo ser el último",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/o4Ikkls2J1Kc52AU3tj0DcP09Q7.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDI5MDJf/Gachiakuta%20ep18.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDI5MDJf/Gachiakuta%20ep18.mp4",
+        "episodeCode": "T1 E18: Es malo ser el último",
+        "hiddenCode": "T1 E18",
+        "intro": {
+          "start": 95,
+          "end": 180
+        }
+      },
+      {
+        "title": "E19: La serie Vigilante",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/bHM5XVcofXakYQxAqj8wcK1ng1P.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDI1MTVf/Gachiakuta%20ep19.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDI1MTVf/Gachiakuta%20ep19.mp4",
+        "episodeCode": "T1 E19: La serie Vigilante",
+        "hiddenCode": "T1 E19",
+        "intro": {
+          "start": 205,
+          "end": 290
+        }
+      },
+      {
+        "title": "E20: Marca",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/yg7Czklh7ZMyMy15IGvj2tS5J7R.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjI1OTY0Nzdf/Gachiakuta%20Latino%20Ep%2020.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjI1OTY0Nzdf/Gachiakuta%20Latino%20Ep%2020.mp4",
+        "episodeCode": "T1 E20: Marca",
+        "hiddenCode": "T1 E20",
+        "intro": {
+          "start": 210,
+          "end": 295
+        }
+      },
+      {
+        "title": "E21: Speedrun",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/c1t00n7NQBuYhAgUCzhtEoucELt.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjI1OTU4NTFf/Gachiakuta%20Latino%20Ep%2021.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjI1OTU4NTFf/Gachiakuta%20Latino%20Ep%2021.mp4",
+        "episodeCode": "T1 E21: Speedrun",
+        "hiddenCode": "T1 E21",
+        "intro": {
+          "start": 205,
+          "end": 290
+        }
+      },
+      {
+        "title": "E22: El poder de la protección",
+        "meta": "13+ · 24m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/2In8eyBswA8ZqgGYxNcTqXserAr.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjI1OTY0NDFf/Gachiakuta%20Latino%20Ep%2022.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjI1OTY0NDFf/Gachiakuta%20Latino%20Ep%2022.mp4",
+        "episodeCode": "T1 E22: El poder de la protección",
+        "hiddenCode": "T1 E22",
+        "intro": {
+          "start": 85,
+          "end": 170
+        }
+      },
+      {
+        "title": "E23: Episodio 23",
+        "meta": "13+ · 23m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/tfk85anbQEgvBsR068Q2AbrVdvN.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjI1OTYzOTlf/Gachiakuta%20Latino%20Ep%2023.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjI1OTYzOTlf/Gachiakuta%20Latino%20Ep%2023.mp4",
+        "episodeCode": "T1 E23: Episodio 23",
+        "hiddenCode": "T1 E23",
+        "intro": {
+          "start": 95,
+          "end": 180
+        }
+      },
+      {
+        "title": "E24: Episodio 24",
+        "meta": "13+ · 23m · 2025",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/eEtcfbX2hATG14Qv29DmpIBF8PT.jpg",
+        "videoUrl": "https://od.lk/s/M18zMjIyMDIzNjdf/Gachiakuta%20ep24.mp4",
+        "downloadUrl": "https://od.lk/d/M18zMjIyMDIzNjdf/Gachiakuta%20ep24.mp4",
+        "episodeCode": "T1 E24: Episodio 24",
+        "hiddenCode": "T1 E24",
+        "intro": {
+          "start": 235,
+          "end": 320
+        }
+      },
+    ]
+  }
+];
+
+</script>
+<script src="../player-series.js"></script>
+<script type="module" src="../player-series-module.js"></script>
+<script src="../wakelock.js"></script>
+
+</body>
+</html>

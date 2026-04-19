@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+
+
+  <title>Tokyo Revengers</title>
+  <script src="../loader.min.js"></script>
+  <meta name="theme-color" content="#01011d">
+<meta name="msapplication-navbutton-color" content="#01011d">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool@latest"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-ChzD5StK818vBAQZL5n94vJUmJl+jz1Ro8AiyOsd0GWIT6saFOY+zG+VVM/LMxltwGPplT7tI9On7kVCXkmVc=" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+   <link rel="icon" type="image/png" sizes="32x32" href="../logo-2025.png">
+    <link rel="manifest" href="../manifest.json">
+   <link href="https://vjs.zencdn.net/8.5.2/video-js.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../anime.css">
+  <style>
+   
+
+.cover {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: url("https://image.tmdb.org/t/p/w500/arB3L9pZZBSzUPSC8BEv8c3X0bF.jpg") no-repeat center top;
+  background-size: contain;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.cover::before,
+.cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+
+.cover-landscape {
+  position: absolute;
+  inset: 0;
+  background: url("https://image.tmdb.org/t/p/original/wjw3wrmkjjApu83Y4SxmQ5gP2mZ.jpg") no-repeat center top;
+  background-size: cover;
+  z-index: 0; /* <- Esto es clave para que se vea debajo del contenido, pero por encima del fondo negro */
+  display: none;
+}
+
+.cover::backdrop,
+.cover-landscape::backdrop {
+  transition: none;
+}
+
+.cover::before,
+.cover::after,
+.cover-landscape::before,
+.cover-landscape::after {
+  transition: none; /* No tocamos tus gradientes */
+}
+
+.cover-image-overlay,
+.cover-landscape-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.4s ease;
+  z-index: 0.5; /* justo encima del fondo, pero debajo de contenido y gradientes */
+  pointer-events: none;
+}
+
+
+
+
+
+/* Ocultar sombras en landscape */
+@media screen and (orientation: landscape) {
+  .cover::before,
+  .cover::after {
+    display: none;
+  }
+
+  .cover-landscape {
+    display: block;
+  }
+}
+
+.cover-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Mostrar landscape solo en modo horizontal */
+@media screen and (orientation: landscape) {
+  .cover {
+    background: none;
+  }
+
+  .cover-landscape {
+    display: block;
+  }
+}
+
+.cover-content img.logo {
+    width: 300px;
+    margin-bottom: 10px;
+  }
+
+  @media (orientation: landscape) {
+    
+  
+    .cover-content img.logo {
+      width: 220px;
+      margin: 0 0 0.5rem 0;
+    }
+  
+    
+  }
+  
+  
+  @media (min-width: 1200px) {
+    .cover-content img.logo {
+      margin-top: 380px;
+      width: 420px;
+      margin-bottom: 0px;
+    }
+  
+    
+  }
+
+
+    </style>
+</head>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+  <div id="loader" class="loader"></div>
+  <div class="overlay-loader-page"></div>
+  <div class="custom-top-bar">
+    <button onclick="window.history.back()">
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <button onclick="location.reload()">
+      <span class="material-icons">refresh</span>
+    </button>
+  </div>
+    <header id="header">
+        <a href="javascript:history.back();" id="back-link" class="icon-link" tabindex="1">
+            <span class="material-icons">chevron_left</span>
+        </a>
+        <span id="page-title" class="page-title">Tokyo Revengers</span> <!-- Título oculto por defecto -->
+    </header>
+    <!-- Tabs para pantallas grandes -->
+<div class="tabs tabs-secondary">
+  <!-- Logo a la izquierda -->
+  <a href="../main.html">
+    <img src="https://od.lk/s/M18zMTIxODI5MjVf/Knight.png" width="150px" class="logo" />
+  </a>
+
+  <!-- Tabs centradas -->
+  <div class="tabs-wrapper">
+    <a href="../main.html#inicio" class="tab">Inicio</a>
+    <a href="../main.html#series" class="tab">Películas</a>
+    <a href="../main.html#peliculas" class="tab">Series</a>
+    <a href="../main.html#hbo" class="tab">Anime</a>
+    <a href="../main.html#documentales" class="tab">Familia</a>
+    <a href="../main.html#mi-lista" class="tab">Doramas</a>
+  </div>
+
+  <!-- Íconos a la derecha -->
+  <div class="icons">
+    <!-- FAVORITOS -->
+    <a href="../new favoritos 2025.html" class="header-only">
+      <span class="material-icons-outlined">bookmark_border</span>
+    </a>
+
+    <!-- BUSCAR -->
+    <a href="../New search page 2025.html" class="header-only">
+      <span class="material-icons-outlined">search</span>
+    </a>
+
+    <!-- PERFIL -->
+    <a href="../perfil digital Knight 2025.html" class="header-only">
+      <img src="https://od.lk/s/M18zMTIxOTE0Mjlf/logo%202025.png" alt="Perfil" class="profile-icon-footer" id="headerProfileIcon" />
+    </a>
+  </div>
+</div>
+
+<!-- COVER / PORTADA -->
+<div class="cover" id="cover">
+  <!-- FONDO LANDSCAPE SOLO PARA MODO HORIZONTAL -->
+  <div class="cover-landscape">
+    <div class="cover-landscape-image-overlay"></div> <!-- Overlay para imagen landscape -->
+    <div class="cover-landscape-shadow-left"></div>
+  </div>
+
+  <div class="cover-image-overlay"></div> <!-- Overlay para imagen portrait -->
+  
+  <div class="cover-content">
+    <img src="" alt="Tokyo Revengers Logo "class="logo" oncontextmenu="return false" draggable="false">
+    <div class="meta">NR   1 temporada   2021   Dob Lat</div>
+  
+      <button id="resumeButton" class="watch-button" onclick="playLastWatchedEpisode()" tabindex="3">
+        <span class="material-icons">play_arrow</span> Mira T1 E1
+      </button>
+  
+      <!-- NUEVO BLOQUE DE ICONOS -->
+      <div class="iconos">
+        <!-- Botón de Favoritos -->
+        <button id="favoritoBtn" data-identificador="Tokyo Revengers" onclick="toggleFavorito()">
+          <span id="favoritoIcon" class="material-icons-outlined">add</span>
+          <p id="favoritoText">Favoritos</p>
+        </button>
+  
+        <!-- Info oculta para localStorage -->
+        <div id="favoritoData" style="display: none;">
+          <img id="favoritoImagen" class="poster" src="https://image.tmdb.org/t/p/original/wjw3wrmkjjApu83Y4SxmQ5gP2mZ.jpg" alt="Poster de la Película">
+          <a id="favoritoEnlace" href="tokyo-revengers.html"></a>
+          <span id="nombre">Tokyo Revengers</span>
+      </div>
+  
+        <!-- Notificación tipo "añadido a favoritos" -->
+        <div id="notificacion" class="notificacion" style="bottom: -100px;">
+          <span id="notificacionTexto">Añadido a favoritos</span>
+          <span class="notificacion-icono material-icons-outlined">check</span>
+        </div>
+  
+        <!-- Botón de Compartir -->
+        <div class="action-item" id="compartirBtn" onclick="window.location.href='http://action_share';">
+          <span class="material-icons-outlined">share</span>
+          <p>Compartir</p>
+        </div>
+      </div>
+  
+      <div class="description">
+        Takemichi es un desempleado de 26 años que descubre que la chica con la que salió en secundaria, la que fue su única novia, ha muerto. Tras eso sufre un accidente del cual, al despertar, descubre que...  </div>
+    </div>
+  </div>
+  
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('episodes')">Episodios</button>
+    <button class="tab" onclick="showTab('suggested')">Quizá también te guste</button>
+  </div>
+  
+  <div id="episodes" class="tab-content">
+    <div class="season-selector">
+      <select id="seasonSelect" onchange="renderEpisodes()"></select>
+    </div>
+    <div id="episodeList"></div>
+  </div>
+  
+  <div id="suggested" class="tab-content" style="display: none;">
+    <div class="suggested-grid">
+
+      <div class="suggested-item">
+        <a href="sk8-the-infinity.html">
+          <img src="https://image.tmdb.org/t/p/w300/kZHnqxP16mb2pVYthJfT4buYk4P.jpg" alt="SK8 the Infinity" oncontextmenu="return false" draggable="false">
+        </a>
+        <div class="suggested-info">
+          <div class="title">SK8 the Infinity</div>
+          <div class="meta-row">
+            <span class="meta">Dob | Lat</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="suggested-item">
+        <a href="higehiro-after-being-rejected-i-shaved-and-took-in-a-high-school-runaway.html">
+          <img src="https://image.tmdb.org/t/p/w300/5k20SVsi0sAMZI9p9g1HaUUHgeA.jpg" alt="Higehiro: After Being Rejected, I Shaved and Took in a High School Runaway." oncontextmenu="return false" draggable="false">
+        </a>
+        <div class="suggested-info">
+          <div class="title">Higehiro: After Being Rejected, I Shaved and Took in a High School Runaway.</div>
+          <div class="meta-row">
+            <span class="meta">Dob | Lat</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="suggested-item">
+        <a href="to-your-eternity.html">
+          <img src="https://image.tmdb.org/t/p/w300/lA2jRBubr2OLOlbkJXuBXYqv4A9.jpg" alt="To Your Eternity" oncontextmenu="return false" draggable="false">
+        </a>
+        <div class="suggested-info">
+          <div class="title">To Your Eternity</div>
+          <div class="meta-row">
+            <span class="meta">Dob | Lat</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="suggested-item">
+        <a href="housing-complex-c.html">
+          <img src="https://image.tmdb.org/t/p/w300/cHVyiWmCqlKEeb0c539lu7q3fhK.jpg" alt="Housing Complex C" oncontextmenu="return false" draggable="false">
+        </a>
+        <div class="suggested-info">
+          <div class="title">Housing Complex C</div>
+          <div class="meta-row">
+            <span class="meta">Dob | Lat</span>
+          </div>
+        </div>
+      </div>
+</div>
+        </div>
+      </div>           
+    
+    </div>
+    
+    
+  </div>
+    
+
+  
+  <!-- OVERLAY -->
+<div id="menuOverlay" class="menu-overlay hidden" onclick="closeSeasonMenu()"></div>
+
+<!-- MENÚ DESLIZANTE DE TEMPORADAS -->
+<div id="seasonMenu" class="season-menu hidden">
+  <div class="season-menu-header">
+    <div class="menu-drag-indicator"></div>
+  </div>
+  <div id="seasonOptions"></div>
+</div>
+
+  
+  
+<!-- PLAYER -->
+<div class="player" id="player">
+  <video
+    id="video"
+    class="video-js vjs-default-skin"
+    preload="auto"
+    width="100%"
+    height="100%"
+    poster="https://wallpapercave.com/wp/wp5415042.jpg"
+    data-setup='{"controls": false, "autoplay": false, "preload": "auto"}'>
+    <source src="tu video.mp4" type="video/mp4" />
+  </video>
+
+  <!-- Loader -->
+  <div class="video-loader hidden" id="videoLoader">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Aspect Ratio Label -->
+  <div id="aspectLabel" style="
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 16px;
+    display: none;
+    z-index: 9999;
+  ">
+    cover
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Botón Omitir Intro -->
+  <div class="skip-intro hidden" id="skipIntroBtn" onclick="skipIntro()">
+    <span class="material-icons">fast_forward</span>
+    <span class="label">Omitir intro</span>
+  </div>
+
+  <!-- Botón Siguiente Episodio -->
+  <div class="next-episode hidden" id="nextEpisodeBtn" onclick="playNextEpisode()">
+    <div class="icon-container">
+      <svg class="circle-timer" viewBox="0 0 36 36">
+        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 1 1 0 31.831 a 15.9155 15.9155 0 1 1 0 -31.831"/>
+        <path class="circle-fill" id="circleProgress" stroke-dasharray="0, 100" d="M18 2.0845
+          a 15.9155 15.9155 0 1 1 0 31.831
+          a 15.9155 15.9155 0 1 1 0 -31.831"/>
+      </svg>
+      <span class="material-icons play-icon">play_arrow</span>
+    </div>
+    <span class="label" id="nextEpisodeLabel">Siguiente episodio</span>
+  </div>
+
+  <div class="controls" id="controls">
+    <div class="top-bar">
+      <div class="icon-btn material-icons" onclick="goBack()">chevron_left</div>
+      <div style="display: flex; gap: 15px;">
+        <div class="icon-btn material-icons" onclick="castCurrentVideo()">cast</div>
+        <div class="icon-btn material-icons" onclick="toggleAspectRatio()">aspect_ratio</div>
+      </div>
+    </div>
+
+    <div class="center-controls">
+      <button class="btn" onclick="skip(-10)">
+        <span class="material-icons">replay_10</span>
+      </button>
+      <button class="btn" id="playPauseBtn" onclick="togglePlay()">
+        <span class="material-icons">play_arrow</span>
+      </button>
+      <button class="btn" onclick="skip(10)">
+        <span class="material-icons">forward_10</span>
+      </button>
+    </div>
+
+    <div class="bottom-bar">
+      <div id="episodeHeader">
+        <div class="title">Tokyo Revengers</div>
+        <div class="subtitle" id="episodeSubtitle"></div>
+      </div>
+
+      <div class="progress-container">
+        <input type="range" class="progress" id="progress" value="0" max="100">
+        <div class="time" id="duration">- 00:00</div>
+      </div>
+
+      <!-- 🚀 Botones Extra (Reiniciar / Siguiente Episodio) -->
+      <div class="extra-controls">
+        <button class="btn" onclick="restartVideo()">
+          <span class="material-icons">skip_previous</span>
+          <span class="label">Reiniciar</span>
+        </button>
+        <button class="btn" onclick="playNextEpisode()">
+          <span class="material-icons">skip_next</span>
+          <span class="label">Sig. Epi</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+  
+<footer class="footer">
+  <a href="../main.html" class="footer-icon" tabindex="14">
+      <span class="material-icons-outlined">home</span>
+      <span class="material-icons">home</span>
+  </a>
+  <a href="../new favoritos 2025.html" class="footer-icon" tabindex="15">
+      <span class="material-icons-outlined">bookmark_border</span>
+      <span class="material-icons">bookmark</span>
+  </a>
+  <a href="../New search page 2025.html" class="footer-icon" tabindex="16">
+      <span class="material-icons-outlined">search</span>
+      <span class="material-icons">search</span>
+  </a>
+  <a href="../perfil digital Knight 2025.html" class="footer-icon" tabindex="17">
+      <img src="https://od.lk/d/M18zMDc1MjMzOTdf/DIGITAL%20KNIGHT2.png" alt="Icono de Perfil" id="footerIconImg" class="profile-icon-footer">
+  </a>
+</footer>
+
+  <script src="https://vjs.zencdn.net/8.5.2/video.min.js"></script>
+<script>
+
+const seriesId = "tokyo-revengers-105009";
+window.seriesId = seriesId;
+
+// --- PLAYLIST ---
+const playlist = [
+{
+    "season": "T1: Dr. STONE",
+    "episodes": [
+    {
+        "title": "E1: Renacer",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/6FcmZTXklg6ONMC11H0sqiMBpZ7.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E1: Renacer",
+        "hiddenCode": "T1 E1",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E2: Resistir",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/f0ZhZ7fc7kWafyugqHbX7CoWhfO.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E2: Resistir",
+        "hiddenCode": "T1 E2",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E3: Determinación",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/3egxb6LOeuuxOmtFJijFr9Va5h.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E3: Determinación",
+        "hiddenCode": "T1 E3",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E4: Regreso",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/bJAhezqKrwaL14vnxZxISHR5ptk.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E4: Regreso",
+        "hiddenCode": "T1 E4",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E5: Liberar",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/mR9h9yI9jr5n10QRpGw4deQStnD.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E5: Liberar",
+        "hiddenCode": "T1 E5",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E6: Arrepentirse",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/6vC4aDuRfpHiyoNdqhW4KCWRYpz.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E6: Arrepentirse",
+        "hiddenCode": "T1 E6",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E7: Revivir",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/w0Ivwpsw4kc0kIhy9D23DTVqUSK.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E7: Revivir",
+        "hiddenCode": "T1 E7",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E8: Reemplazo",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/qNkYATNFMbApgvATdk2fU4w3zYa.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E8: Reemplazo",
+        "hiddenCode": "T1 E8",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E9: Revolución",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/4WYP6vds19yH7CqGvsLUhy51QfJ.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E9: Revolución",
+        "hiddenCode": "T1 E9",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E10: Resurgir",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/n6vwasg7CIjbAvtLIBwaMdSi7Dc.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E10: Resurgir",
+        "hiddenCode": "T1 E10",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E11: Respeto",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/1X0VRPm7hCzFxqD2r9X0owXNmtu.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E11: Respeto",
+        "hiddenCode": "T1 E11",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E12: Venganza",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/5JjriIqwqK5i3BhGlyFDSOWA0EE.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E12: Venganza",
+        "hiddenCode": "T1 E12",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E13: Cabos Sueltos",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/r7IfbXvxQ8NGmNdhJXquYtCqnje.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E13: Cabos Sueltos",
+        "hiddenCode": "T1 E13",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E14: Separación",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/vsELfbgRw3Ez7MvdjIEFAdvpJgb.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E14: Separación",
+        "hiddenCode": "T1 E14",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E15: Sin dolor no hay victoria",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/vhjIqpf7K75fAGIpH9PJVI8YKyP.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E15: Sin dolor no hay victoria",
+        "hiddenCode": "T1 E15",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E16: Había una vez",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/pQFZAaNPfOuEqMFdwzCJTFSDZ0l.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E16: Había una vez",
+        "hiddenCode": "T1 E16",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E17: De ninguna manera",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/7xJjcQDAXp02UYtbqPaoDAWTxPJ.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E17: De ninguna manera",
+        "hiddenCode": "T1 E17",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E18: Abran fuego",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/wVdKa97ErBzEa2FbBuFpF6i2EUz.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E18: Abran fuego",
+        "hiddenCode": "T1 E18",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E19: Mirar para atrás",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/zvzHveT5QouqOUCCRmw6FcmgIzV.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E19: Mirar para atrás",
+        "hiddenCode": "T1 E19",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E20: Vivo o muerto",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/1BwUPV4RHuxUVeQC1ZzOLuYMs5C.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E20: Vivo o muerto",
+        "hiddenCode": "T1 E20",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E21: Uno solo",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/AnrF7wDI5CvLXxQuFEH8CUfDCo0.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E21: Uno solo",
+        "hiddenCode": "T1 E21",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E22: Uno para todos",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/qK25ayIJZKY0HTmBXGbHnbdJcCZ.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E22: Uno para todos",
+        "hiddenCode": "T1 E22",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E23: Fin de la guerra",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/41Ocdf3HTe0iPAoR320PvKcW0EY.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E23: Fin de la guerra",
+        "hiddenCode": "T1 E23",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E24: Bebé llorón",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/bQH23udylJmaQByLhUo7RMejQzX.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E24: Bebé llorón",
+        "hiddenCode": "T1 E24",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E25: Es lo que es",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/cbyFfJCGC8HK19veH775EZ2w5TC.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E25: Es lo que es",
+        "hiddenCode": "T1 E25",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E26: Debo irme",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/8YEksZz1ScqME9nJ3ICfFuC07FK.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E26: Debo irme",
+        "hiddenCode": "T1 E26",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+}
+
+    ]
+  },
+  {
+    "season": "T2: Dr. STONE",
+    "episodes": [
+    {
+        "title": "E27: Mantente solo",
+        "meta": "NR · 23m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/gxbRYBKhBAXTBO4hiR2hXnc5DLb.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E27: Mantente solo",
+        "hiddenCode": "T1 E27",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E28: Lazos familiares",
+        "meta": "NR · 23m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/skQXNMiZAhL0YVm4DyIC6kRUX67.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E28: Lazos familiares",
+        "hiddenCode": "T1 E28",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E29: Nochebuena",
+        "meta": "NR · 23m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/qyHveCWXnnoTuBr6bsTaYHLaYC2.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E29: Nochebuena",
+        "hiddenCode": "T1 E29",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E30: Levanta la moral",
+        "meta": "NR · 23m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/5vfXhIm9BP9KgzHbzmsyfgn8WS5.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E30: Levanta la moral",
+        "hiddenCode": "T1 E30",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E31: Rivalidad entre hermanos",
+        "meta": "NR · 23m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/vo9aaS5l8HcNx8iwU8GdPCtqYYZ.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E31: Rivalidad entre hermanos",
+        "hiddenCode": "T1 E31",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E32: Luchemos juntos",
+        "meta": "NR · 23m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/cxZKJG6Sp2uiJ4wHX6r7GNhun07.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E32: Luchemos juntos",
+        "hiddenCode": "T1 E32",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E33: El amanecer de una nueva era",
+        "meta": "NR · 23m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/qnmwsRVFYdugSWoKAZrNMyYvNVI.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E33: El amanecer de una nueva era",
+        "hiddenCode": "T1 E33",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E34: La luz de mi vida",
+        "meta": "NR · 23m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/ro1Gf1EeJUpWifYfBKPCMtNqVrW.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E34: La luz de mi vida",
+        "hiddenCode": "T1 E34",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E35: De vuelta a casa",
+        "meta": "NR · 23m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/wgV2RCDBcqyT6QEg8gChITrIlnM.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E35: De vuelta a casa",
+        "hiddenCode": "T1 E35",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E36: Ultimo pedido",
+        "meta": "NR · 23m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/r7rIYoXutpFGE8sHUcjzmKYUc9v.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E36: Ultimo pedido",
+        "hiddenCode": "T1 E36",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E37: Cuando llueve, diluvia",
+        "meta": "NR · 23m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/iWd9msf4GrU8JQv3QvvtOkCZvRK.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E37: Cuando llueve, diluvia",
+        "hiddenCode": "T1 E37",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E38: El día más largo",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/gwngJ9yqZHoaBLBP89LioHY6INd.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E38: El día más largo",
+        "hiddenCode": "T1 E38",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E39: Enemigo mortal",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/jPdsvCcWw51ayQtZVrY7UvQfjty.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E39: Enemigo mortal",
+        "hiddenCode": "T1 E39",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      }
+    ]
+  },
+  {
+    "season": "T3: Dr. STONE NEW WORLD",
+    "episodes": [
+    {
+        "title": "E40: Se acabó la paciencia",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/AclCQ8NZlmaweNqOWwy7WdvQ8LB.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E40: Se acabó la paciencia",
+        "hiddenCode": "T1 E40",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E41: Vuelve a la vida",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/xCUYd0DcuaXEBu7kG2bqJLuZHeQ.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E41: Vuelve a la vida",
+        "hiddenCode": "T1 E41",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E42: Una mala corazonada",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/wc5EhpZ5FvPZL17bPAkJUSbwiTo.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E42: Una mala corazonada",
+        "hiddenCode": "T1 E42",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E43: Revuelta",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/503Gfap73e9jLHnt07IksS6OGsZ.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E43: Revuelta",
+        "hiddenCode": "T1 E43",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E44: Invertir la tendencia",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/l3tuupu8Y7aDWmKTD2y3RgqhKjH.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E44: Invertir la tendencia",
+        "hiddenCode": "T1 E44",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E45: Lo sé en mi cabeza",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/xnL5eEZNfx3Dh0aavgGDYHp37UU.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E45: Lo sé en mi cabeza",
+        "hiddenCode": "T1 E45",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E46: El ogro azul",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/hDBKQMg20ERIKQPqXJvzEGynzP3.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E46: El ogro azul",
+        "hiddenCode": "T1 E46",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E47: Corazón valiente",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/q4IVp5BSPpYx8u0IUnC2RrjwbtH.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E47: Corazón valiente",
+        "hiddenCode": "T1 E47",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E48: No queda nada",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/rIVtmmExm6bkhTAAvvpmBturt2f.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E48: No queda nada",
+        "hiddenCode": "T1 E48",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E49: Episodio 49",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/9rGHKXUUjJ9a2Gj1U5spdQHCtbl.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E49: Episodio 49",
+        "hiddenCode": "T1 E49",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+      {
+        "title": "E50: Episodio 50",
+        "meta": "NR · 24m · 2021",
+        "thumbnail": "https://image.tmdb.org/t/p/w300/ulNJV64WEy6t5TfxyRIY3odgtv6.jpg",
+        "videoUrl": "",
+        "downloadUrl": "",
+        "episodeCode": "T1 E50: Episodio 50",
+        "hiddenCode": "T1 E50",
+        "intro": {
+          "start": 0,
+          "end": 0
+        }
+      },
+    ]
+  }
+];
+
+</script>
+<script src="../player-series.js"></script>
+<script type="module" src="../player-series-module.js"></script>
+
+</body>
+</html>
