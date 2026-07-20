@@ -4,26 +4,96 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Generador TMDB PRO</title>
+   <link rel="icon" type="image/png" sizes="32x32" href="logo-2025.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-thumb { background: #888; border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+    body{
+    background:#07111f;
+    background-image:linear-gradient(180deg,#07111f,#0c1728);
+}
+
+input,
+select,
+textarea,
+button{
+    outline:none;
+    -webkit-tap-highlight-color:transparent;
+}
+
+button,
+img,
+a,
+div{
+    -webkit-tap-highlight-color:transparent;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#3b82f6 !important;
+    box-shadow:0 0 0 2px rgba(59,130,246,.25);
+}
+
+button:focus{
+    outline:none;
+}
+
+.panel{
+    background:#101c2d;
+    border:1px solid #25344b;
+    border-radius:16px;
+    padding:20px;
+}
+
+.poster-card{
+    transition:.2s;
+}
+
+.poster-card:hover{
+    transform:translateY(-4px);
+}
+
+#salida{
+    min-height:700px;
+    background:#0b1322;
+    color:#dbeafe;
+    border:1px solid #2c3f59;
+    font-size:13px;
+    line-height:1.5;
+}
+
+textarea::selection,
+input::selection{
+    background:#3b82f6;
+    color:white;
+}
+
   </style>
 </head>
-<body class="bg-black text-white min-h-screen p-4 font-sans">
-  <h1 class="text-3xl font-bold mb-6 text-center">🎬 Generador TMDB PRO</h1>
-  <div class="max-w-3xl mx-auto space-y-4">
+<body class="bg-slate-950 text-slate-100 min-h-screen p-6 font-sans">
+  <h1 class="text-4xl font-bold text-center mb-8 tracking-wide text-slate-100">
+Generador TMDB PRO
+</h1>
+  <div class="max-w-6xl mx-auto panel space-y-6">
 
     <div class="flex gap-2 items-center">
-      <select id="tipo" class="p-2 rounded bg-zinc-800 border border-zinc-600 w-36">
+      <select id="tipo" class="p-2 rounded bg-slate-800 border-slate-600 text-slate-100 w-36">
         <option value="movie">Película</option>
         <option value="tv">Serie</option>
       </select>
-      <input type="text" id="searchInput" placeholder="Busca película o serie..."
-             class="flex-1 p-2 rounded bg-zinc-800 border border-zinc-600 placeholder-zinc-400" />
-      <button onclick="buscar()"
-              class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-bold">Buscar</button>
+     <input type="text" id="searchInput"
+       placeholder="Busca película o serie..."
+       class="flex-1 p-2 rounded bg-slate-800 border-slate-600 text-slate-100 placeholder-zinc-400"
+       onkeydown="if(event.key==='Enter'){event.preventDefault(); buscar();}">
+      <button
+onclick="buscar()"
+class="bg-slate-700 hover:bg-slate-600 transition px-6 py-2 rounded-lg font-semibold">
+Buscar
+</button>
     </div>
 
     <div id="resultados" class="grid grid-cols-3 sm:grid-cols-4 gap-3"></div>
@@ -36,26 +106,35 @@
       <div class="grid grid-cols-2 gap-4">
         <div>
           <label class="block text-sm mb-1">ID TMDB</label>
-          <input id="movieId" readonly class="w-full p-2 rounded bg-zinc-800 border border-zinc-600" />
+          <input id="movieId" readonly class="w-full p-2 rounded bg-slate-800 border-slate-600 text-slate-100" />
         </div>
         <div>
           <label class="block text-sm mb-1">Tipo</label>
-          <input id="tipoSeleccion" readonly class="w-full p-2 rounded bg-zinc-800 border border-zinc-600" />
+          <input id="tipoSeleccion" readonly class="w-full p-2 rounded bg-slate-800 border-slate-600 text-slate-100" />
         </div>
       </div>
 
       <div id="temporadaBox" class="hidden">
         <label class="block text-sm mb-1">Temporada</label>
         <input id="temporada" type="number" value="1" min="1"
-               class="w-full p-2 rounded bg-zinc-800 border border-zinc-600"/>
+               class="w-full p-2 rounded bg-slate-800 border-slate-600 text-slate-100"/>
       </div>
 
-      <button onclick="generar()"
-              class="w-full mt-2 bg-green-600 hover:bg-green-700 px-4 py-3 rounded text-lg font-semibold">🎉 Generar HTML</button>
-      <button onclick="copiarTexto()"
-              class="w-full mt-2 bg-blue-600 hover:bg-blue-700 px-4 py-3 rounded text-lg font-semibold">📋 Copiar texto</button>
+      <button
+onclick="generar()"
+class="w-full mt-2 bg-blue-700 hover:bg-blue-600 transition px-4 py-3 rounded-lg text-lg font-semibold">
+Generar HTML
+</button>
+      <button
+onclick="copiarTexto()"
+class="w-full mt-2 bg-slate-700 hover:bg-slate-600 transition px-4 py-3 rounded-lg text-lg font-semibold">
+Copiar código
+</button>
 
-      <textarea id="salida" readonly class="w-full mt-4 h-64 p-4 bg-zinc-900 border border-zinc-700 rounded resize-none font-mono text-sm"></textarea>
+      <textarea
+id="salida"
+readonly
+class="w-full mt-4 h-[700px] p-5 bg-slate-950 border border-slate-700 rounded-lg resize-y font-mono text-sm"></textarea>
     </div>
   </div>
 
@@ -110,7 +189,8 @@ async function buscar() {
     const nombre = item.title || item.name;
 
     const div = document.createElement('div');
-    div.className = 'cursor-pointer text-center hover:opacity-80';
+    div.className =
+'poster-card cursor-pointer text-center bg-slate-900 rounded-xl p-2 border border-slate-700 hover:border-blue-500';
     div.innerHTML = `
       <img src="${poster}" alt="${nombre}" class="rounded w-full mb-1">
       <p class="text-xs font-semibold">${nombre}</p>
