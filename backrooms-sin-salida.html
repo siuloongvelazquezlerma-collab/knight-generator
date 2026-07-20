@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
 
-  <title>{{titulo}}</title>
+  <title>Backrooms: Sin salida</title>
   <script src="../loader.min.js"></script>
   <meta name="theme-color" content="#01011d">
   <meta name="background-color" content="#01011d">
@@ -50,7 +50,7 @@
     .cover {
       position: relative;
   width: 100%;
-  background: url("{{fondo}}") no-repeat center top;
+  background: url("https://image.tmdb.org/t/p/original/7NVnp7XHiW99nYLqEH5A63uPSJN.jpg") no-repeat center top;
   background-size: contain;
   display: flex;
   flex-direction: column;
@@ -74,7 +74,7 @@
 .cover-landscape {
   position: absolute;
   inset: 0;
-  background: url("{{fondo_landscape}}") no-repeat center top;
+  background: url("https://image.tmdb.org/t/p/original/fcNGQZxPBywCH6dy95T9Aq0MjwU.jpg") no-repeat center top;
   background-size: cover;
   z-index: 0; /* <- Esto es clave para que se vea debajo del contenido, pero por encima del fondo negro */
   display: none;
@@ -125,7 +125,7 @@
     
   
     .cover-content img.logo {
-      width: 150px;
+      width: 190px;
       margin-bottom: 4px;
     }
   
@@ -136,8 +136,8 @@
     
   
     .cover-content img.logo {
-      margin-top:320px;
-      width: 360px;
+      margin-top:300px;
+      width: 380px;
       margin-bottom: -10px;
     }
   
@@ -203,7 +203,7 @@
     <a href="javascript:history.back();" id="back-link" class="icon-link">
         <span class="material-icons">chevron_left</span>
     </a>
-    <span id="page-title" class="page-title">{{titulo}}</span> <!-- Título oculto por defecto -->
+    <span id="page-title" class="page-title">Backrooms: Sin salida</span> <!-- Título oculto por defecto -->
 </header>
 
 <!-- Tabs para pantallas grandes -->
@@ -253,11 +253,11 @@
     </div>
   
     <div class="cover-content">
-      <img src="{{logo}}" alt="{{titulo}}"class="logo" tabindex="2">
-      <div class="meta">{{meta}}</div>
+      <img src="https://image.tmdb.org/t/p/original/g0PswKqAFJdwGK3d1fKvj8LGnrW.png" alt="Backrooms: Sin salida"class="logo" tabindex="2">
+      <div class="meta">16+   1h 51min   2026   Dob Lat</div>
    
   
-       <div class="bloque-botones">
+      <div class="bloque-botones">
         <div id="video-controls">
           <button id="watchButton" class="watch-button">
             <span id="watchButtonIcon" class="material-icons">play_arrow</span>
@@ -279,7 +279,7 @@
       
         <div class="iconos">
           <!-- Botón de Favoritos -->
-          <button id="favoritoBtn" data-identificador="{{titulo}}" onclick="toggleFavorito()">
+          <button id="favoritoBtn" data-identificador="Backrooms: Sin salida" onclick="toggleFavorito()">
             <span id="favoritoIcon" class="material-icons-outlined">add</span>
             <p id="favoritoText">Favoritos</p>
           </button>
@@ -288,9 +288,9 @@
          <!-- Info oculta para localStorage -->
           <!-- Info oculta para localStorage -->
           <div id="favoritoData" style="display: none;">
-            <img id="favoritoImagen" class="poster" src="{{fondo_landscape}}" alt="Poster de la Película">
-            <a id="favoritoEnlace" href="{{archivo}}"></a>
-            <span id="nombre">{{titulo_completo}}</span>
+            <img id="favoritoImagen" class="poster" src="https://image.tmdb.org/t/p/original/3vFWXDqHU2oawtg7moqzGqpMaMk.jpg" alt="Poster de la Película">
+            <a id="favoritoEnlace" href="backrooms-sin-salida.html"></a>
+            <span id="nombre">Backrooms: Sin salida</span>
           </div>
       
           <!-- Botón de Compartir -->
@@ -300,7 +300,7 @@
           </div>
       
           <!-- Botón de Descargar -->
-          <div class="action-item download-action" onclick="descargarPelicula('tu video.mp4')">
+          <div class="action-item download-action" onclick="descargarPelicula('https://od.lk/d/M18zMzEzMzMyMjNf/Backrooms.mp4')">
             <i class="material-icons">arrow_downward</i>
             <span class="underline"></span>
             Descargar
@@ -310,22 +310,54 @@
       </div>
       
       <div class="description">
-        {{descripcion_corta}}
+        Una extraña puerta aparece en el sótano de una exposición de muebles. Cuando el paciente de una terapeuta desaparece en una dimensión más allá de la realidad, ella deberá adentrarse en lo desconocido...
 
       </div>
     </div>
   </div>
 
-<!-- QUIZÁ TAMBIÉN TE GUSTE -->
+ <!-- QUIZÁ TAMBIÉN TE GUSTE -->
  <div class="page-content">
 <div class="sugerencias-section">
   <div class="sugerencias-header">
     <h2 class="sugerencias-titulo">Quizá también te guste</h2>
     <div class="sugerencias-tabs-line"></div>
   </div>
-    <div class="sugerencias-grid">
-    {{sugerencias}}
-  </div>
+  <div class="sugerencias-grid">
+    <a href="El resplandor (1980).html" class="sugerencia-item">
+      <img src="https://image.tmdb.org/t/p/original/mm003Mj2e9kJRsrxiVdPn2BSBPh.jpg" alt="El resplandor (1980)">
+      <p class="sugerencia-titulo">El resplandor (1980)</p>
+      <p class="sugerencia-sub">Dob | Lat</p>
+    </a>
+    
+    <a href="13 fantasmas.html" class="sugerencia-item">
+      <img src="https://image.tmdb.org/t/p/original/77pqeCDToMB0EpfJyT8JUiupze1.jpg" alt="13 fantasmas">
+      <p class="sugerencia-titulo">13 fantasmas</p>
+      <p class="sugerencia-sub">Dob | Lat</p>
+    </a>
+    
+    <a href="El amanecer de los muertos.html" class="sugerencia-item">
+      <img src="https://image.tmdb.org/t/p/original/6aue0EtBfftVryNP11acJqOZu2h.jpg" alt="El amanecer de los muertos">
+      <p class="sugerencia-titulo">El amanecer de los muertos</p>
+      <p class="sugerencia-sub">Dob | Lat</p>
+    </a>
+    
+    <a href="Cloverfield Monstruo.html" class="sugerencia-item">
+      <img src="https://image.tmdb.org/t/p/original/rqGhuoEzXddM2LPBTQuvf8PnCUI.jpg" alt="Cloverfield Monstruo">
+      <p class="sugerencia-titulo">Cloverfield Monstruo</p>
+      <p class="sugerencia-sub">Dob | Lat</p>
+    </a>
+    
+    <a href="Conjuring The Beyond.html" class="sugerencia-item">
+      <img src="https://image.tmdb.org/t/p/original/icNT5zfTsS8rZKaViOzQ9PmLpOh.jpg" alt="Conjuring The Beyond">
+      <p class="sugerencia-titulo">Conjuring The Beyond</p>
+      <p class="sugerencia-sub">Dob | Lat</p>
+    </a>                  
+                                                                                                                                                                                              
+       
+     
+       
+ </div>
 </div>
 </div>
 
@@ -339,7 +371,7 @@
   height="100%"
   poster="https://wallpapercave.com/wp/wp5415042.jpg"
   data-setup='{"controls": false, "autoplay": false, "preload": "auto"}'>
-  <source id="videoSource" src="tu video.mp4" type="video/mp4" />
+  <source id="videoSource" src="https://od.lk/s/M18zMzEzMzMyMjNf/Backrooms.mp4" type="video/mp4" />
 </video>
 <!-- Loader -->
 <div class="video-loader hidden" id="videoLoader">
@@ -375,21 +407,22 @@
         <div style="display: flex; gap: 15px;">
   
          <!-- Botón de idioma con mini menú -->
-<!--
-<div class="icon-btn" id="langBtnWrapper" style="position:relative; display:flex; align-items:center; gap:5px;">
-  <span class="material-icons" id="langIcon">chat</span>
+
+ <div class="icon-btn" id="langBtnWrapper" style="position:relative; display:flex; align-items:center; gap:5px;">
+          <span class="material-icons" id="langIcon">chat</span>
+          
+          <div id="langMenu" class="lang-menu">
+            <div class="lang-option" data-lang="latino">
+              <span class="check"></span> Latino
+            </div>
+            <div class="lang-option" data-lang="ingles">
+              <span class="check"></span> Inglés (Subtitulada)
+            </div>
+            <button id="langConfirmBtn">Listo</button>
+          </div>
+        </div>
   
-  <div id="langMenu" class="lang-menu">
-    <div class="lang-option" data-lang="latino">
-      <span class="check"></span> Español (Latino)
-    </div>
-    <div class="lang-option" data-lang="ingles">
-      <span class="check"></span> Inglés (Subtitulada)
-    </div>
-    <button id="langConfirmBtn">Listo</button>
-  </div>
-</div>
--->
+
   
   <!-- Botón Cast -->
   <div class="icon-btn material-icons" onclick="castCurrentVideo()">cast</div>
@@ -413,7 +446,7 @@
   
       <div class="bottom-bar">
         <div id="episodeHeader">
-          <div class="title">{{titulo_completo}}</div>
+          <div class="title">Backrooms: Sin salida</div>
           <div class="subtitle" id="episodeSubtitle"></div>
         </div>
    
@@ -446,16 +479,14 @@
         <span class="material-icons">search</span>
     </a>
   </footer>
-
   <script src="https://vjs.zencdn.net/8.5.2/video.min.js"></script>
 
-  <script src="../suggestions-library.js"></script>
+ <script src="../suggestions-library.js"></script>
 <script src="../suggested-content.js"></script>
 
- 
 <script>
 
-window.movieId = "{{movieId}}";
+window.movieId = "backrooms-sin-salida-1083381";
 
 
 
@@ -499,11 +530,35 @@ const playPauseBtn = document.getElementById('playPauseBtn').querySelector('.mat
 const cover = document.getElementById('cover');
 const thumb = document.getElementById('thumb'); // si existe
 
+/* =============================
+   🔥 INTEGRACIÓN CON EL VIDEO
+============================= */
 
-/*
+// Activar WakeLock cuando empieza
+video.addEventListener("play", () => {
+  requestWakeLock();
+});
+
+// Reintentar cuando pone fullscreen
+video.addEventListener("fullscreenchange", () => {
+  if (document.fullscreenElement) {
+    requestWakeLock();
+  }
+});
+
+// Quitar WakeLock al pausar
+video.addEventListener("pause", () => {
+  releaseWakeLock();
+});
+
+// Quitar WakeLock al terminar
+video.addEventListener("ended", () => {
+  releaseWakeLock();
+});
+
+
 (function () {
-  
-  const source = document.getElementById("videoSource");
+   const source = document.getElementById("videoSource");
   const langBtnWrapper = document.getElementById("langBtnWrapper");
   const langMenu = document.getElementById("langMenu");
   const langOptions = document.querySelectorAll(".lang-option");
@@ -512,8 +567,8 @@ const thumb = document.getElementById('thumb'); // si existe
   const overlayBg = document.getElementById("overlay");
 
   const videos = {
-    latino: "tu video.mp4",
-    ingles: "tu video.mp4"
+    latino: "https://od.lk/s/M18zMzEzMzMyMjNf/Backrooms.mp4",
+    ingles: "https://od.lk/s/M18zMzEzMzI4MDRf/Backrooms%20sub.mp4"
   };
 
   let currentLang = "latino";       // idioma que está reproduciéndose
@@ -628,7 +683,7 @@ video.load();
   document.addEventListener('touchstart', handleOutsideClose, true);
 
 })();
-*/
+
 
 
 // ------------------------
