@@ -98,6 +98,148 @@ Buscar
 
     <div id="resultados" class="grid grid-cols-3 sm:grid-cols-4 gap-3"></div>
 
+    <!-- ===========================
+     GENERADOR DE CARRUSELES
+=========================== -->
+
+<div class="panel mt-8 space-y-4">
+
+<h2 class="text-2xl font-bold">
+Generador de Carrusel TMDB
+</h2>
+
+<div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+
+<select id="carouselTipo"
+class="p-2 rounded bg-slate-800 border-slate-600">
+
+<option value="movie">Películas</option>
+<option value="tv">Series</option>
+
+</select>
+
+<select id="carouselCarpeta"
+class="p-2 rounded bg-slate-800 border-slate-600">
+
+<option value="">Sin carpeta</option>
+
+<option value="DC/">DC</option>
+
+<option value="Marvel/">Marvel</option>
+
+<option value="Disney/">Disney</option>
+
+<option value="Anime/">Anime</option>
+
+<option value="Doramas/">Doramas</option>
+
+<option value="Harry-Potter/">Harry Potter</option>
+
+<option value="Star-Wars/">Star Wars</option>
+
+<option value="Peliculas/">Películas</option>
+
+<option value="Series/">Series</option>
+
+</select>
+
+<select id="carouselGenero"
+class="p-2 rounded bg-slate-800 border-slate-600">
+
+<option value="28">Acción</option>
+<option value="12">Aventura</option>
+<option value="16">Animación</option>
+<option value="35">Comedia</option>
+<option value="80">Crimen</option>
+<option value="99">Documental</option>
+<option value="18">Drama</option>
+<option value="10751">Familiar</option>
+<option value="14">Fantasía</option>
+<option value="36">Historia</option>
+<option value="27">Terror</option>
+<option value="10402">Música</option>
+<option value="9648">Misterio</option>
+<option value="10749">Romance</option>
+<option value="878">Ciencia ficción</option>
+<option value="10770">TV Movie</option>
+<option value="53">Suspenso</option>
+<option value="10752">Guerra</option>
+<option value="37">Western</option>
+
+</select>
+
+<select id="carouselFormato"
+class="p-2 rounded bg-slate-800 border-slate-600">
+
+<option value="poster">
+Portrait
+</option>
+
+<option value="backdrop">
+Landscape
+</option>
+
+</select>
+
+<input
+id="carouselTitulo"
+type="text"
+placeholder="Título del carrusel"
+class="p-2 rounded bg-slate-800 border-slate-600">
+
+<input
+id="carouselCantidad"
+type="number"
+value="20"
+min="1"
+max="100"
+class="p-2 rounded bg-slate-800 border-slate-600">
+
+<button
+onclick="generarCarrusel()"
+class="bg-green-700 hover:bg-green-600 rounded p-2">
+
+Generar Carrusel
+
+</button>
+
+</div>
+
+<div id="carouselResultados"
+class="space-y-2 max-h-[600px] overflow-y-auto"></div>
+
+<div class="flex gap-2 mt-4">
+
+<button
+onclick="seleccionarTodo()"
+class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded">
+
+Seleccionar todo
+
+</button>
+
+<button
+onclick="deseleccionarTodo()"
+class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded">
+
+Deseleccionar
+
+</button>
+
+<button
+onclick="copiarCarrusel()"
+class="bg-green-700 hover:bg-green-600 px-4 py-2 rounded">
+
+Copiar seleccionados
+
+</button>
+
+</div>
+
+</div>
+
+
+
     <div id="seleccion" class="hidden space-y-4">
       <div class="text-center">
         <img id="imagenSeleccion" class="mx-auto rounded max-w-xs w-full" alt="Seleccionado" />
@@ -140,6 +282,28 @@ class="w-full mt-4 h-[700px] p-5 bg-slate-950 border border-slate-700 rounded-lg
 
   <script>
    const API_KEY = '4b77886f6f12c73066c0d0509038df60';
+
+   const GENRES = {
+28:"Acción",
+12:"Aventura",
+16:"Animación",
+35:"Comedia",
+80:"Crimen",
+99:"Documental",
+18:"Drama",
+10751:"Familiar",
+14:"Fantasía",
+36:"Historia",
+27:"Terror",
+10402:"Música",
+9648:"Misterio",
+10749:"Romance",
+878:"Ciencia ficción",
+10770:"TV Movie",
+53:"Suspenso",
+10752:"Guerra",
+37:"Western"
+};
 
 function escapeHTML(str) {
   return str ? str.replace(/[&<>"']/g, m => ({
@@ -514,6 +678,173 @@ const sugerenciasHTML = (recomendaciones.results || []).slice(0, 4).map(rec => {
   }
 }
 
+async function generarCarrusel(){
+
+const tipo=document.getElementById("carouselTipo").value;
+let genero=document.getElementById("carouselGenero").value;
+const formato=document.getElementById("carouselFormato").value;
+const cantidad=parseInt(document.getElementById("carouselCantidad").value);
+const carpeta=document.getElementById("carouselCarpeta").value;
+
+// Géneros TMDB para SERIES
+if(tipo === "tv"){
+
+    const generosTV = {
+        "28":"10759", // Acción/Aventura
+        "12":"10759", // Aventura
+        "16":"16",    // Animación
+        "35":"35",    // Comedia
+        "80":"80",    // Crimen
+        "18":"18",    // Drama
+        "27":"9648",  // Terror/Misterio
+        "878":"10765" // Ciencia ficción/Fantasía
+    };
+
+    genero = generosTV[genero] || genero;
+
+}
+
+
+let filtroColeccion = "";
+
+
+// =====================
+// PELICULAS
+// =====================
+
+if(tipo === "movie"){
+
+    if(carpeta === "Marvel/"){
+        filtroColeccion = "&with_keywords=180547";
+    }
+
+
+    if(carpeta === "DC/"){
+        filtroColeccion = "&with_companies=9993";
+    }
+
+
+    if(carpeta === "Disney/"){
+        filtroColeccion = "&with_companies=2";
+    }
+
+
+    if(carpeta === "Harry-Potter/"){
+        filtroColeccion = "&with_keywords=818";
+    }
+
+   if(carpeta === "Star-Wars/"){
+    filtroColeccion = "&with_companies=1";
+}
+
+
+    if(carpeta === "Anime/"){
+        filtroColeccion = "&with_original_language=ja";
+    }
+
+
+    // Películas normales
+      else if(carpeta === "Peliculas/"){
+
+        filtroColeccion =
+        "&without_keywords=180547|849";
+
+    }
+
+}
+
+
+// =====================
+// SERIES
+// =====================
+
+if(tipo === "tv"){
+
+    if(carpeta === "Marvel/"){
+        filtroColeccion = "&with_companies=420";
+    }
+
+     if(carpeta === "DC/"){
+        filtroColeccion = "&with_networks=71|3186";
+    }
+
+    if(carpeta === "Disney/"){
+        filtroColeccion = "&with_networks=2739";
+    }
+
+    if(carpeta === "Star-Wars/"){
+    filtroColeccion = "&with_networks=2739";
+}
+
+    if(carpeta === "Anime/"){
+        filtroColeccion = "&with_original_language=ja";
+    }
+
+    if(carpeta === "Doramas/"){
+        filtroColeccion = "&with_original_language=ko";
+    }
+
+}
+
+
+
+console.log(
+"TIPO:",
+tipo,
+"GENERO:",
+genero,
+"CARPETA:",
+carpeta,
+"FILTRO:",
+filtroColeccion
+);
+
+const res=await fetch(
+`https://api.themoviedb.org/3/discover/${tipo}?api_key=${API_KEY}&language=es-MX&sort_by=popularity.desc&with_genres=${genero}${filtroColeccion}&page=1`
+);
+
+const data=await res.json();
+
+const contenedor = document.getElementById("carouselResultados");
+
+contenedor.innerHTML = "";
+
+(data.results || []).slice(0, cantidad).forEach(item => {
+
+const titulo = item.title || item.name;
+
+const slug = generarSlug(titulo);
+
+const carpeta = document.getElementById("carouselCarpeta").value;
+
+const imagen = formato === "poster"
+    ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+    : `https://image.tmdb.org/t/p/original${item.backdrop_path}`;
+
+const div = document.createElement("div");
+
+div.className = "flex items-center gap-3 bg-slate-900 p-2 rounded";
+
+div.dataset.slug = slug;
+div.dataset.imagen = imagen;
+
+div.innerHTML = `
+<input type="checkbox" class="carouselCheck" checked>
+
+<img src="${imagen}" class="w-16 rounded">
+
+<div class="flex-1">
+    <div class="font-semibold">${escapeHTML(titulo)}</div>
+    <div class="text-xs text-slate-400">${carpeta}${slug}.html</div>
+</div>
+`;
+
+contenedor.appendChild(div);
+
+});
+
+}
+
 function copiarTexto() {
   const salida = document.getElementById('salida');
   if (!salida.value.trim()) {
@@ -529,7 +860,99 @@ function copiarTexto() {
   });
 }
 
+function seleccionarTodo(){
 
+document.querySelectorAll(".carouselCheck").forEach(c=>{
+c.checked=true;
+});
+
+}
+
+function deseleccionarTodo(){
+
+document.querySelectorAll(".carouselCheck").forEach(c=>{
+c.checked=false;
+});
+
+}
+
+function copiarCarrusel(){
+
+let html = "";
+
+const formato = document.getElementById("carouselFormato").value;
+const tituloCarrusel = document.getElementById("carouselTitulo").value || "Nuevo Carrusel";
+const carpeta = document.getElementById("carouselCarpeta").value;
+
+const seleccionados = document.querySelectorAll("#carouselResultados .carouselCheck:checked");
+
+if(seleccionados.length === 0){
+    alert("Selecciona al menos un elemento.");
+    return;
+}
+
+// Encabezado
+html += formato === "poster" ? `
+<div class="movie-section">
+  <h2>${tituloCarrusel}</h2>
+  <div class="scroll-container">
+
+`
+:
+`
+<div class="movie-section">
+  <h2>${tituloCarrusel}</h2>
+  <div class="horizontal-scroll-container">
+
+`;
+
+// Películas seleccionadas
+seleccionados.forEach(check=>{
+
+    const item = check.parentElement;
+
+    const slug = item.dataset.slug;
+    const imagen = item.dataset.imagen;
+
+    if(formato === "poster"){
+
+        html += `
+    <a href="${carpeta}${slug}.html">
+      <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='130' height='200'></svg>"
+           data-src="${imagen}"
+           class="lazy-img"
+           alt="${slug}">
+    </a>
+
+`;
+
+    }else{
+
+        html += `
+    <a href="${carpeta}${slug}.html">
+      <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'></svg>"
+           data-src="${imagen}"
+           class="lazy-img"
+           alt="${slug}">
+    </a>
+
+`;
+
+    }
+
+});
+
+// Cierre
+html += `
+  </div>
+</div>
+`;
+
+navigator.clipboard.writeText(html);
+
+alert("Carrusel copiado.");
+
+}
 
 
   </script>
