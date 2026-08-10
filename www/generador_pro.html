@@ -72,6 +72,188 @@ input::selection{
     color:white;
 }
 
+/* =========================================
+   PREVIEW DEL CARRUSEL
+========================================= */
+
+#carouselPreviewWrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* =========================================
+   PREVIEW PORTRAIT
+========================================= */
+
+#carouselPreview.scroll-container {
+
+    display: flex;
+
+    gap: 12px;
+
+    overflow-x: auto;
+
+    overflow-y: hidden;
+
+    scroll-behavior: smooth;
+
+    padding: 5px 2px 12px;
+
+    scrollbar-width: thin;
+
+}
+
+
+/* =========================================
+   PREVIEW LANDSCAPE
+========================================= */
+
+#carouselPreview.horizontal-scroll-container {
+
+    display: flex;
+
+    gap: 14px;
+
+    overflow-x: auto;
+
+    overflow-y: hidden;
+
+    scroll-behavior: smooth;
+
+    padding: 5px 2px 12px;
+
+    scrollbar-width: thin;
+
+}
+
+
+/* =========================================
+   POSTERS
+========================================= */
+
+#carouselPreview.scroll-container a {
+
+    flex: 0 0 auto;
+
+    width: 130px;
+
+    position: relative;
+
+}
+
+
+#carouselPreview.scroll-container img {
+
+    width: 130px;
+
+    height: 200px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+
+    display: block;
+
+}
+
+
+/* =========================================
+   LANDSCAPE
+========================================= */
+
+#carouselPreview.horizontal-scroll-container a {
+
+    flex: 0 0 auto;
+
+    width: 260px;
+
+    position: relative;
+
+}
+
+
+#carouselPreview.horizontal-scroll-container img {
+
+    width: 260px;
+
+    height: 146px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+
+    display: block;
+
+}
+
+
+/* =========================================
+   BOTÓN QUITAR
+========================================= */
+
+.preview-remove {
+
+    position: absolute;
+
+    top: 5px;
+
+    right: 5px;
+
+    width: 26px;
+
+    height: 26px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    background: rgba(0,0,0,.8);
+
+    color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    z-index: 5;
+
+}
+
+
+.preview-remove:hover {
+
+    background: #dc2626;
+
+}
+
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+#carouselPreview::-webkit-scrollbar {
+
+    height: 6px;
+
+}
+
+
+#carouselPreview::-webkit-scrollbar-thumb {
+
+    background: #475569;
+
+    border-radius: 10px;
+
+}
+
+
+#carouselPreview::-webkit-scrollbar-track {
+
+    background: transparent;
+
+}
+
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen p-6 font-sans">
@@ -108,7 +290,7 @@ Buscar
 Generador de Carrusel TMDB
 </h2>
 
-<div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+<div class="grid grid-cols-2 md:grid-cols-6 gap-3">
 
 <select id="carouselTipo"
 class="p-2 rounded bg-slate-800 border-slate-600">
@@ -118,27 +300,31 @@ class="p-2 rounded bg-slate-800 border-slate-600">
 
 </select>
 
+<select id="carouselModo"
+class="p-2 rounded bg-slate-800 border-slate-600">
+
+<option value="random">🔀 Aleatorio</option>
+<option value="search">🔎 Buscar por nombre</option>
+
+</select>
+
+<input
+id="carouselBusqueda"
+type="text"
+placeholder="Buscar película o serie..."
+class="p-2 rounded bg-slate-800 border-slate-600">
+
 <select id="carouselCarpeta"
 class="p-2 rounded bg-slate-800 border-slate-600">
 
-<option value="">Sin carpeta</option>
-
 <option value="DC/">DC</option>
-
 <option value="Marvel/">Marvel</option>
-
 <option value="Disney/">Disney</option>
-
 <option value="Anime/">Anime</option>
-
 <option value="Doramas/">Doramas</option>
-
 <option value="Harry-Potter/">Harry Potter</option>
-
 <option value="Star-Wars/">Star Wars</option>
-
 <option value="Peliculas/">Películas</option>
-
 <option value="Series/">Series</option>
 
 </select>
@@ -192,45 +378,111 @@ id="carouselCantidad"
 type="number"
 value="20"
 min="1"
-max="100"
+step="1"
+placeholder="Cantidad"
 class="p-2 rounded bg-slate-800 border-slate-600">
 
 <button
 onclick="generarCarrusel()"
-class="bg-green-700 hover:bg-green-600 rounded p-2">
+class="bg-green-700 hover:bg-green-600 rounded p-2 font-semibold">
 
-Generar Carrusel
+Buscar contenido
 
 </button>
 
 </div>
 
-<div id="carouselResultados"
-class="space-y-2 max-h-[600px] overflow-y-auto"></div>
+ <div>
 
-<div class="flex gap-2 mt-4">
+    <div class="flex items-center justify-between mb-2">
 
-<button
-onclick="seleccionarTodo()"
-class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded">
+      <h3 class="font-semibold text-lg">
+        Resultados
+      </h3>
 
-Seleccionar todo
+      <div class="flex gap-2">
 
-</button>
+        <button
+          onclick="seleccionarTodo()"
+          class="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded">
 
-<button
-onclick="deseleccionarTodo()"
-class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded">
+          Seleccionar todo
 
-Deseleccionar
+        </button>
 
-</button>
+
+        <button
+          onclick="deseleccionarTodo()"
+          class="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded">
+
+          Deseleccionar
+
+        </button>
+
+         <button
+          onclick="agregarAlPreview()"
+          class="bg-blue-700 hover:bg-blue-600 px-3 py-2 rounded font-semibold">
+
+          ＋ Agregar al preview
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="carouselResultados"
+      class="space-y-2 max-h-[600px] overflow-y-auto">
+
+    </div>
+
+  </div>
+
+
+  <!-- ==============================
+       PREVIEW REAL DEL CARRUSEL
+  =============================== -->
+
+  <div class="border-t border-slate-700 pt-5 mt-5">
+
+    <div class="flex items-center justify-between mb-3">
+
+      <div>
+
+        <h3 class="text-xl font-bold">
+          Vista previa del carrusel
+        </h3>
+
+        <p
+          id="previewContador"
+          class="text-xs text-slate-400">
+
+          0 elementos
+
+        </p>
+
+      </div>
+
+
+      <div class="flex gap-2">
+
+        <button
+          onclick="vaciarPreview()"
+          class="bg-red-800 hover:bg-red-700 px-3 py-2 rounded">
+
+          Vaciar
+
+        </button>
+
+
 
 <button
 onclick="copiarCarrusel()"
-class="bg-green-700 hover:bg-green-600 px-4 py-2 rounded">
+ class="bg-green-700 hover:bg-green-600 px-4 py-2 rounded font-semibold">
 
-Copiar seleccionados
+📋 Copiar carrusel
 
 </button>
 
@@ -238,6 +490,23 @@ Copiar seleccionados
 
 </div>
 
+  <!-- ESTE ES EL CARRUSEL DEL PREVIEW -->
+
+    <div
+      id="carouselPreviewWrapper"
+      class="bg-slate-950 rounded-xl p-4 border border-slate-700 overflow-hidden">
+
+      <div
+        id="carouselPreview"
+        class="scroll-container">
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
 
 
     <div id="seleccion" class="hidden space-y-4">
@@ -678,172 +947,958 @@ const sugerenciasHTML = (recomendaciones.results || []).slice(0, 4).map(rec => {
   }
 }
 
-async function generarCarrusel(){
+// ======================================================
+// CARRUSEL - ELEMENTOS ACUMULADOS DEL PREVIEW
+// ======================================================
 
-const tipo=document.getElementById("carouselTipo").value;
-let genero=document.getElementById("carouselGenero").value;
-const formato=document.getElementById("carouselFormato").value;
-const cantidad=parseInt(document.getElementById("carouselCantidad").value);
-const carpeta=document.getElementById("carouselCarpeta").value;
+let previewItems = [];
 
-// Géneros TMDB para SERIES
-if(tipo === "tv"){
 
-    const generosTV = {
-        "28":"10759", // Acción/Aventura
-        "12":"10759", // Aventura
-        "16":"16",    // Animación
-        "35":"35",    // Comedia
-        "80":"80",    // Crimen
-        "18":"18",    // Drama
-        "27":"9648",  // Terror/Misterio
-        "878":"10765" // Ciencia ficción/Fantasía
-    };
+// ======================================================
+// AGREGAR RESULTADOS SELECCIONADOS AL PREVIEW
+// ======================================================
 
-    genero = generosTV[genero] || genero;
+
+function agregarAlPreview() {
+
+    const seleccionados =
+        document.querySelectorAll(
+            "#carouselResultados .carouselCheck:checked"
+        );
+
+    if (seleccionados.length === 0) {
+
+        alert("Selecciona al menos un elemento.");
+
+        return;
+    }
+
+
+    // =========================================
+    // CONFIGURACIÓN ACTUAL
+    // =========================================
+
+    const formato =
+        document.getElementById("carouselFormato").value;
+
+    const tituloCarrusel =
+        document.getElementById("carouselTitulo").value ||
+        "Nuevo Carrusel";
+
+    const carpeta =
+        document.getElementById("carouselCarpeta").value;
+
+
+    // =========================================
+    // CONTENEDOR DEL PREVIEW
+    // =========================================
+
+    const preview =
+        document.getElementById("carouselPreview");
+
+
+    // =========================================
+    // ASEGURAR QUE EXISTE LA LISTA
+    // =========================================
+
+    if (!window.carouselPreviewItems) {
+
+        window.carouselPreviewItems = [];
+
+    }
+
+
+    let agregados = 0;
+    let repetidos = 0;
+
+
+    // =========================================
+    // RECORRER SELECCIONADOS
+    // =========================================
+
+    seleccionados.forEach(check => {
+
+        const item =
+            check.closest(".flex.items-center");
+
+
+        if (!item) return;
+
+
+        const slug =
+            item.dataset.slug;
+
+        const imagen =
+            item.dataset.imagen;
+
+        const tmdbId =
+            item.dataset.tmdbid;
+
+
+        if (!slug || !imagen) return;
+
+
+        // =====================================
+        // ID ÚNICO
+        // =====================================
+
+        const identificador =
+            tmdbId ||
+            slug;
+
+
+        // =====================================
+        // EVITAR DUPLICADOS
+        // =====================================
+
+        const existe =
+            window.carouselPreviewItems.some(
+                elemento =>
+                    elemento.id === identificador
+            );
+
+
+        if (existe) {
+
+            repetidos++;
+
+            return;
+
+        }
+
+
+        // =====================================
+        // GUARDAR ELEMENTO
+        // =====================================
+
+        window.carouselPreviewItems.push({
+
+            id: identificador,
+
+            slug: slug,
+
+            imagen: imagen,
+
+            carpeta: carpeta
+
+        });
+
+
+        agregados++;
+
+    });
+
+
+    // =========================================
+    // ACTUALIZAR PREVIEW
+    // =========================================
+
+    renderizarPreview();
+
+
+    // =========================================
+    // MENSAJE
+    // =========================================
+
+    if (agregados > 0) {
+
+        if (repetidos > 0) {
+
+            alert(
+                `${agregados} agregado(s). ` +
+                `${repetidos} ya estaban en el preview.`
+            );
+
+        } else {
+
+            alert(
+                `${agregados} elemento(s) agregado(s) al preview.`
+            );
+
+        }
+
+    } else {
+
+        alert(
+            "Los elementos seleccionados ya están en el preview."
+        );
+
+    }
 
 }
 
 
-let filtroColeccion = "";
 
 
-// =====================
-// PELICULAS
-// =====================
+// ======================================================
+// MOSTRAR PREVIEW
+// ======================================================
 
-if(tipo === "movie"){
 
-    if(carpeta === "Marvel/"){
-        filtroColeccion = "&with_keywords=180547";
+function renderizarPreview() {
+
+    const preview =
+        document.getElementById("carouselPreview");
+
+    const contador =
+        document.getElementById("previewContador");
+
+
+    if (!preview) return;
+
+
+    const formato =
+        document.getElementById("carouselFormato").value;
+
+
+    // =========================================
+    // LIMPIAR
+    // =========================================
+
+    preview.innerHTML = "";
+
+
+    // =========================================
+    // CLASE DEL CARRUSEL
+    // =========================================
+
+    if (formato === "poster") {
+
+        preview.className =
+            "scroll-container";
+
+    } else {
+
+        preview.className =
+            "horizontal-scroll-container";
+
     }
 
 
-    if(carpeta === "DC/"){
-        filtroColeccion = "&with_companies=9993";
+    // =========================================
+    // MOSTRAR ELEMENTOS
+    // =========================================
+
+    window.carouselPreviewItems.forEach(
+        (item, index) => {
+
+            const a =
+                document.createElement("a");
+
+
+            a.href =
+                `${item.carpeta}${item.slug}.html`;
+
+
+            // =====================================
+            // IMAGEN
+            // =====================================
+
+            const img =
+                document.createElement("img");
+
+
+            img.src =
+                item.imagen;
+
+            img.alt =
+                item.slug;
+
+
+            img.className =
+                "lazy-img";
+
+
+            // =====================================
+            // BOTÓN ELIMINAR
+            // =====================================
+
+            const boton =
+                document.createElement("button");
+
+
+            boton.className =
+                "preview-remove";
+
+
+            boton.type =
+                "button";
+
+
+            boton.innerHTML =
+                "×";
+
+
+            boton.onclick =
+                function(event) {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    window.carouselPreviewItems
+                        .splice(index, 1);
+
+
+                    renderizarPreview();
+
+                };
+
+
+            // =====================================
+            // ARMAR TARJETA
+            // =====================================
+
+            a.appendChild(img);
+
+            a.appendChild(boton);
+
+            preview.appendChild(a);
+
+        }
+    );
+
+
+    // =========================================
+    // CONTADOR
+    // =========================================
+
+    if (contador) {
+
+        const cantidad =
+            window.carouselPreviewItems.length;
+
+
+        contador.textContent =
+            `${cantidad} elemento${cantidad === 1 ? "" : "s"}`;
+
     }
 
-
-    if(carpeta === "Disney/"){
-        filtroColeccion = "&with_companies=2";
-    }
-
-
-    if(carpeta === "Harry-Potter/"){
-        filtroColeccion = "&with_keywords=818";
-    }
-
-   if(carpeta === "Star-Wars/"){
-    filtroColeccion = "&with_companies=1";
 }
 
 
-    if(carpeta === "Anime/"){
-        filtroColeccion = "&with_original_language=ja";
+
+
+// ======================================================
+// VACIAR PREVIEW
+// ======================================================
+
+function vaciarPreview() {
+
+    if (previewItems.length === 0) {
+
+        return;
+
     }
 
 
-    // Películas normales
-      else if(carpeta === "Peliculas/"){
+    previewItems = [];
 
-        filtroColeccion =
-        "&without_keywords=180547|849";
 
-    }
+    renderizarPreview();
 
 }
 
 
-// =====================
-// SERIES
-// =====================
+// ======================================================
+// SELECCIONAR TODO
+// ======================================================
 
-if(tipo === "tv"){
+function seleccionarTodo() {
 
-    if(carpeta === "Marvel/"){
-        filtroColeccion = "&with_companies=420";
-    }
+    document
+        .querySelectorAll("#carouselResultados .carouselCheck")
+        .forEach(check => {
 
-     if(carpeta === "DC/"){
-        filtroColeccion = "&with_networks=71|3186";
-    }
+            check.checked = true;
 
-    if(carpeta === "Disney/"){
-        filtroColeccion = "&with_networks=2739";
-    }
-
-    if(carpeta === "Star-Wars/"){
-    filtroColeccion = "&with_networks=2739";
-}
-
-    if(carpeta === "Anime/"){
-        filtroColeccion = "&with_original_language=ja";
-    }
-
-    if(carpeta === "Doramas/"){
-        filtroColeccion = "&with_original_language=ko";
-    }
+        });
 
 }
 
 
+// ======================================================
+// DESELECCIONAR TODO
+// ======================================================
 
-console.log(
-"TIPO:",
-tipo,
-"GENERO:",
-genero,
-"CARPETA:",
-carpeta,
-"FILTRO:",
-filtroColeccion
-);
+function deseleccionarTodo() {
 
-const res=await fetch(
-`https://api.themoviedb.org/3/discover/${tipo}?api_key=${API_KEY}&language=es-MX&sort_by=popularity.desc&with_genres=${genero}${filtroColeccion}&page=1`
-);
+    document
+        .querySelectorAll("#carouselResultados .carouselCheck")
+        .forEach(check => {
 
-const data=await res.json();
+            check.checked = false;
 
-const contenedor = document.getElementById("carouselResultados");
+        });
 
-contenedor.innerHTML = "";
+}
 
-(data.results || []).slice(0, cantidad).forEach(item => {
+async function generarCarrusel() {
 
-const titulo = item.title || item.name;
+    const tipo =
+        document.getElementById("carouselTipo").value;
 
-const slug = generarSlug(titulo);
 
-const carpeta = document.getElementById("carouselCarpeta").value;
+    const modo =
+        document.getElementById("carouselModo").value;
 
-const imagen = formato === "poster"
-    ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-    : `https://image.tmdb.org/t/p/original${item.backdrop_path}`;
 
-const div = document.createElement("div");
+    const busqueda =
+        document.getElementById("carouselBusqueda").value.trim();
 
-div.className = "flex items-center gap-3 bg-slate-900 p-2 rounded";
 
-div.dataset.slug = slug;
+    let genero =
+        document.getElementById("carouselGenero").value;
+
+
+    const formato =
+        document.getElementById("carouselFormato").value;
+
+
+    const cantidad =
+        parseInt(
+            document.getElementById("carouselCantidad").value
+        ) || 20;
+
+
+    const carpeta =
+        document.getElementById("carouselCarpeta").value;
+
+
+    const contenedor =
+        document.getElementById("carouselResultados");
+
+
+    contenedor.innerHTML = `
+        <div class="text-center p-6 text-slate-300">
+            Buscando contenido...
+        </div>
+    `;
+
+
+    // ==========================================
+    // VALIDAR BÚSQUEDA
+    // ==========================================
+
+    if (modo === "search" && !busqueda) {
+
+        contenedor.innerHTML = "";
+
+        alert(
+            "Escribe el nombre de una película o serie."
+        );
+
+        return;
+
+    }
+
+
+    // ==========================================
+    // GÉNEROS SERIES
+    // ==========================================
+
+    if (tipo === "tv") {
+
+        const generosTV = {
+
+            "28": "10759",
+            "12": "10759",
+            "16": "16",
+            "35": "35",
+            "80": "80",
+            "18": "18",
+            "27": "9648",
+            "878": "10765"
+
+        };
+
+
+        genero =
+            generosTV[genero] || genero;
+
+    }
+
+
+    let resultados = [];
+
+
+    // ==========================================
+    // 🔎 BUSCAR POR NOMBRE
+    // ==========================================
+
+    if (modo === "search") {
+
+        const url =
+            `https://api.themoviedb.org/3/search/${tipo}` +
+            `?api_key=${API_KEY}` +
+            `&language=es-MX` +
+            `&query=${encodeURIComponent(busqueda)}` +
+            `&include_adult=false` +
+            `&page=1`;
+
+
+        try {
+
+            const res =
+                await fetch(url);
+
+
+            if (!res.ok) {
+
+                throw new Error(
+                    "Error al consultar TMDB."
+                );
+
+            }
+
+
+            const data =
+                await res.json();
+
+
+            resultados =
+                data.results || [];
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            contenedor.innerHTML = `
+                <div class="text-center p-6 text-red-400">
+                    Error al buscar en TMDB.
+                </div>
+            `;
+
+            return;
+
+        }
+
+    }
+
+
+    // ==========================================
+    // 🔀 MODO ALEATORIO
+    // ==========================================
+
+    else {
+
+        let filtroColeccion = "";
+
+
+        // ======================================
+        // PELÍCULAS
+        // ======================================
+
+        if (tipo === "movie") {
+
+            if (carpeta === "Marvel/") {
+
+                filtroColeccion =
+                    "&with_keywords=180547";
+
+            }
+
+
+            if (carpeta === "DC/") {
+
+                filtroColeccion =
+                    "&with_companies=9993";
+
+            }
+
+
+            if (carpeta === "Disney/") {
+
+                filtroColeccion =
+                    "&with_companies=2";
+
+            }
+
+
+            if (carpeta === "Harry-Potter/") {
+
+                filtroColeccion =
+                    "&with_keywords=818";
+
+            }
+
+
+            if (carpeta === "Star-Wars/") {
+
+                filtroColeccion =
+                    "&with_companies=1";
+
+            }
+
+
+            if (carpeta === "Anime/") {
+
+                filtroColeccion =
+                    "&with_original_language=ja";
+
+            }
+
+
+            if (carpeta === "Peliculas/") {
+
+                filtroColeccion =
+                    "&without_keywords=180547|849";
+
+            }
+
+        }
+
+
+        // ======================================
+        // SERIES
+        // ======================================
+
+        if (tipo === "tv") {
+
+            if (carpeta === "Marvel/") {
+
+                filtroColeccion =
+                    "&with_companies=420";
+
+            }
+
+
+            if (carpeta === "DC/") {
+
+                filtroColeccion =
+                    "&with_networks=71|3186";
+
+            }
+
+
+            if (carpeta === "Disney/") {
+
+                filtroColeccion =
+                    "&with_networks=2739";
+
+            }
+
+
+            if (carpeta === "Star-Wars/") {
+
+                filtroColeccion =
+                    "&with_networks=2739";
+
+            }
+
+
+            if (carpeta === "Anime/") {
+
+                filtroColeccion =
+                    "&with_original_language=ja";
+
+            }
+
+
+            if (carpeta === "Doramas/") {
+
+                filtroColeccion =
+                    "&with_original_language=ko";
+
+            }
+
+        }
+
+
+        // ======================================
+        // PÁGINA ALEATORIA
+        // ======================================
+
+        const paginaAleatoria =
+            Math.floor(Math.random() * 10) + 1;
+
+
+        const url =
+            `https://api.themoviedb.org/3/discover/${tipo}` +
+            `?api_key=${API_KEY}` +
+            `&language=es-MX` +
+            `&sort_by=popularity.desc` +
+            `&with_genres=${genero}` +
+            `${filtroColeccion}` +
+            `&page=${paginaAleatoria}`;
+
+
+        try {
+
+            const res =
+                await fetch(url);
+
+
+            if (!res.ok) {
+
+                throw new Error(
+                    "Error al consultar TMDB."
+                );
+
+            }
+
+
+            const data =
+                await res.json();
+
+
+            resultados =
+                data.results || [];
+
+
+            // Mezclar
+            resultados.sort(
+                () => Math.random() - 0.5
+            );
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            contenedor.innerHTML = `
+                <div class="text-center p-6 text-red-400">
+                    Error al obtener contenido de TMDB.
+                </div>
+            `;
+
+            return;
+
+        }
+
+    }
+
+
+    // ==========================================
+    // FILTRAR IMÁGENES
+    // ==========================================
+
+    resultados =
+        resultados.filter(item => {
+
+            if (formato === "poster") {
+
+                return !!item.poster_path;
+
+            }
+
+
+            return !!item.backdrop_path;
+
+        });
+
+
+    // ==========================================
+    // CANTIDAD
+    // ==========================================
+
+    resultados =
+        resultados.slice(0, cantidad);
+
+
+    contenedor.innerHTML = "";
+
+
+    // ==========================================
+    // MOSTRAR RESULTADOS
+    // ==========================================
+
+    for (const item of resultados) {
+
+    const titulo =
+        item.title ||
+        item.name ||
+        "Sin título";
+
+    const slug =
+        generarSlug(titulo);
+
+    let imagen = "";
+
+    // =========================================
+    // 🖼️ POSTER
+    // =========================================
+
+    if (formato === "poster") {
+
+        if (!item.poster_path) continue;
+
+        imagen =
+            `https://image.tmdb.org/t/p/w500${item.poster_path}`;
+
+    }
+
+    // =========================================
+    // 🎬 LANDSCAPE
+    // Buscar backdrop con idioma
+    // =========================================
+
+    else {
+
+        try {
+
+            const imagesUrl =
+                `https://api.themoviedb.org/3/${tipo}/${item.id}/images` +
+                `?api_key=${API_KEY}`;
+
+            const imagesRes =
+                await fetch(imagesUrl);
+
+            const imagesData =
+                await imagesRes.json();
+
+            const backdrops =
+                imagesData.backdrops || [];
+
+
+            // =====================================
+            // PRIORIDAD DE IDIOMAS
+            // 1. Español México
+            // 2. Español
+            // 3. Inglés
+            // 4. Sin idioma
+            // =====================================
+
+            let backdrop =
+                backdrops.find(img =>
+                    img.iso_639_1 === "es-MX"
+                );
+
+
+            if (!backdrop) {
+
+                backdrop =
+                    backdrops.find(img =>
+                        img.iso_639_1 === "es"
+                    );
+
+            }
+
+
+            if (!backdrop) {
+
+                backdrop =
+                    backdrops.find(img =>
+                        img.iso_639_1 === "en"
+                    );
+
+            }
+
+
+            // =====================================
+            // Si no existe con idioma,
+            // permitir uno sin idioma
+            // como último recurso
+            // =====================================
+
+            if (!backdrop) {
+
+                backdrop =
+                    backdrops.find(img =>
+                        img.iso_639_1 === null
+                    );
+
+            }
+
+
+            if (!backdrop) continue;
+
+
+            imagen =
+                `https://image.tmdb.org/t/p/original${backdrop.file_path}`;
+
+        }
+
+        catch (error) {
+
+            console.warn(
+                "No se pudieron obtener imágenes de:",
+                titulo,
+                error
+            );
+
+            continue;
+
+        }
+
+    }
+
+
+    // =========================================
+    // CREAR RESULTADO
+    // =========================================
+
+    const div =
+        document.createElement("div");
+
+
+    div.className =
+        "flex items-center gap-3 bg-slate-900 p-2 rounded";
+
+
+    div.dataset.slug = slug;
 div.dataset.imagen = imagen;
+div.dataset.tmdbid = item.id;
 
-div.innerHTML = `
-<input type="checkbox" class="carouselCheck" checked>
 
-<img src="${imagen}" class="w-16 rounded">
+    div.innerHTML = `
 
-<div class="flex-1">
-    <div class="font-semibold">${escapeHTML(titulo)}</div>
-    <div class="text-xs text-slate-400">${carpeta}${slug}.html</div>
-</div>
-`;
+        <input
+            type="checkbox"
+            class="carouselCheck"
+            checked
+        >
 
-contenedor.appendChild(div);
+        <img
+            src="${imagen}"
+            class="w-16 rounded"
+        >
 
-});
+        <div class="flex-1">
+
+            <div class="font-semibold">
+                ${escapeHTML(titulo)}
+            </div>
+
+            <div class="text-xs text-slate-400">
+                ${carpeta}${slug}.html
+            </div>
+
+        </div>
+
+    `;
+
+
+    contenedor.appendChild(div);
 
 }
+
+
+    // ==========================================
+    // SIN RESULTADOS
+    // ==========================================
+
+    if (!resultados.length) {
+
+        contenedor.innerHTML = `
+
+            <div class="text-center p-6 text-slate-400">
+
+                No se encontraron resultados.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
 
 function copiarTexto() {
   const salida = document.getElementById('salida');
@@ -876,82 +1931,160 @@ c.checked=false;
 
 }
 
-function copiarCarrusel(){
+function copiarCarrusel() {
 
-let html = "";
+    if (previewItems.length === 0) {
 
-const formato = document.getElementById("carouselFormato").value;
-const tituloCarrusel = document.getElementById("carouselTitulo").value || "Nuevo Carrusel";
-const carpeta = document.getElementById("carouselCarpeta").value;
+        alert(
+            "Primero agrega elementos al preview."
+        );
 
-const seleccionados = document.querySelectorAll("#carouselResultados .carouselCheck:checked");
+        return;
 
-if(seleccionados.length === 0){
-    alert("Selecciona al menos un elemento.");
-    return;
-}
+    }
 
-// Encabezado
-html += formato === "poster" ? `
+
+    const formato =
+        document.getElementById("carouselFormato").value;
+
+
+    const tituloCarrusel =
+        document.getElementById("carouselTitulo").value.trim()
+        || "Nuevo Carrusel";
+
+
+    const carpeta =
+        document.getElementById("carouselCarpeta").value;
+
+
+    let html = "";
+
+
+    // ==========================================
+    // ENCABEZADO
+    // ==========================================
+
+    if (formato === "poster") {
+
+        html += `
 <div class="movie-section">
-  <h2>${tituloCarrusel}</h2>
+  <h2>${escapeHTML(tituloCarrusel)}</h2>
   <div class="scroll-container">
 
-`
-:
-`
+`;
+
+    } else {
+
+        html += `
 <div class="movie-section">
-  <h2>${tituloCarrusel}</h2>
+  <h2>${escapeHTML(tituloCarrusel)}</h2>
   <div class="horizontal-scroll-container">
-
-`;
-
-// Películas seleccionadas
-seleccionados.forEach(check=>{
-
-    const item = check.parentElement;
-
-    const slug = item.dataset.slug;
-    const imagen = item.dataset.imagen;
-
-    if(formato === "poster"){
-
-        html += `
-    <a href="${carpeta}${slug}.html">
-      <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='130' height='200'></svg>"
-           data-src="${imagen}"
-           class="lazy-img"
-           alt="${slug}">
-    </a>
-
-`;
-
-    }else{
-
-        html += `
-    <a href="${carpeta}${slug}.html">
-      <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'></svg>"
-           data-src="${imagen}"
-           class="lazy-img"
-           alt="${slug}">
-    </a>
 
 `;
 
     }
 
-});
 
-// Cierre
-html += `
+    // ==========================================
+    // ELEMENTOS DEL PREVIEW
+    // ==========================================
+
+    previewItems.forEach(item => {
+
+
+        if (formato === "poster") {
+
+            html += `
+    <a href="${carpeta}${item.slug}.html">
+      <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='130' height='200'></svg>"
+           data-src="${item.imagen}"
+           class="lazy-img"
+           alt="${escapeHTML(item.slug)}">
+    </a>
+
+`;
+
+        } else {
+
+            html += `
+    <a href="${carpeta}${item.slug}.html">
+      <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'></svg>"
+           data-src="${item.imagen}"
+           class="lazy-img"
+           alt="${escapeHTML(item.slug)}">
+    </a>
+
+`;
+
+        }
+
+    });
+
+
+    // ==========================================
+    // CIERRE
+    // ==========================================
+
+    html += `
   </div>
 </div>
 `;
 
-navigator.clipboard.writeText(html);
 
-alert("Carrusel copiado.");
+    // ==========================================
+    // COPIAR
+    // ==========================================
 
+    navigator.clipboard.writeText(html)
+
+        .then(() => {
+
+            alert(
+                `Carrusel copiado con ${previewItems.length} elemento${previewItems.length === 1 ? "" : "s"}.`
+            );
+
+        })
+
+        .catch(() => {
+
+            alert(
+                "No se pudo copiar automáticamente. Usa Ctrl+C."
+            );
+
+        });
+
+}
+
+
+function vaciarPreview() {
+
+    const preview = document.getElementById("carouselPreview");
+    const contador = document.getElementById("previewContador");
+
+    if (!preview) {
+        console.error("No existe #carouselPreview");
+        return;
+    }
+
+    // Vaciar visualmente el carrusel
+    preview.innerHTML = "";
+
+    // Reiniciar contador
+    if (contador) {
+        contador.textContent = "0 elementos";
+    }
+
+    // Reiniciar arreglo si tu sistema lo utiliza
+    if (Array.isArray(window.previewItems)) {
+        window.previewItems.length = 0;
+    }
+
+    // Reiniciar también cualquier colección global común
+    if (Array.isArray(window.carouselPreviewItems)) {
+        window.carouselPreviewItems.length = 0;
+    }
+
+    console.log("Preview vaciado correctamente");
 }
 
 
