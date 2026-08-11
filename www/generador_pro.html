@@ -1933,7 +1933,10 @@ c.checked=false;
 
 function copiarCarrusel() {
 
-    if (previewItems.length === 0) {
+    if (
+        !window.carouselPreviewItems ||
+        window.carouselPreviewItems.length === 0
+    ) {
 
         alert(
             "Primero agrega elementos al preview."
@@ -1989,7 +1992,7 @@ function copiarCarrusel() {
     // ELEMENTOS DEL PREVIEW
     // ==========================================
 
-    previewItems.forEach(item => {
+    window.carouselPreviewItems.forEach(item => {
 
 
         if (formato === "poster") {
@@ -2040,7 +2043,7 @@ function copiarCarrusel() {
         .then(() => {
 
             alert(
-                `Carrusel copiado con ${previewItems.length} elemento${previewItems.length === 1 ? "" : "s"}.`
+                `Carrusel copiado con ${window.carouselPreviewItems.length} elemento${window.carouselPreviewItems.length === 1 ? "" : "s"}.`
             );
 
         })
