@@ -1,0 +1,472 @@
+::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: #888; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+    body{
+    background:#07111f;
+    background-image:linear-gradient(180deg,#07111f,#0c1728);
+}
+
+input,
+select,
+textarea,
+button{
+    outline:none;
+    -webkit-tap-highlight-color:transparent;
+}
+
+button,
+img,
+a,
+div{
+    -webkit-tap-highlight-color:transparent;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#3b82f6 !important;
+    box-shadow:0 0 0 2px rgba(59,130,246,.25);
+}
+
+button:focus{
+    outline:none;
+}
+
+.panel{
+    background:#101c2d;
+    border:1px solid #25344b;
+    border-radius:16px;
+    padding:20px;
+}
+
+.poster-card{
+    transition:.2s;
+}
+
+.poster-card:hover{
+    transform:translateY(-4px);
+}
+
+#salida{
+    min-height:700px;
+    background:#0b1322;
+    color:#dbeafe;
+    border:1px solid #2c3f59;
+    font-size:13px;
+    line-height:1.5;
+}
+
+textarea::selection,
+input::selection{
+    background:#3b82f6;
+    color:white;
+}
+
+/* =========================================
+   PREVIEW DEL CARRUSEL
+========================================= */
+
+#carouselPreviewWrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* =========================================
+   PREVIEW PORTRAIT
+========================================= */
+
+#carouselPreview.scroll-container {
+
+    display: flex;
+
+    gap: 12px;
+
+    overflow-x: auto;
+
+    overflow-y: hidden;
+
+    scroll-behavior: smooth;
+
+    padding: 5px 2px 12px;
+
+    scrollbar-width: thin;
+
+}
+
+
+/* =========================================
+   PREVIEW LANDSCAPE
+========================================= */
+
+#carouselPreview.horizontal-scroll-container {
+
+    display: flex;
+
+    gap: 14px;
+
+    overflow-x: auto;
+
+    overflow-y: hidden;
+
+    scroll-behavior: smooth;
+
+    padding: 5px 2px 12px;
+
+    scrollbar-width: thin;
+
+}
+
+
+/* =========================================
+   POSTERS
+========================================= */
+
+#carouselPreview.scroll-container a {
+
+    flex: 0 0 auto;
+
+    width: 130px;
+
+    position: relative;
+
+}
+
+
+#carouselPreview.scroll-container img {
+
+    width: 130px;
+
+    height: 200px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+
+    display: block;
+
+}
+
+
+/* =========================================
+   LANDSCAPE
+========================================= */
+
+#carouselPreview.horizontal-scroll-container a {
+
+    flex: 0 0 auto;
+
+    width: 260px;
+
+    position: relative;
+
+}
+
+
+#carouselPreview.horizontal-scroll-container img {
+
+    width: 260px;
+
+    height: 146px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+
+    display: block;
+
+}
+
+
+/* =========================================
+   BOTÓN QUITAR
+========================================= */
+
+.preview-remove {
+
+    position: absolute;
+
+    top: 5px;
+
+    right: 5px;
+
+    width: 26px;
+
+    height: 26px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    background: rgba(0,0,0,.8);
+
+    color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    z-index: 5;
+
+}
+
+
+.preview-remove:hover {
+
+    background: #dc2626;
+
+}
+
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+#carouselPreview::-webkit-scrollbar {
+
+    height: 6px;
+
+}
+
+
+#carouselPreview::-webkit-scrollbar-thumb {
+
+    background: #475569;
+
+    border-radius: 10px;
+
+}
+
+
+#carouselPreview::-webkit-scrollbar-track {
+
+    background: transparent;
+
+}
+
+/* ======================================================
+   TOP 10 PREVIEW
+====================================================== */
+
+.top-10 {
+    width: 100%;
+    padding: 12px 0;
+}
+
+
+/* ======================================================
+   CABECERA
+====================================================== */
+
+.top-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+
+/* ======================================================
+   LOGO PEQUEÑO
+====================================================== */
+
+.top-logo {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+
+/* ======================================================
+   TÍTULO
+====================================================== */
+
+.top-header h2 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.1;
+    font-weight: 700;
+}
+
+
+/* ======================================================
+   CARRUSEL
+====================================================== */
+
+.scrollable {
+    display: flex;
+    gap: 12px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 4px 4px 12px;
+
+    scroll-behavior: smooth;
+
+    scrollbar-width: thin;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+
+/* ======================================================
+   CARD
+====================================================== */
+
+.scrollable .card {
+    position: relative;
+
+    flex: 0 0 auto;
+
+    width: 130px;
+
+    border-radius: 8px;
+
+    overflow: visible;
+}
+
+
+/* ======================================================
+   IMAGEN
+====================================================== */
+
+.scrollable .card img {
+    display: block;
+
+    width: 130px;
+    height: 195px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+}
+
+
+/* ======================================================
+   NUMERO
+====================================================== */
+
+.rank-number {
+    position: absolute;
+
+    left: -5px;
+    bottom: -3px;
+
+    z-index: 5;
+
+    font-size: 42px;
+
+    line-height: 1;
+
+    font-weight: 900;
+
+    color: white;
+
+    text-shadow:
+        2px 2px 3px rgba(0,0,0,.9),
+        -1px -1px 2px rgba(0,0,0,.8);
+
+    pointer-events: none;
+}
+
+
+/* ======================================================
+   SCROLLBAR
+====================================================== */
+
+.scrollable::-webkit-scrollbar {
+    height: 6px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.25);
+    border-radius: 10px;
+}
+
+
+/* ======================================================
+   MÓVIL
+====================================================== */
+
+@media (max-width: 600px) {
+
+    .top-logo {
+        width: 44px;
+        height: 44px;
+    }
+
+    .top-header h2 {
+        font-size: 17px;
+    }
+
+    .scrollable .card {
+        width: 105px;
+    }
+
+    .scrollable .card img {
+        width: 105px;
+        height: 158px;
+    }
+
+    .rank-number {
+        font-size: 34px;
+    }
+
+}
+
+/* =========================================================
+   PESTAÑAS DEL GENERADOR
+========================================================= */
+
+.generator-tab {
+
+    flex: 1;
+
+    min-width: 180px;
+
+    padding: 12px 18px;
+
+    border-radius: 10px;
+
+    background: #1e293b;
+
+    color: #94a3b8;
+
+    font-weight: 700;
+
+    transition: all 0.2s ease;
+
+    border: 1px solid transparent;
+
+}
+
+
+.generator-tab:hover {
+
+    background: #334155;
+
+    color: #f8fafc;
+
+}
+
+
+.generator-tab.active {
+
+    background: #2563eb;
+
+    color: white;
+
+    border-color: #3b82f6;
+
+    box-shadow:
+        0 0 0 1px rgba(59, 130, 246, 0.25),
+        0 4px 15px rgba(0, 0, 0, 0.25);
+
+}
