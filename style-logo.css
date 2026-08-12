@@ -1,0 +1,828 @@
+.logo-it {
+    height: 100px;
+    max-width: 70%;
+    margin-bottom: 0px;
+  }
+  
+  .logo-bruja {
+    height: 100px;
+    max-width: 60%;
+    margin-bottom: -5px;
+  }
+  
+  .logo-diablo {
+    height: 100px;
+    max-width: 78%;
+    margin-bottom: -0px;
+  }
+  
+  .logo-m3gan {
+    height: 120px;
+    max-width: 70%;
+    margin-bottom: -30px;
+  }
+  .logo-triple {
+    height: 120px;
+    max-width: 60%;
+    margin-bottom: -30px;
+  }
+  .logo-deadpool {
+    height: 100px;
+    max-width: 60%;
+    margin-bottom: -0px;
+  }
+  
+  .logo-kraven {
+    height: 100px;
+    max-width: 50%;
+    margin-bottom: -0px;
+  }
+  
+  .logo-abogado {
+    height: 100px;
+    max-width: 65%;
+    margin-bottom: -20px;
+  }
+  
+  .logo-sonic {
+    height: 100px;
+    max-width: 65%;
+    margin-bottom: -0px;
+  }
+  
+  .logo-azteca {
+    height: 100px;
+    max-width: 65%;
+    margin-bottom: -0px;
+  }
+  
+  .logo-cj7 {
+    height: 100px;
+    max-width: 60%;
+    margin-bottom: -0px;
+  }
+  
+  .logo-mentiras {
+    height: 100px;
+    max-width: 70%;
+    margin-bottom: -20px;
+  }
+  
+  .logo-chespirito {
+    height: 100px;
+    max-width: 70%;
+  }
+  
+  .logo-simpson {
+    height: 100px;
+    max-width: 62%;
+    margin-bottom: -0px;
+  }
+  
+  
+  .logo-malcolm {
+    height: 100px;
+    max-width: 70%;
+    margin-bottom: -0px;
+  }
+  
+  .logo-dukes {
+    height: 100px;
+    max-width: 60%;
+    margin-bottom: -0px;
+  }
+  
+  .logo-lost {
+    height: 100px;
+    max-width: 60%;
+    margin-bottom: -10px;
+  }
+  
+  .logo-boys {
+    height: 100px;
+    max-width: 70%;
+    margin-bottom: -0px;
+  }
+  
+  .logo-lois {
+    height: 100px;
+    max-width: 62%;
+    margin-bottom: -0px;
+  }
+  
+  .logo-daima {
+    height: 100px;
+    max-width: 72%;
+    margin-bottom: -10px;
+  }
+  
+  
+  .logo-snk {
+    height: 100px;
+    max-width: 75%;
+    margin-bottom: -10px;
+  }
+  
+  .logo-dragon {
+    height: 100px;
+    max-width: 70%;
+    margin-bottom: -10px;
+  }
+  .logo-vida {
+    height: 100px;
+    max-width: 70%;
+    margin-bottom: -30px;
+  }
+  
+  .logo-slayer {
+    height: 100px;
+    max-width: 80%;
+    margin-bottom: -30px;
+  }
+  
+  .logo-ranma {
+    height: 60px;
+    max-width: 70%;
+    margin-bottom: -0px;
+  }
+  
+  .logo-sailor {
+    height: 80px;
+    max-width: 72%;
+    margin-bottom: 5px;
+  }
+  
+  .logo-elementos {
+    height: 100px;
+    max-width: 52%;
+    margin-bottom: -10px;
+  }
+  
+  .logo-Frankenstein {
+    height: 100px;
+    max-width: 72%;
+    margin-bottom: -10px;
+  }
+  
+  
+  .logo-encanto {
+    height: 100px;
+    max-width: 55%;
+    margin-bottom: -5px;
+  }
+  
+  .logo-mario {
+    height: 150px;
+    max-width: 40%;
+    margin-bottom: -5px;
+  }
+  
+  .logo-bluey {
+    height: 90px;
+    max-width: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .logo-cars {
+    height: 150px;
+    max-width: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .logo-gru {
+    height: 100px;
+    max-width: 42%;
+    margin-bottom: -10px;
+  }
+  
+  .logo-twelve {
+    height: 100px;
+    max-width: 55%;
+    margin-bottom: -20px;
+  }
+  
+  .logo-ling {
+    height: 100px;
+    max-width: 55%;
+    margin-bottom: -20px;
+  }
+  
+  .logo-derry {
+    height: 100px;
+    max-width: 50%;
+    margin-bottom: 0px;
+  }
+  
+  .meta {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #bbb;
+  }
+  
+  .description {
+    margin-top: 8px;
+    font-size: 12px;
+    max-width: 95%;
+    color: #ccc;
+    font-weight: bold;
+  }
+  
+  .logo-strangers {
+    height: 100px;
+    max-width: 42%;
+    margin-bottom: -10px;
+  }
+
+  .logo-zootopia-2 {
+    height: 100px;
+    max-width: 52%;
+    margin-bottom: 10px;
+  }
+  .logo-Avatar-3 {
+    height: 100px;
+    max-width: 52%;
+    margin-bottom: -5px;
+  }
+
+  .logo-Thunderbolts {
+    height: 260px;
+    max-width: 52%;
+    margin-bottom: -100px;
+  }
+
+  .logo-Anaconda {
+    height: 260px;
+    max-width: 52%;
+    margin-bottom: -100px;
+  }
+
+  .logo-vida-de-Bruce-Lee {
+    height: 200px;
+    max-width: 52%;
+    margin-bottom: -40px;
+  }
+
+  .logo-gachiakuta {
+    height: 200px;
+    max-width: 52%;
+    margin-bottom: -70px;
+  }
+
+  .logo-inside {
+    height: 180px;
+    max-width: 50%;
+    margin-bottom: -25px;
+  }
+
+  .logo-duna {
+    height: 280px;
+    max-width: 75%;
+    margin-bottom: -105px;
+    margin-left: 65px;
+  }
+
+  .logo-Blade {
+    height: 280px;
+    max-width: 75%;
+    margin-bottom: -105px;
+    
+  }
+
+  .logo-john {
+    height: 280px;
+    max-width: 35%;
+    margin-bottom: -85px;
+    
+  }
+
+  .logo-oppenheimer {
+    height: 280px;
+    max-width: 65%;
+    margin-bottom: -125px;
+    
+  }
+
+  .logo-The-Batman {
+    height: 250px;
+    max-width: 55%;
+    margin-bottom: -65px;
+    
+  }
+
+  .logo-interestelar {
+    height: 250px;
+    max-width: 65%;
+    margin-bottom: -95px;
+    
+  }
+
+  .logo-conjuro {
+    height: 250px;
+    max-width: 45%;
+    margin-bottom: -95px;
+    
+  }
+
+  .logo-gladiador {
+    height: 250px;
+    max-width: 65%;
+    margin-bottom: -105px;
+    
+  }
+
+  .logo-peaky {
+    height: 250px;
+    max-width: 55%;
+    margin-bottom: -105px;
+    
+  }
+
+  .logo-vampire {
+    height: 250px;
+    max-width: 65%;
+    margin-bottom: -80px;
+    
+  }
+
+  .logo-smallville {
+    height: 250px;
+    max-width: 65%;
+    margin-bottom: -80px;
+    
+  }
+
+  .logo-drake {
+    height: 250px;
+    max-width: 45%;
+    margin-bottom: -70px;
+    
+  }
+
+  .logo-squid {
+    height: 250px;
+    max-width: 65%;
+    margin-bottom: -100px;
+    
+  }
+
+  .logo-oscuridad {
+    height: 250px;
+    max-width: 40%;
+    margin-bottom: -60px;
+    
+  }
+
+  .logo-galaxy {
+    height: 250px;
+    max-width: 40%;
+    margin-bottom: -60px;
+    
+  }
+  .logo-avatar {
+    height: 250px;
+    max-width: 50%;
+    margin-bottom: -80px;
+    
+  }
+
+  .logo-intercambiados {
+    height: 250px;
+    max-width: 50%;
+    margin-bottom: -100px;
+    
+  }
+
+  .logo-Michael {
+    height: 250px;
+    max-width: 70%;
+    margin-bottom: -50px;
+    
+  }
+
+  .logo-Kombat-II {
+    height: 250px;
+    max-width: 70%;
+    margin-bottom: -80px;
+    
+  }
+
+  .logo-toy-story-5 {
+    height: 180px;
+    max-width: 70%;
+    margin-bottom: 10px;
+    
+  }
+
+  .logo-troya {
+    height: 100px;
+    max-width: 60%;
+    margin-bottom: -10px;
+    
+  }
+
+   .logo-nuevo-dia {
+    height: 100px;
+    max-width: 60%;
+    margin-bottom: -10px;
+    
+  }
+
+  @media (min-width: 1200px) {
+    /* Tamaños únicos para cada logo */
+  
+    .logo-it {
+      height: 120px;
+      max-width: 50%;
+      margin-bottom: 40px;
+    }
+  
+    .logo-bruja {
+      height: 100px;
+      max-width: 55%;
+      margin-bottom: 40px;
+    }
+  
+    .logo-diablo {
+      height: 230px;
+      max-width: 48%;
+      margin-bottom: 20px;
+    }
+  
+    .logo-m3gan {
+      height: 120px;
+      max-width: 52%;
+      margin-bottom: 20px;
+    }
+  
+    .logo-mentiras {
+      height: 220px;
+      max-width: 50%;
+      margin-bottom: 0px;
+    }
+  
+    .logo-chespirito {
+      height: 250px;
+      max-width: 58%;
+    }
+  
+    .logo-simpson {
+      height: 180px;
+      max-width: 52%;
+      margin-bottom: 40px;
+    }
+  
+    .logo-triple {
+      height: 120px;
+      max-width: 50%;
+      margin-bottom: 30px;
+    }
+    .logo-deadpool {
+      height: 220px;
+      max-width: 80%;
+      margin-bottom: 10px;
+    }
+    
+    .logo-kraven {
+      height: 200px;
+      max-width: 40%;
+      margin-bottom: 30px;
+    }
+    
+    .logo-abogado {
+      height: 100px;
+      max-width: 60%;
+      margin-bottom: 40px;
+    }
+  
+    .logo-sonic {
+      height: 140px;
+      max-width: 80%;
+      margin-bottom: 40px;
+    }
+  
+    .logo-azteca {
+      height: 140px;
+      max-width: 80%;
+      margin-bottom: 40px;
+    }
+    
+    .logo-cj7 {
+      height: 220px;
+      max-width: 50%;
+      margin-bottom: 50px;
+    }
+  
+    .logo-malcolm {
+      height: 220px;
+      max-width: 50%;
+      margin-bottom: 40px;
+    }
+    
+    .logo-dukes {
+      height: 200px;
+      max-width: 50%;
+      margin-bottom: 50px;
+    }
+    
+    .logo-lost {
+      height: 200px;
+      max-width: 50%;
+      margin-bottom: 10px;
+    }
+    
+    .logo-boys {
+      height: 220px;
+      max-width: 50%;
+      margin-bottom: 30px;
+    }
+    
+    .logo-lois {
+      height: 220px;
+      max-width: 52%;
+      margin-bottom: 20px;
+    }
+  
+    .logo-daima {
+      height: 220px;
+      max-width: 62%;
+      margin-bottom: 20px;
+    }
+    
+    
+    .logo-snk {
+      height: 220px;
+      max-width: 55%;
+      margin-bottom:0px;
+    }
+    
+    .logo-dragon {
+      height: 220px;
+      max-width: 60%;
+      margin-bottom: 30px;
+    }
+    
+    .logo-slayer {
+      height: 150px;
+      max-width: 60%;
+      margin-bottom: 50px;
+    }
+    
+    .logo-ranma {
+      height: 100px;
+      max-width: 60%;
+      margin-bottom: 30px;
+    }
+    
+    .logo-sailor {
+      height: 200px;
+      max-width: 62%;
+      margin-bottom: 20px;
+    }
+  
+    .logo-elementos {
+      height: 200px;
+      max-width: 50%;
+      margin-bottom: 20px;
+    }
+  
+    .logo-Frankenstein {
+      height: 150px;
+      max-width: 40%;
+      margin-bottom: 20px;
+    }
+    
+    
+    .logo-encanto {
+      height: 220px;
+      max-width: 55%;
+      margin-bottom:0px;
+    }
+    
+    .logo-mario {
+      height: 220px;
+      max-width: 60%;
+      margin-bottom: 30px;
+    }
+    
+    .logo-bluey {
+      height: 220px;
+      max-width: 50%;
+      margin-bottom: 0px;
+    }
+    
+    .logo-cars {
+      height: 200px;
+      max-width: 60%;
+      margin-bottom: 40px;
+    }
+    
+    .logo-gru {
+      height: 150px;
+      max-width: 52%;
+      margin-bottom: 30px;
+    }
+  
+    .logo-twelve {
+      height: 100px;
+      max-width: 52%;
+      margin-bottom: 40px;
+    }
+  
+    .logo-ling {
+      height: 100px;
+      max-width: 52%;
+      margin-bottom: 40px;
+    }
+  
+    .logo-derry {
+      height: 120px;
+      max-width: 62%;
+      margin-bottom: 40px;
+    }
+  
+    .logo-vida {
+      height: 100px;
+      max-width: 60%;
+      margin-bottom: 30px;
+    }
+  
+    .logo-strangers {
+      height: 150px;
+      max-width: 26%;
+      margin-bottom: 40px;
+    }
+
+    .logo-zootopia-2 {
+      height: 150px;
+      max-width: 72%;
+      margin-bottom: 10px;
+    }
+
+    .logo-Avatar-3 {
+      height: 120px;
+      max-width: 52%;
+      margin-bottom: 10px;
+    }
+
+    .logo-Thunderbolts {
+      height: 120px;
+      max-width: 52%;
+      margin-bottom: 10px;
+    }
+
+    .logo-Anaconda {
+      height:100px;
+      max-width: 52%;
+      margin-bottom: -10px;
+    }
+
+    .logo-vida-de-Bruce-Lee {
+      height:150px;
+      max-width: 52%;
+      margin-bottom: 10px;
+    }
+
+    .logo-gachiakuta {
+      height:250px;
+      max-width: 52%;
+      margin-bottom: -40px;
+    }
+
+    .logo-inside {
+      height:250px;
+      max-width: 52%;
+      margin-bottom: -10px;
+    }
+
+    .logo-duna {
+      height:130px;
+      max-width: 52%;
+      margin-bottom: -10px;
+    }
+
+    .logo-Blade {
+      height:130px;
+      max-width: 82%;
+      margin-bottom: -10px;
+    }
+
+    .logo-john {
+      height:190px;
+      max-width: 82%;
+      margin-bottom: -0px;
+    }
+
+    .logo-oppenheimer {
+      height:190px;
+      max-width: 42%;
+      margin-bottom: -60px;
+    }
+
+    .logo-The-Batman {
+      height:190px;
+      max-width: 60%;
+      margin-bottom: -10px;
+    }
+
+    .logo-interestelar {
+      height:100px;
+      max-width: 40%;
+      margin-bottom: -10px;
+    }
+
+    .logo-conjuro {
+      height:150px;
+      max-width: 60%;
+      margin-bottom: -10px;
+    }
+
+    .logo-gladiador {
+      height:150px;
+      max-width: 35%;
+      margin-bottom: -30px;
+    }
+
+    .logo-peaky {
+      height:250px;
+      max-width: 35%;
+      margin-bottom: -60px;
+    }
+
+    .logo-vampire {
+      height:250px;
+      max-width: 65%;
+      margin-bottom: -30px;
+    }
+
+    .logo-smallville {
+      height:250px;
+      max-width: 65%;
+      margin-bottom: -30px;
+    }
+
+    .logo-drake {
+      height:250px;
+      max-width: 65%;
+      margin-bottom: -10px;
+    }
+
+    .logo-squid {
+      height:250px;
+      max-width: 45%;
+      margin-bottom: -80px;
+    }
+
+    .logo-oscuridad{
+      height:250px;
+      max-width: 55%;
+      margin-bottom: -10px;
+    }
+
+    .logo-galaxy{
+      height:250px;
+      max-width: 55%;
+      margin-bottom: 10px;
+    }
+
+    .logo-avatar{
+      height:250px;
+      max-width: 55%;
+      margin-bottom: -30px;
+    }
+
+    .logo-intercambiados{
+      height:250px;
+      max-width: 45%;
+      margin-bottom: -60px;
+    }
+
+    .logo-Michael{
+      height:250px;
+      max-width: 75%;
+      margin-bottom: 20px;
+    }
+
+    .logo-Kombat-II{
+      height:250px;
+      max-width: 55%;
+      margin-bottom: -30px;
+    }
+
+     .logo-toy-story-5{
+      height:250px;
+      max-width: 55%;
+      margin-bottom: 30px;
+    }
+
+     .logo-troya{
+      height:200px;
+      max-width: 50%;
+      margin-bottom: 20px;
+    }
+
+    .logo-nuevo-dia{
+      height:200px;
+      max-width: 50%;
+      margin-bottom: 20px;
+    }
+  }

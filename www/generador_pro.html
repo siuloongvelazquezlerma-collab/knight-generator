@@ -53,6 +53,16 @@
 
         </button>
 
+         <button
+        type="button"
+        class="generator-tab"
+        data-tab="swiper"
+        onclick="cambiarGenerador('swiper')">
+
+        🖼️ Swiper
+
+    </button>
+
     </div>
 
 </div>
@@ -716,6 +726,267 @@ class="w-full mt-4 h-[700px] p-5 bg-slate-950 border border-slate-700 rounded-lg
 
 </div>
 
+<!-- =========================================================
+     GENERADOR SWIPER
+========================================================= -->
+
+<div
+    id="generador-swiper"
+    class="generator-section max-w-6xl mx-auto panel mt-8 space-y-4 hidden">
+
+    <h2 class="text-2xl font-bold">
+        Generador Swiper TMDB
+    </h2>
+
+    <!-- CONFIGURACIÓN -->
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+
+        <!-- SECCIÓN -->
+
+        <select
+            id="swiperSeccion"
+            class="p-2 rounded bg-slate-800 border-slate-600">
+
+            <option value="peliculas">
+                🎬 Películas
+            </option>
+
+            <option value="series">
+                📺 Series
+            </option>
+
+            <option value="anime">
+                🍥 Anime
+            </option>
+
+            <option value="doramas">
+                🇰🇷 Doramas
+            </option>
+
+            <option value="infantil">
+                🧸 Infantil y Familia
+            </option>
+
+        </select>
+
+
+        <!-- MODO -->
+
+        <select
+            id="swiperModo"
+            class="p-2 rounded bg-slate-800 border-slate-600">
+
+            <option value="random">
+                🔀 Aleatorio
+            </option>
+
+            <option value="search">
+                🔎 Buscar por nombre
+            </option>
+
+        </select>
+
+
+        <!-- CANTIDAD -->
+
+        <input
+            id="swiperCantidad"
+            type="number"
+            value="6"
+            min="1"
+            max="10"
+            step="1"
+            placeholder="Cantidad"
+            class="p-2 rounded bg-slate-800 border-slate-600">
+
+
+        <!-- CARPETA -->
+
+        <select
+            id="swiperCarpeta"
+            class="p-2 rounded bg-slate-800 border-slate-600">
+
+            <option value="Peliculas/">
+                Películas
+            </option>
+
+            <option value="Series/">
+                Series
+            </option>
+
+            <option value="Anime/">
+                Anime
+            </option>
+
+            <option value="Doramas/">
+                Doramas
+            </option>
+
+            <option value="Infantil/">
+                Infantil
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- BÚSQUEDA -->
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+        <input
+            id="swiperBusqueda"
+            type="text"
+            placeholder="Buscar película o serie..."
+            class="p-2 rounded bg-slate-800 border-slate-600">
+
+        <input
+            id="swiperTitulo"
+            type="text"
+            placeholder="Título de la sección"
+            class="p-2 rounded bg-slate-800 border-slate-600">
+
+    </div>
+
+
+    <!-- BOTÓN -->
+
+    <button
+        type="button"
+        onclick="generarSwiper()"
+        class="bg-blue-700 hover:bg-blue-600 rounded p-3 font-semibold">
+
+        🖼️ Generar Swiper
+
+    </button>
+
+
+    <!-- RESULTADOS -->
+
+    <div class="border-t border-slate-700 pt-5 mt-5">
+
+        <div class="flex items-center justify-between mb-3">
+
+            <h3 class="font-semibold text-lg">
+                Resultados
+            </h3>
+
+            <div class="flex gap-2">
+
+                <button
+                    type="button"
+                    onclick="seleccionarTodoSwiper()"
+                    class="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded">
+
+                    Seleccionar todo
+
+                </button>
+
+                <button
+                    type="button"
+                    onclick="deseleccionarTodoSwiper()"
+                    class="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded">
+
+                    Deseleccionar
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="swiperResultados"
+            class="space-y-2 max-h-[600px] overflow-y-auto">
+
+        </div>
+
+
+        <button
+            type="button"
+            onclick="agregarSeleccionadosSwiper()"
+            class="mt-4 w-full px-4 py-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold">
+
+            ➕ Agregar seleccionados al Preview
+
+        </button>
+
+    </div>
+
+
+    <!-- PREVIEW -->
+
+    <div class="border-t border-slate-700 pt-5 mt-5">
+
+        <div class="flex items-center justify-between mb-3 flex-wrap gap-3">
+
+    <div>
+        <h3 class="text-xl font-bold">
+            Vista previa del Swiper
+        </h3>
+
+        <p
+            id="swiperPreviewContador"
+            class="text-xs text-slate-400">
+            0 elementos
+        </p>
+    </div>
+
+    <div class="flex gap-2 flex-wrap">
+
+       
+
+        <button
+            type="button"
+            onclick="vaciarSwiperPreview()"
+            class="bg-red-800 hover:bg-red-700 px-3 py-2 rounded">
+            Vaciar
+        </button>
+
+    </div>
+
+</div>
+
+
+       <div
+    id="swiperPreviewWrapper"
+    class="preview-vertical bg-slate-950 rounded-xl border border-slate-700 overflow-hidden">
+
+    <div class="swiper-preview-device">
+
+        <div
+            id="swiperPreview"
+            class="swiper">
+
+            <div class="swiper-wrapper">
+            </div>
+
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    <!-- COPIAR -->
+
+    <button
+        type="button"
+        onclick="copiarSwiper()"
+        class="w-full bg-green-700 hover:bg-green-600 px-4 py-3 rounded-lg font-semibold">
+
+        📋 Copiar Swiper
+
+    </button>
+
+</div>
+
 <script>
 
 function cambiarGenerador(tab) {
@@ -751,16 +1022,18 @@ function cambiarGenerador(tab) {
     // ==========================================
 
     const seccion =
-        document.getElementById(
-            "generador-" +
-            (
-                tab === "plantillas"
-                    ? "plantillas"
-                    : tab === "carrusel"
-                        ? "carrusel"
-                        : "top10"
-            )
-        );
+    document.getElementById(
+        "generador-" +
+        (
+            tab === "plantillas"
+                ? "plantillas"
+                : tab === "carrusel"
+                    ? "carrusel"
+                    : tab === "top10"
+                        ? "top10"
+                        : "swiper"
+        )
+    );
 
 
     if (seccion) {
@@ -793,6 +1066,7 @@ function cambiarGenerador(tab) {
 
 
 <script src="generador_pro.js"></script>
+<script src="swiper-generator.js"></script>
 
 </body>
 </html>
