@@ -671,6 +671,153 @@ let swiperPreviewIndex = 0;
 
 let swiperPreviewOrientation = 'portrait';
 
+/* ============================================================
+   CONJUNTOS SWIPER
+============================================================ */
+
+let swiperConjuntos = {};
+
+let swiperConjuntoActual = '';
+
+const SWIPER_SECCIONES = [
+    'inicio',
+    'series',
+    'peliculas',
+    'hbo',
+    'documentales',
+    'mi_lista'
+];
+
+/* ============================================================
+   CREAR CONJUNTO
+============================================================ */
+
+function swiperCrearConjunto(nombre) {
+
+    if (!nombre) return;
+
+    if (!swiperConjuntos[nombre]) {
+
+        swiperConjuntos[nombre] = {};
+
+        SWIPER_SECCIONES.forEach(seccion => {
+            swiperConjuntos[nombre][seccion] = [];
+        });
+
+    }
+
+    swiperConjuntoActual = nombre;
+
+}
+
+
+/* ============================================================
+   NORMALIZAR NOMBRE DEL CONJUNTO
+============================================================ */
+
+function swiperNombreConjunto(nombre) {
+
+    nombre = String(nombre || '').trim();
+
+    if (!nombre) {
+        return 'conjunto1';
+    }
+
+    return nombre
+        .toLowerCase()
+        .replace(/\s+/g, '')
+        .replace(/[^a-z0-9_-]/g, '');
+
+}
+
+
+/* ============================================================
+   AGREGAR AL CONJUNTO ACTUAL
+============================================================ */
+
+function swiperAgregarAlConjunto(items) {
+
+    if (!items || !items.length) return;
+
+    if (!swiperConjuntoActual) {
+
+        swiperCrearConjunto('conjunto1');
+
+    }
+
+    const conjunto =
+        swiperConjuntos[swiperConjuntoActual];
+
+    if (!conjunto) return;
+
+
+    const seccion =
+    swiperElement('swiperDestino')?.value ||
+    'peliculas';
+
+
+    if (!conjunto[seccion]) {
+
+        conjunto[seccion] = [];
+
+    }
+
+
+    items.forEach(item => {
+
+        const existe =
+            conjunto[seccion].some(
+                x =>
+                    x.tipo === item.tipo &&
+                    x.titulo === item.titulo
+            );
+
+
+        if (!existe) {
+
+            conjunto[seccion].push({
+
+                tipo: item.tipo,
+
+                titulo: item.titulo,
+
+                archivo: item.archivo,
+
+                poster: item.poster,
+
+                backdrop: item.backdrop,
+
+                logo: item.logo,
+
+                logoClass: item.logoClass,
+
+                meta: item.meta,
+
+                descripcion: item.descripcion
+
+            });
+
+        }
+
+    });
+
+}
+
+
+/* ============================================================
+   CREAR JSON FINAL
+============================================================ */
+
+function swiperObtenerJSON() {
+
+    return JSON.stringify(
+        swiperConjuntos,
+        null,
+        2
+    );
+
+}
+
 
 /* ============================================================
    OBTENER ELEMENTOS
@@ -736,7 +883,23 @@ async function generarSwiper() {
     try {
 
         const config =
-            SWIPER_CONFIG[seccion];
+    SWIPER_CONFIG[seccion];
+
+if (!config) {
+
+    console.error(
+        'Sección TMDB no configurada:',
+        seccion
+    );
+
+    resultados.innerHTML = `
+        <div class="p-4 text-red-400">
+            La categoría "${swiperEscapeHTML(seccion)}" no está configurada.
+        </div>
+    `;
+
+    return;
+}
 
 
         let data;
@@ -1031,8 +1194,8 @@ function swiperCarpetaActual() {
 
 
     const seccion =
-        swiperElement('swiperSeccion')?.value ||
-        'peliculas';
+    swiperElement('swiperDestino')?.value ||
+    'peliculas';
 
 
     return SWIPER_CONFIG[seccion]?.carpeta ||
@@ -1086,9 +1249,11 @@ function agregarSeleccionadosSwiper() {
 
 
     const checks =
-        [...document.querySelectorAll(
-            '#swiperResultados .swiper-check'
-        )];
+        [
+            ...document.querySelectorAll(
+                '#swiperResultados .swiper-check'
+            )
+        ];
 
 
     const seleccionados =
@@ -1096,7 +1261,10 @@ function agregarSeleccionadosSwiper() {
             .filter(check => check.checked)
             .map(check =>
                 resultados[
-                    parseInt(check.dataset.index, 10)
+                    parseInt(
+                        check.dataset.index,
+                        10
+                    )
                 ]
             )
             .filter(Boolean);
@@ -1113,9 +1281,38 @@ function agregarSeleccionadosSwiper() {
     }
 
 
-    /*
-       Evitar duplicados por ID.
-    */
+    /* ========================================================
+       CONJUNTO
+    ======================================================== */
+
+    const titulo =
+        swiperElement('swiperTitulo')
+            ?.value.trim() ||
+        'conjunto1';
+
+
+    const nombreConjunto =
+        swiperNombreConjunto(titulo);
+
+
+    swiperCrearConjunto(
+        nombreConjunto
+    );
+
+
+    /* ========================================================
+       AGREGAR AL JSON
+    ======================================================== */
+
+    swiperAgregarAlConjunto(
+        seleccionados
+    );
+
+
+    /* ========================================================
+       PREVIEW
+       SE MANTIENE EXACTAMENTE IGUAL
+    ======================================================== */
 
     seleccionados.forEach(item => {
 
@@ -1440,12 +1637,16 @@ function swiperIniciarPreview() {
    COPIAR SWIPER
    ============================================================ */
 
+/* ============================================================
+   COPIAR JSON SWIPER
+============================================================ */
+
 async function copiarSwiper() {
 
-    if (!swiperPreviewItems.length) {
+    if (!Object.keys(swiperConjuntos).length) {
 
         alert(
-            'Primero agrega elementos al Preview.'
+            'Primero genera y agrega elementos a un conjunto.'
         );
 
         return;
@@ -1453,50 +1654,35 @@ async function copiarSwiper() {
     }
 
 
-    const titulo =
-        swiperElement('swiperTitulo')?.value.trim() ||
-        'Inicio';
-
-
-   const html =
-`<!-- Sección "${swiperEscapeHTML(titulo)}" -->
-<div id="inicio" class="swiper mySwiper active-tab" style="display:block;">
-  <div class="swiper-wrapper">
-
-${swiperPreviewItems
-    .map(item => swiperCrearSlide(item))
-    .join('\n\n')}
-
-</div>`;
+    const json =
+        swiperObtenerJSON();
 
 
     try {
 
         await navigator.clipboard.writeText(
-            html
+            json
         );
 
 
         alert(
-            '✅ Swiper copiado correctamente.'
+            '✅ JSON de Swipers copiado correctamente.'
         );
 
 
     } catch (error) {
 
-        /*
-           Fallback para navegadores
-           que bloqueen clipboard.
-        */
-
         const textarea =
             document.createElement('textarea');
 
 
-        textarea.value = html;
+        textarea.value =
+            json;
+
 
         textarea.style.position =
             'fixed';
+
 
         textarea.style.opacity =
             '0';
@@ -1509,6 +1695,7 @@ ${swiperPreviewItems
 
         textarea.select();
 
+
         document.execCommand(
             'copy'
         );
@@ -1518,7 +1705,66 @@ ${swiperPreviewItems
 
 
         alert(
-            '✅ Swiper copiado correctamente.'
+            '✅ JSON de Swipers copiado correctamente.'
+        );
+
+    }
+
+}
+
+/* ============================================================
+   GENERAR JSON DE CONJUNTOS
+============================================================ */
+
+async function generarJSONSwipers() {
+
+    if (!Object.keys(swiperConjuntos).length) {
+
+        alert(
+            'Primero agrega elementos a algún conjunto.'
+        );
+
+        return;
+
+    }
+
+
+    const json =
+        JSON.stringify(
+            swiperConjuntos,
+            null,
+            2
+        );
+
+
+    try {
+
+        await navigator.clipboard.writeText(json);
+
+        alert(
+            '✅ JSON de Swipers copiado correctamente.'
+        );
+
+    } catch (error) {
+
+        const textarea =
+            document.createElement('textarea');
+
+        textarea.value = json;
+
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+
+        document.body.appendChild(textarea);
+
+        textarea.select();
+
+        document.execCommand('copy');
+
+        textarea.remove();
+
+        alert(
+            '✅ JSON de Swipers copiado correctamente.'
         );
 
     }

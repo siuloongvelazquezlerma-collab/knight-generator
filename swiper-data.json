@@ -1,0 +1,473 @@
+{
+  "conjunto1": {
+
+    "inicio": [
+      {
+      "tipo": "movie",
+      "titulo": "Spider-Man: Un nuevo día",
+      "archivo": "marvel/spider-man-un-nuevo-dia.html",
+      "poster": "https://image.tmdb.org/t/p/original/23ReR54BPzRRhsAi243VaHn6wqk.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/qeQJx07rK2xm8SD2sJxFKhE7gs0.jpg",
+      "logo": "https://image.tmdb.org/t/p/original/g4YvZOWYmissloGtaVAeWybkPct.png",
+      "logoClass": "logo-nuevo-dia",
+      "meta": "Película · 13+ · 2026 · Ciencia ficción, Acción y Aventura",
+      "descripcion": "Peter Parker enfrenta una nueva amenaza que pondrá a prueba su destino. Entre aliados, enemigos y grandes decisiones, Spider-Man descubrirá el verdadero precio de ser un héroe."
+    },
+    {
+      "tipo": "movie",
+      "titulo": "Troya",
+      "archivo": "peliculas/troya.html",
+      "poster": "https://image.tmdb.org/t/p/original/wK8NDjfdlwUjds6EsKvUhODD1p8.jpg",
+      "backdrop": "https://od.lk/s/M18zMzE0NDY1MjBf/ElXLsIPGzaujLZgxw.webp",
+      "logo": "https://od.lk/s/M18zMzE0NDY3NThf/Troya%20logo.webp",
+      "logoClass": "logo-troya",
+      "meta": "Película · 16+ · 2004 · Acción, Drama e Historia",
+      "descripcion": "El príncipe Paris de Troya desencadena una guerra legendaria al llevarse a Helena de Esparta. Mientras miles de guerreros luchan por el honor y el poder, Aquiles se convierte en el héroe más temido del conflicto."
+    },
+    {
+      "tipo": "movie",
+      "titulo": "Toy Story 5",
+      "archivo": "Disney/toy-story-5.html",
+      "poster": "https://image.tmdb.org/t/p/original/to5PIWJXXOmatYepPRTLGWENLJf.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/qjTqY5coNiz6sVtPng40IzltsoN.jpg",
+      "logo": "https://image.tmdb.org/t/p/original/aI3zj2mXnusvdbG5AYwWXCbEVk3.png",
+      "logoClass": "logo-toy-story-5",
+      "meta": "Película · Familiar · 7+ · 2026 · Animación, Comedia y Aventura",
+      "descripcion": "Woody, Buzz Lightyear y el resto de los juguetes regresan para vivir una nueva aventura llena de emoción, amistad y diversión, enfrentándose a los desafíos de una nueva generación."
+    },
+    {
+      "tipo": "movie",
+      "titulo": "Mortal Kombat II",
+      "archivo": "peliculas/mortal-kombat-ii.html",
+      "poster": "https://image.tmdb.org/t/p/original/qYMyJ7UQyxhkYXKTxh298GvxDdM.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/ybmfvoIPxQ9Ivy2tEhi6JxufMJL.jpg",
+      "logo": "https://image.tmdb.org/t/p/original/93MgvKwv93QeEnhUusZPpK454xa.png",
+      "logoClass": "logo-Kombat-II",
+      "meta": "Película · 18+ · 2026 · Acción, Fantasía y Aventura",
+      "descripcion": "Los campeones favoritos de los fans —ahora acompañados por el mismísimo Johnny Cage— se enfrentan entre sí en la batalla definitiva, sangrienta y sin reglas."
+    },
+    {
+      "tipo": "movie",
+      "titulo": "Michael",
+      "archivo": "peliculas/michael.html",
+      "poster": "https://image.tmdb.org/t/p/original/5HgVwIzug5iCoprtj4ZSvcHjjI1.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/ufSwlnECLoUbBjPrFqEQcWBzHwc.jpg",
+      "logo": "https://image.tmdb.org/t/p/original/wJHlHY0t6iBq6JRyCZNCH7cKzl1.png",
+      "logoClass": "logo-Michael",
+      "meta": "Película · 7+ · 2026 · Música y Drama",
+      "descripcion": "Narra la vida de Michael Jackson más allá de la música, recorriendo su trayectoria desde el descubrimiento de su extraordinario talento."
+    },
+    {
+      "tipo": "series",
+      "titulo": "The Boys",
+      "archivo": "series/the boys.html",
+      "poster": "https://image.tmdb.org/t/p/original/jHMkIrYYX91SYWDjpNYmQvO6gdR.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/72tIpwERAuKnaCBXpC7EYvDJHUT.jpg",
+      "logo": "https://image.tmdb.org/t/p/original/xawDgfkBQaocXR9CljBMjkYpXNK.png",
+      "logoClass": "logo-boys",
+      "meta": "Serie · 18+ · 2019 · 5 Temporadas · Sci-Fi, Fantasy, Action & Adventure",
+      "descripcion": "La serie tiene lugar en un mundo en el que los superhéroes representan el lado oscuro de la celebridad y la fama."
+    }
+  ],
+
+  "series": [
+    {
+      "tipo": "movie",
+      "titulo": "John Wick: Otro día para matar",
+      "archivo": "peliculas/john-wick-otro-dia-para-matar.html",
+      "poster": "https://image.tmdb.org/t/p/original/aWkacfnrzwMCoYqs30xuPcIcr7p.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/4XkiCklfaQVsIQuwgn7hIUCwbmJ.jpg",
+      "logo": "https://image.tmdb.org/t/p/original/460jDBD9WRrNKWLQSxTQYDvCBdV.png",
+      "logoClass": "logo-john",
+      "meta": "Película · 16+ · 2014 · Acción, Suspenso",
+      "descripcion": "La ciudad de Nueva York se convierte en el patio acribillado a balazos de un ex-asesino mientras él elimina a los gánsteres que destruyeron todo lo que él quería."
+    },
+    {
+      "tipo": "movie",
+      "titulo": "Oppenheimer",
+      "archivo": "peliculas/oppenheimer.html",
+      "poster": "https://image.tmdb.org/t/p/original/eHjIEiEKTnb9euehI7IbCxtGH5N.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/brPg958V6r6mdtXlrVNIWHRcWQz.jpg",
+      "logo": "https://image.tmdb.org/t/p/original/b07VisHvZb0WzUpA8VB77wfMXwg.png",
+      "logoClass": "logo-oppenheimer",
+      "meta": "Película · 13+ · 2023 · Drama, Historia",
+      "descripcion": "La historia del científico que lideró el desarrollo de la bomba atómica y el peso moral de sus decisiones."
+    },
+    {
+      "tipo": "movie",
+      "titulo": "The Batman",
+      "archivo": "DC/Batman (2022).html",
+      "poster": "https://image.tmdb.org/t/p/original/kvTPpXhoJS0Rz1NltQApatXMCsV.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/ygKhfLwnN8oADzbCXKDDchT5Znm.jpg",
+      "logo": "https://image.tmdb.org/t/p/original/haibnO2TycgulXD1Fj7b94L9m9E.png",
+      "logoClass": "logo-The-Batman",
+      "meta": "Película · 13+ · 2022 · Acción, Crimen, Drama",
+      "descripcion": "Batman se adentra en lo más oscuro de Gotham mientras persigue a un asesino que deja pistas crípticas tras cada crimen."
+    },
+    {
+      "tipo": "movie",
+      "titulo": "Interstellar",
+      "archivo": "peliculas/Interesterlar.html",
+      "poster": "https://image.tmdb.org/t/p/original/iolc5VLP4PFU0XvjTVRiCb80mUR.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/vgnoBSVzWAV9sNQUORaDGvDp7wx.jpg",
+      "logo": "https://image.tmdb.org/t/p/original/xBmWKbXWEgRn69x7qma4uiPgE1N.png",
+      "logoClass": "logo-interestelar",
+      "meta": "Película · 13+ · 2014 · Ciencia ficción, Drama",
+      "descripcion": "Un grupo de exploradores viaja a través de un agujero de gusano en el espacio para salvar a la humanidad."
+    },
+    {
+      "tipo": "movie",
+      "titulo": "El Conjuro",
+      "archivo": "peliculas/El conjuro.html",
+      "poster": "https://image.tmdb.org/t/p/original/jHdoEpV0mzxlXRFrjLGjbDqDx2B.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/n55CL25WWHqGm3rrmf0M07m5e1F.jpg",
+      "logo": "https://image.tmdb.org/t/p/original/vr0FJLBBPBbNTohbbI9B9Khhv78.png",
+      "logoClass": "logo-conjuro",
+      "meta": "Película · 16+ · 2013 · Terror, Misterio",
+      "descripcion": "Los investigadores paranormales Ed y Lorraine Warren enfrentan uno de los casos más aterradores de su carrera."
+    },
+    {
+      "tipo": "movie",
+      "titulo": "Gladiador",
+      "archivo": "peliculas/Gladiador (2000).html",
+      "poster": "https://image.tmdb.org/t/p/original/scmgpMsNEbidbSJbSPGJaDsPMk8.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/hND7xAaxxBgaIspp9iMsaEXOSTz.jpg",
+      "logo": "https://image.tmdb.org/t/p/original/aF9ldcxU5HOEvrrhkZnd9jePoWu.png",
+      "logoClass": "logo-gladiador",
+      "meta": "Película · 18+ · 2000 · Acción, Drama, Historia",
+      "descripcion": "Un general romano traicionado busca venganza convirtiéndose en gladiador ante el mismo emperador que destruyó su vida."
+    }
+  ],
+
+   "peliculas": [
+    {
+      "tipo": "series",
+      "titulo": "Peaky Blinders",
+      "archivo": "series/peaky-blinders.html",
+      "poster": "https://image.tmdb.org/t/p/original/mA7FVyEx6F54baZqKxVrkFa6XoB.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/wiE9doxiLwq3WCGamDIOb2PqBqc.jpg",
+      "logo": "https://image.tmdb.org/t/p/original/eKsi6bSHYJp6pGABTFjTp2uG8Ux.png",
+      "logoClass": "logo-peaky",
+      "meta": "Serie · 18+ · 2013 · 6 Temporadas",
+      "descripcion": "Tommy Shelby lidera una peligrosa organización criminal en la Inglaterra de la posguerra mientras expande su imperio."
+    },
+
+    {
+      "tipo": "series",
+      "titulo": "The Vampire Diaries",
+      "archivo": "series/diarios-de-vampiros.html",
+      "poster": "https://od.lk/s/M18zMTkxNTY1MjNf/vampire%20diaries%20poster%202.jpg",
+      "backdrop": "https://od.lk/s/M18zMTkxNTYzOThf/vampire%20diaries%20background.jpeg",
+      "logo": "https://od.lk/s/M18zMTkxNTYzOTlf/vampire%20diaries%20logo.png",
+      "logoClass": "logo-vampire",
+      "meta": "Serie · 13+ · 2009 · 8 Temporadas",
+      "descripcion": "Elena se ve atrapada entre dos hermanos con un oscuro secreto mientras fuerzas sobrenaturales despiertan en su pueblo."
+    },
+
+    {
+      "tipo": "series",
+      "titulo": "Smallville",
+      "archivo": "series/SMALLVILLEnew.HTML",
+      "poster": "https://od.lk/s/M18zMTYwNTE4NThf/smallville%20pster.jpg",
+      "backdrop": "https://od.lk/s/M18zMTYwMTExMTZf/c3cad98e-72f1-337c-b058-d8f20dc28fbc.jpeg",
+      "logo": "https://od.lk/s/M18zMTYwMTExMjJf/ebd9c941-a3c8-3104-b842-6232bacd5fa8.png",
+      "logoClass": "logo-smallville",
+      "meta": "Serie · 12+ · 2001 · 10 Temporadas",
+      "descripcion": "La historia del joven Clark Kent antes de convertirse en Superman, enfrentando sus poderes y enemigos en Smallville."
+    },
+
+    {
+      "tipo": "series",
+      "titulo": "Drake & Josh",
+      "archivo": "series/drake-y-josh.html",
+      "poster": "https://image.tmdb.org/t/p/original/tDz82SjJPxrhXzhhJTOLcnTrPmB.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/2nLAARcgjaOCy0YINLHNMThLf2R.jpg",
+      "logo": "https://image.tmdb.org/t/p/original/8hLz40pmmmBuHRD2iF2k0eUsh4Y.png",
+      "logoClass": "logo-drake",
+      "meta": "Serie · +7 · 2004 · 4 Temporadas",
+      "descripcion": "Dos adolescentes completamente opuestos deben aprender a convivir cuando se convierten en hermanastros."
+    },
+
+    {
+      "tipo": "series",
+      "titulo": "El Juego del Calamar",
+      "archivo": "series/el-juego-del-calamar.html",
+      "poster": "https://image.tmdb.org/t/p/original/ogIakdG6gW23YEtd4fIap2IVtSV.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/5aE1kxWg6RhgQxJTXTxifv4uq7P.jpg",
+      "logo": "https://image.tmdb.org/t/p/original/ivkt4d2ffX9scRGzc0BYAq23j2A.png",
+      "logoClass": "logo-squid",
+      "meta": "Serie · 18+ · 2021 · 3 Temporadas",
+      "descripcion": "Cientos de personas endeudadas compiten en juegos infantiles mortales por un premio millonario."
+    },
+
+    {
+      "tipo": "series",
+      "titulo": "¿Le temes a la oscuridad?",
+      "archivo": "series/le-temes-a-la-oscuridad.html",
+      "poster": "https://image.tmdb.org/t/p/original/7F352L5inAj8nf2BcMuCkzG0Tur.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/original/nXmuzHiT3ODY9v50x8ipfSAFaNs.jpg",
+      "logo": "https://image.tmdb.org/t/p/original/mX1BDnZVkm2PKQDXQWlJ7Svh1dM.png",
+      "logoClass": "logo-oscuridad",
+      "meta": "Serie · 13+ · 1992 · 7 Temporadas",
+      "descripcion": "Un grupo de jóvenes se reúne alrededor de una fogata para contar historias aterradoras que cobran vida."
+    }
+  ],
+
+  "hbo": [
+  {
+    "tipo": "series",
+    "titulo": "Gachiakuta",
+    "archivo": "Anime/gachiakuta.html",
+    "poster": "https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=contain,format=auto,quality=94,width=840/CurationAssets/Gachiakuta/SEASON%201/ULTRA-WIDE/Gachiakuta-S1C1-KV1-(Character)-UW-Tall-Cropped.png",
+    "backdrop": "https://od.lk/s/M18zMTk5MzU1NjFf/Gachiakuta-S1C1-KV1-UW-LTR%281%29.png",
+    "logo": "https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=contain,format=auto,quality=85,width=600/CurationAssets/Gachiakuta/SEASON%201/ULTRA-WIDE/Gachiakuta-S1C1-KV1-UW-Logo-ENG.png",
+    "logoClass": "logo-gachiakuta",
+    "meta": "Serie · 13+ · 2025 · Anime · Suspenso",
+    "descripcion": "A Ludo lo acusan de asesinato y lo arrojan al Abismo, un infierno habitado por las bestias de la basura."
+  },
+
+  {
+    "tipo": "movie",
+    "titulo": "Demon Slayer: Kimetsu no Yaiba - Castillo Infinito",
+    "archivo": "Anime/demon-slayer-kimetsu-no-yaiba-castillo-infinito.html",
+    "poster": "https://image.tmdb.org/t/p/original/5PF2z1qfNZDqd9z79cNjMpeaMba.jpg",
+    "backdrop": "https://od.lk/s/M18zMTkxODc1NTRf/625ba5c87db9aeb60cdbe2e9811f1f99.jpg",
+    "logo": "https://image.tmdb.org/t/p/original/vYP6D7kcDRx4oalok672Xbh0Lmw.png",
+    "logoClass": "logo-diablo",
+    "meta": "Película · 13+ · 2025 · Anime · Suspenso",
+    "descripcion": "Tanjirō y los Pilares corren hacia la mansión, pero son arrastrados a un espacio misterioso por obra de Kibutsuji."
+  },
+
+  {
+    "tipo": "series",
+    "titulo": "Dragon Ball Daima",
+    "archivo": "dragon ball/Dragon ball daima Latino.html",
+    "poster": "https://image.tmdb.org/t/p/original/73rGI735Tzf5ohSBh4rE06uyVyD.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/yCTVy8pA2kxHAjkj8JTgSSbL1UU.jpg",
+    "logo": "https://image.tmdb.org/t/p/original/fOTS7xzuI6QM6QgjX7nwhSHGxGf.png",
+    "logoClass": "logo-daima",
+    "meta": "Serie · 7+ · 2024 · 1 Temporada",
+    "descripcion": "Dragon Ball Daima lleva a los personajes a una nueva transformación en una historia original."
+  },
+
+  {
+    "tipo": "series",
+    "titulo": "Shingeki no Kyojin",
+    "archivo": "Anime/Attack on Titan (2013).html",
+    "poster": "https://image.tmdb.org/t/p/original/cOemgMBvf1WuTnjcihfSmasRzrh.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/lTDtH9YnFWJdwOgNuB4dUAzGOQl.jpg",
+    "logo": "https://image.tmdb.org/t/p/original/eHMfVTIwen9anB4HuvQlFRGZFms.png",
+    "logoClass": "logo-snk",
+    "meta": "Serie · 16+ · 2023 · 4 Temporadas",
+    "descripcion": "La batalla final entre la humanidad y los titanes alcanza su clímax en la última temporada."
+  },
+
+  {
+    "tipo": "series",
+    "titulo": "Dragon Ball Z",
+    "archivo": "Anime/dragon-ball-z.html",
+    "poster": "https://od.lk/s/M18zMTE4NjY1NTVf/new%20dragon%20ball%20z%20poster.png",
+    "backdrop": "https://od.lk/s/M18zMTE4NjYyODBf/dragon%20ball%20z%20fondo.png",
+    "logo": "https://image.tmdb.org/t/p/original/vw9Nt8aftq4fepr8vK6HsF8jWcm.png",
+    "logoClass": "logo-dragon",
+    "meta": "Serie · 13+ · 1989 · 4 Sagas",
+    "descripcion": "Goku continúa su viaje en Dragon Ball Z enfrentando nuevos enemigos y desafíos."
+  },
+
+  {
+    "tipo": "series",
+    "titulo": "Ranma ½",
+    "archivo": "Anime/Ranma ½.html",
+    "poster": "https://image.tmdb.org/t/p/original/c7VBbO2IAoWeQLQxzYSypsFvxd0.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/M0NvQAf3JQW3AuADYDhHwmhNCu.jpg",
+    "logo": "https://image.tmdb.org/t/p/original/jIPw1T05kVYiRnNZtxNB7jdLxrs.png",
+    "logoClass": "logo-ranma",
+    "meta": "Serie · 13+ · 1989 · 1 Temporada",
+    "descripcion": "Ranma, un joven artista marcial, debe lidiar con una maldición que lo convierte en chica al contacto con agua fría."
+  },
+
+  {
+    "tipo": "series",
+    "titulo": "Sailor Moon",
+    "archivo": "Anime/Sailor Moon (1992).html",
+    "poster": "https://image.tmdb.org/t/p/original/q4xNfVPwpNsZlfoNC7gqGzTksb9.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/b6sDwnsPUdaG7O2h41xC2MVfsVs.jpg",
+    "logo": "https://image.tmdb.org/t/p/original/6PIY5PGYlXWSOTT7UFiM3Pfln82.png",
+    "logoClass": "logo-sailor",
+    "meta": "Serie · 10+ · 2024 · 5 Temporadas",
+    "descripcion": "Sailor Moon regresa con nuevas aventuras mágicas y un renovado poder para proteger la Tierra."
+  }
+],
+
+  "documentales": [
+    {
+        "tipo": "movie",
+        "titulo": "Los Pitufos",
+        "archivo": "Animacion/pitufos.html",
+        "poster": "https://image.tmdb.org/t/p/original/zOlllOUcAJELWJSTnFhNIuxgm8.jpg",
+        "backdrop": "https://image.tmdb.org/t/p/original/9whEVuKte4Qi0LI4TzPf7glinJW.jpg",
+        "logo": "https://image.tmdb.org/t/p/original/tPVrpSoD3asR8S4a9OW6ec3nOWQ.png",
+        "logoClass": "logo-it",
+        "meta": "Película · 13+ · 2025 · Animación, Familia",
+        "descripcion": "Con la ayuda de nuevos amigos, los Pitufos deberán descubrir qué define su destino para salvar el universo."
+    },
+    {
+        "tipo": "movie",
+        "titulo": "Encanto",
+        "archivo": "Disney/encanto.html",
+        "poster": "https://image.tmdb.org/t/p/original/s5tDGKVNcxFpOYE0QktEoOVLpPq.jpg",
+        "backdrop": "https://image.tmdb.org/t/p/original/2Sm3asuwKVNTzgm2nF6hp5mwEfh.jpg",
+        "logo": "https://image.tmdb.org/t/p/original/5KfeY5h2yvjaSy1R1lZUdbjE40Q.png",
+        "logoClass": "logo-encanto",
+        "meta": "Película · 6+ · 2021 · Animación, Familia",
+        "descripcion": "La familia Madrigal tiene dones mágicos únicos... excepto Mirabel. ¿O no?"
+    },
+    {
+        "tipo": "movie",
+        "titulo": "Super Mario Bros. La película",
+        "archivo": "Animacion/mario bros.html",
+        "poster": "https://image.tmdb.org/t/p/original/dDsRyuDgRNOcsxe8369kRVshmuj.jpg",
+        "backdrop": "https://image.tmdb.org/t/p/original/thcPZNTWOR0SIpHKqof4Jgokkp6.jpg",
+        "logo": "https://image.tmdb.org/t/p/original/6Fr8xbEmQe9XXmuoNi5atUxoa5U.png",
+        "logoClass": "logo-mario",
+        "meta": "Película · 6+ · 2023 · Animación, Familia",
+        "descripcion": "Mario y Luigi se embarcan en una aventura épica por el Reino Champiñón."
+    },
+    {
+        "tipo": "series",
+        "titulo": "Bluey",
+        "archivo": "series/bluey.html",
+        "poster": "https://image.tmdb.org/t/p/original/lSaa8OnwNkC3GyY9VplpWgtO7Ul.jpg",
+        "backdrop": "https://image.tmdb.org/t/p/original/ssGPaqKznKEfGYuuofy6tX0nx2F.jpg",
+        "logo": "https://image.tmdb.org/t/p/original/lDojhi3PJw3ImcrufCoXplxdRuZ.png",
+        "logoClass": "logo-bluey",
+        "meta": "Serie · 3+ · 2018 · 3 Temporadas",
+        "descripcion": "Bluey, una perrita llena de energía, vive aventuras cotidianas con su familia."
+    },
+    {
+        "tipo": "series",
+        "titulo": "Cars: On the Road",
+        "archivo": "series/cars-on-the-road.html",
+        "poster": "https://image.tmdb.org/t/p/original/6QXirTPUQecr1BAEfgVSXPD1np0.jpg",
+        "backdrop": "https://image.tmdb.org/t/p/original/vVWaQ7DXszdAB9FTzKRaiKCLwzJ.jpg",
+        "logo": "https://image.tmdb.org/t/p/original/m22MHOovyzfuHFP6EsispPhSKyf.png",
+        "logoClass": "logo-cars",
+        "meta": "Serie · 6+ · 2022 · 1 Temporada",
+        "descripcion": "Rayo McQueen y Mate recorren el país viviendo disparatadas aventuras."
+    },
+    {
+        "tipo": "movie",
+        "titulo": "Mi Villano Favorito 4",
+        "archivo": "Animacion/Mi villano favorito 4 (2024).html",
+        "poster": "https://image.tmdb.org/t/p/original/9GWoOjFu1Wm4qsjTaUB5UXehBSn.jpg",
+        "backdrop": "https://image.tmdb.org/t/p/original/lgkPzcOSnTvjeMnuFzozRO5HHw1.jpg",
+        "logo": "https://image.tmdb.org/t/p/original/z5ocMV0RK2kiV9qYxCD9PQsjlbL.png",
+        "logoClass": "logo-gru",
+        "meta": "Película · 6+ · 2024 · Animación, Familia",
+        "descripcion": "Gru y los minions regresan con una nueva misión llena de caos y diversión."
+    }
+],
+
+  "mi-lista": [
+    {
+        "tipo": "series",
+        "titulo": "Twelve",
+        "archivo": "Doramas/twelve.html",
+        "poster": "https://image.tmdb.org/t/p/original/j5iFVfgGwrjSHYEP8VPeAuNHoNv.jpg",
+        "backdrop": "https://image.tmdb.org/t/p/original/ppfObQ9676tl5xA87WDdSLZa7yC.jpg",
+        "logo": "https://image.tmdb.org/t/p/original/sxD0hb60HqEd5MjaFRUzdGYQPsQ.png",
+        "logoClass": "logo-twelve",
+        "meta": "Serie · 13+ · 2025 · 1 Temporada",
+        "descripcion": "Un grupo de héroes, cada uno representando a uno de los 12 signos del zodiaco, lucha para defender la península de Corea de los espíritus malignos."
+    },
+    {
+        "tipo": "series",
+        "titulo": "Please Feel At Ease Mr. Ling",
+        "archivo": "Doramas/please-feel-at-ease-mr-ling.html",
+        "poster": "https://image.tmdb.org/t/p/original/4ny9RlQQVnqOMshsqZOWTgDhVWI.jpg",
+        "backdrop": "https://image.tmdb.org/t/p/original/4LGucZZ9Z8F8gBB87WcOTE8wIJt.jpg",
+        "logo": "https://od.lk/s/M18zMTk0NzI4OThf/Please%20Feel%20At%20Ease%20Mr.%20Ling.png",
+        "logoClass": "logo-ling",
+        "meta": "Serie · 13+ · 2021 · 1 Temporada",
+        "descripcion": "Gu An Xin acoge a Ling Yue, un heredero brillante atrapado en una peligrosa disputa, dando inicio a un inesperado romance."
+    },
+    {
+        "tipo": "series",
+        "titulo": "Su vida privada",
+        "archivo": "Doramas/su-vida-privada.html",
+        "poster": "https://image.tmdb.org/t/p/w500/uqdCjW41amemXEPFjvepZAUGQai.jpg",
+        "backdrop": "https://image.tmdb.org/t/p/original/3nZ7RifC9MwcQKLdphdeOr7SKVl.jpg",
+        "logo": "https://image.tmdb.org/t/p/original/hzzQEMQmtg6k9KslpjLt3rPhRsr.png",
+        "logoClass": "logo-vida",
+        "meta": "Serie · 15+ · 2019 · 1 Temporada",
+        "descripcion": "Sung Duk-mi es una talentosa comisaria de arte y también fan de un miembro del grupo idol llamado Shi-an."
+    },
+    {
+        "tipo": "movie",
+        "titulo": "Amor en aguas turbulentas",
+        "archivo": "Doramas/amor-en-aguas-turbulentas.html",
+        "poster": "https://od.lk/s/M18zMTk2NjMzMTVf/aguias%20poster.jpg",
+        "backdrop": "https://image.tmdb.org/t/p/original/4B3oS9lESptSBvlZxFw2ymLhUJd.jpg",
+        "logo": "https://od.lk/s/M18zMTk2NjMzMThf/aguas%20logo.png",
+        "logoClass": "logo-slayer",
+        "meta": "Película · 13+ · 2023 · Romance, Comedia",
+        "descripcion": "Un mayordomo en un lujoso crucero conoce a una pasajera misteriosa y juntos se ven envueltos en un caso de asesinato en alta mar."
+    },
+    {
+        "tipo": "series",
+        "titulo": "Ranma ½",
+        "archivo": "Anime/Ranma ½.html",
+        "poster": "https://image.tmdb.org/t/p/original/c7VBbO2IAoWeQLQxzYSypsFvxd0.jpg",
+        "backdrop": "https://image.tmdb.org/t/p/original/M0NvQAf3JQW3AuADYDhHwmhNCu.jpg",
+        "logo": "https://image.tmdb.org/t/p/original/jIPw1T05kVYiRnNZtxNB7jdLxrs.png",
+        "logoClass": "logo-ranma",
+        "meta": "Serie · 13+ · 1989 · 1 Temporada",
+        "descripcion": "Ranma, un joven artista marcial, debe lidiar con una maldición que lo convierte en chica al contacto con agua fría."
+    },
+    {
+  "tipo": "series",
+  "titulo": "Sailor Moon",
+  "archivo": "Anime/Sailor Moon (1992).html",
+  "poster": "https://image.tmdb.org/t/p/original/q4xNfVPwpNsZlfoNC7gqGzTksb9.jpg",
+  "backdrop": "https://image.tmdb.org/t/p/original/b6sDwnsPUdaG7O2h41xC2MVfsVs.jpg",
+  "logo": "https://image.tmdb.org/t/p/original/6PIY5PGYlXWSOTT7UFiM3Pfln82.png",
+  "logoClass": "logo-sailor",
+  "meta": "Serie · 10+ · 2024 · 5 Temporadas",
+  "descripcion": "Sailor Moon regresa con nuevas aventuras mágicas y un renovado poder para proteger la Tierra."
+  }
+  ]
+},
+
+"conjunto2": {
+
+  "inicio": [
+    {
+      "tipo": "movie",
+      "titulo": "Película nueva",
+      "archivo": "peliculas/pelicula-nueva.html",
+      "poster": "URL",
+      "backdrop": "URL",
+      "logo": "URL",
+      "logoClass": "logo-pelicula",
+      "meta": "Película · 13+ · 2026",
+      "descripcion": "Descripción..."
+    }
+  ],
+
+  "series": [
+    {
+      "tipo": "series",
+      "titulo": "Serie nueva",
+      "archivo": "series/serie-nueva.html",
+      "poster": "URL",
+      "backdrop": "URL",
+      "logo": "URL",
+      "logoClass": "logo-serie",
+      "meta": "Serie · 13+ · 2026 · 1 Temporada",
+      "descripcion": "Descripción..."
+    }
+  ]
+
+}
+
+}
