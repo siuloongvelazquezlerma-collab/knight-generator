@@ -7,6 +7,7 @@ const SWIPER_TMDB_API_KEY = '4b77886f6f12c73066c0d0509038df60';
 
 const TMDB_BASE = 'https://api.themoviedb.org/3';
 const TMDB_IMG = 'https://image.tmdb.org/t/p';
+const SWIPER_PAGINAS_RECIENTES = {};
 
 /* ============================================================
    CONFIGURACIÓN
@@ -14,32 +15,109 @@ const TMDB_IMG = 'https://image.tmdb.org/t/p';
 
 const SWIPER_CONFIG = {
 
-    peliculas: {
-        tipo: 'movie',
-        carpeta: 'Peliculas/'
+    /* =========================================================
+       CARPETAS / TEMÁTICAS
+       ========================================================= */
+
+    'series/': {
+        filtro: 'todas-series'
     },
 
-    series: {
-        tipo: 'tv',
-        carpeta: 'Series/'
+    'peliculas/': {
+        filtro: 'todas-peliculas'
     },
 
-    anime: {
-        tipo: 'movie',
-        carpeta: 'Anime/'
+    'anime/': {
+        filtro: 'anime'
     },
 
-    doramas: {
-        tipo: 'tv',
-        carpeta: 'Doramas/'
+    'Doramas/': {
+        filtro: 'doramas'
     },
 
-    infantil: {
-        tipo: 'movie',
-        carpeta: 'Infantil/'
+    'mexicanas/': {
+        filtro: 'mexicanas'
+    },
+
+    'Disney/': {
+        filtro: 'disney'
+    },
+
+    'marvel/': {
+        filtro: 'marvel'
+    },
+
+    'DC/': {
+        filtro: 'dc'
+    },
+
+    'Star wars/': {
+        filtro: 'starwars'
+    },
+
+    'Animacion/': {
+        filtro: 'animacion'
+    },
+
+    'Harry potter/': {
+        filtro: 'harry-potter'
+    },
+
+    'dragon ball/': {
+        filtro: 'dragon-ball'
+    },
+
+    'Destino Final/': {
+        filtro: 'destino-final'
+    },
+
+    'Bruce Lee/': {
+        filtro: 'bruce-lee'
+    },
+
+    'Arma mortal/': {
+        filtro: 'arma-mortal'
+    },
+
+    'karate kid/': {
+        filtro: 'karate-kid'
+    },
+
+    'blade/': {
+        filtro: 'blade'
+    },
+
+    'Blade/': {
+        filtro: 'blade'
+    },
+
+    'rec-coleccion/': {
+        filtro: 'rec-coleccion'
+    },
+
+    'twilight/': {
+        filtro: 'twilight'
+    },
+
+    'volver al futuro/': {
+        filtro: 'volver-al-futuro'
+    },
+
+    'Alien/': {
+        filtro: 'alien'
+    },
+
+    'Anime/': {
+        filtro: 'anime'
+    },
+
+    'Infantil/': {
+        filtro: 'infantil'
     }
 
 };
+
+
 
 
 /* ============================================================
@@ -120,6 +198,451 @@ async function swiperTMDB(endpoint) {
     return await respuesta.json();
 
 }
+
+/* ============================================================
+   OBTENER MÚLTIPLES PÁGINAS DE TMDB
+   Permite obtener cantidades superiores a 20 resultados.
+   ============================================================ */
+
+async function swiperTMDBMultiplesPaginas(endpointBase, cantidad) {
+
+    const resultados = [];
+
+    const porPagina = 20;
+
+    const paginasNecesarias =
+        Math.ceil(cantidad / porPagina);
+
+    /*
+       TMDB permite consultar muchas páginas.
+       Ponemos un límite de seguridad bastante amplio.
+    */
+
+    const maxPaginas = Math.min(
+        paginasNecesarias,
+        25
+    );
+
+
+    for (let pagina = 1; pagina <= maxPaginas; pagina++) {
+
+        const separador =
+            endpointBase.includes('?')
+                ? '&'
+                : '?';
+
+        const endpoint =
+            `${endpointBase}${separador}page=${pagina}`;
+
+
+        try {
+
+            const data =
+                await swiperTMDB(endpoint);
+
+
+            if (
+                !data?.results ||
+                !data.results.length
+            ) {
+                break;
+            }
+
+
+            resultados.push(
+                ...data.results
+            );
+
+
+            /*
+               Si TMDB ya no tiene más páginas,
+               terminamos.
+            */
+
+            if (
+                !data.total_pages ||
+                pagina >= data.total_pages
+            ) {
+                break;
+            }
+
+
+            /*
+               Ya tenemos suficientes.
+            */
+
+            if (
+                resultados.length >= cantidad
+            ) {
+                break;
+            }
+
+        } catch (error) {
+
+            console.warn(
+                `No se pudo obtener la página ${pagina}:`,
+                error
+            );
+
+            break;
+
+        }
+
+    }
+
+
+    return resultados.slice(
+        0,
+        cantidad
+    );
+
+}
+
+/* ============================================================
+   OBTENER CONTENIDO SEGÚN FILTRO + SECCIÓN
+   ============================================================ */
+
+async function swiperObtenerLista(filtro, cantidad, seccion) {
+
+    /*
+       ========================================================
+       LA SECCIÓN DEFINE EL TIPO
+       
+       series   → tv
+       peliculas → movie
+       cualquier otra → mixed
+       ========================================================
+    */
+
+    let tipos;
+
+    if (seccion === 'series') {
+
+        tipos = ['tv'];
+
+    } else if (seccion === 'peliculas') {
+
+        tipos = ['movie'];
+
+    } else {
+
+        tipos = ['movie', 'tv'];
+
+    }
+
+
+    /* ========================================================
+       DISCOVER
+       ======================================================== */
+
+    async function obtenerDiscover(tipo, parametros = '') {
+
+        const endpointBase =
+            `/discover/${tipo}?sort_by=popularity.desc${parametros}`;
+
+        /*
+           TMDB devuelve los resultados paginados. Primero leemos
+           el total de páginas y luego elegimos páginas al azar para
+           que cada pulsación de "Generar" no repita la página 1.
+        */
+        const primeraPagina = await swiperTMDB(
+            `${endpointBase}&page=1`
+        );
+
+        const totalPaginas = Math.max(
+            1,
+            Math.min(500, primeraPagina.total_pages || 1)
+        );
+
+        const paginasNecesarias = Math.min(
+            totalPaginas,
+            Math.max(1, Math.ceil(cantidad / 20))
+        );
+
+        const clavePaginas = `${tipo}|${parametros}`;
+        const paginasPrevias = new Set(
+            SWIPER_PAGINAS_RECIENTES[clavePaginas] || []
+        );
+
+        let paginasDisponibles = Array.from(
+            { length: totalPaginas },
+            (_, indice) => indice + 1
+        ).filter(pagina => !paginasPrevias.has(pagina));
+
+        /* Si ya se recorrió todo el catálogo disponible, reiniciamos. */
+        if (paginasDisponibles.length < paginasNecesarias) {
+            paginasDisponibles = Array.from(
+                { length: totalPaginas },
+                (_, indice) => indice + 1
+            );
+        }
+
+        const paginas = paginasDisponibles
+            .sort(() => Math.random() - 0.5)
+            .slice(0, paginasNecesarias);
+
+        SWIPER_PAGINAS_RECIENTES[clavePaginas] = paginas;
+
+        const resultados = [];
+
+        for (const pagina of paginas) {
+            const data = pagina === 1
+                ? primeraPagina
+                : await swiperTMDB(`${endpointBase}&page=${pagina}`);
+
+            resultados.push(...(data.results || []));
+        }
+
+        return resultados
+            .sort(() => Math.random() - 0.5)
+            .slice(0, cantidad);
+
+    }
+
+
+    /* ========================================================
+       TODAS LAS PELÍCULAS
+       ======================================================== */
+
+    if (filtro === 'todas-peliculas') {
+
+        const lista =
+            await obtenerDiscover('movie');
+
+        return lista.map(item => ({
+            ...item,
+            _swiperTipo: 'movie'
+        }));
+
+    }
+
+
+    /* ========================================================
+       TODAS LAS SERIES
+       ======================================================== */
+
+    if (filtro === 'todas-series') {
+
+        const lista =
+            await obtenerDiscover('tv');
+
+        return lista.map(item => ({
+            ...item,
+            _swiperTipo: 'tv'
+        }));
+
+    }
+
+
+    /* ========================================================
+       ANIME
+       
+       La carpeta dice anime.
+       La sección decide si son películas o series.
+       ======================================================== */
+
+    if (filtro === 'anime') {
+
+        const resultados = [];
+
+        for (const tipo of tipos) {
+
+            const lista =
+                await obtenerDiscover(
+                    tipo,
+                    '&with_genres=16&with_original_language=ja'
+                );
+
+            resultados.push(
+                ...lista.map(item => ({
+                    ...item,
+                    _swiperTipo: tipo
+                }))
+            );
+
+        }
+
+        return resultados
+            .sort(() => Math.random() - 0.5)
+            .slice(0, cantidad);
+
+    }
+
+
+    /* ========================================================
+       DORAMAS
+       ======================================================== */
+
+    if (filtro === 'doramas') {
+
+        const resultados = [];
+
+        for (const tipo of tipos) {
+
+            const lista =
+                await obtenerDiscover(
+                    tipo,
+                    '&with_original_language=ko'
+                );
+
+            resultados.push(
+                ...lista.map(item => ({
+                    ...item,
+                    _swiperTipo: tipo
+                }))
+            );
+
+        }
+
+        return resultados
+            .sort(() => Math.random() - 0.5)
+            .slice(0, cantidad);
+
+    }
+
+
+    /* ========================================================
+       INFANTIL
+       ======================================================== */
+
+    if (filtro === 'infantil') {
+
+        const resultados = [];
+
+        for (const tipo of tipos) {
+
+            const lista =
+                await obtenerDiscover(
+                    tipo,
+                    '&with_genres=10751'
+                );
+
+            resultados.push(
+                ...lista.map(item => ({
+                    ...item,
+                    _swiperTipo: tipo
+                }))
+            );
+
+        }
+
+        return resultados
+            .sort(() => Math.random() - 0.5)
+            .slice(0, cantidad);
+
+    }
+
+
+    /* ========================================================
+       ANIMACIÓN
+       ======================================================== */
+
+    if (filtro === 'animacion') {
+
+        const resultados = [];
+
+        for (const tipo of tipos) {
+
+            const lista =
+                await obtenerDiscover(
+                    tipo,
+                    '&with_genres=16'
+                );
+
+            resultados.push(
+                ...lista.map(item => ({
+                    ...item,
+                    _swiperTipo: tipo
+                }))
+            );
+
+        }
+
+        return resultados
+            .sort(() => Math.random() - 0.5)
+            .slice(0, cantidad);
+
+    }
+
+
+    /* ========================================================
+       CATEGORÍAS ESPECIALES
+       ======================================================== */
+
+    const busquedasPorFiltro = {
+        'harry-potter': 'Harry Potter',
+        'dragon-ball': 'Dragon Ball',
+        'destino-final': 'Final Destination',
+        'bruce-lee': 'Bruce Lee',
+        'arma-mortal': 'Lethal Weapon',
+        'karate-kid': 'Karate Kid',
+        blade: 'Blade',
+        'rec-coleccion': '[REC]',
+        twilight: 'Twilight',
+        'volver-al-futuro': 'Back to the Future',
+        alien: 'Alien',
+        starwars: 'Star Wars'
+    };
+
+    const parametrosPorFiltro = {
+        marvel: '&with_companies=420',
+        dc: '&with_companies=9993',
+        disney: '&with_companies=2',
+        mexicanas: '&with_original_language=es&region=MX'
+    };
+
+    if (parametrosPorFiltro[filtro]) {
+        const resultados = [];
+
+        for (const tipo of tipos) {
+            const lista = await obtenerDiscover(
+                tipo,
+                parametrosPorFiltro[filtro]
+            );
+
+            resultados.push(
+                ...lista.map(item => ({ ...item, _swiperTipo: tipo }))
+            );
+        }
+
+        return resultados
+            .sort(() => Math.random() - 0.5)
+            .slice(0, cantidad);
+    }
+
+    if (busquedasPorFiltro[filtro]) {
+        const resultados = [];
+
+        for (const tipo of tipos) {
+            const lista = await swiperTMDBMultiplesPaginas(
+                `/search/${tipo}?query=${encodeURIComponent(busquedasPorFiltro[filtro])}`,
+                cantidad
+            );
+
+            resultados.push(
+                ...lista.map(item => ({ ...item, _swiperTipo: tipo }))
+            );
+        }
+
+        return resultados
+            .sort(() => Math.random() - 0.5)
+            .slice(0, cantidad);
+    }
+
+
+    /* ========================================================
+       SI NO EXISTE EL FILTRO
+       ======================================================== */
+
+    console.warn(
+        'Filtro Swiper no reconocido:',
+        filtro
+    );
+
+    return [];
+
+}
+
 
 
 /* ============================================================
@@ -395,21 +918,47 @@ async function swiperObtenerContenido(item, tipo, carpeta) {
        logos aunque no estén en español.
     */
 
-    const imagenes =
-    await swiperTMDB(
-        `/${tipo}/${id}/images?include_image_language=null`
+    /* ============================================================
+   OBTENER IMÁGENES TMDB
+   ============================================================ */
+
+let imagenes = {
+    posters: [],
+    backdrops: [],
+    logos: []
+};
+
+try {
+
+    /*
+       Pedimos español, inglés y también imágenes sin idioma.
+       Esto evita perder posters/backdrops que TMDB marca
+       como iso_639_1: null.
+    */
+
+    imagenes = await swiperTMDB(
+        `/${tipo}/${id}/images?include_image_language=es,en,null`
     );
+
+} catch (error) {
+
+    console.warn(
+        `No se pudieron obtener imágenes para ${tipo}/${id}:`,
+        error
+    );
+
+}
 
 
 /* ============================================================
-   SEGUNDO INTENTO PARA LOGOS
-   Si TMDB no devolvió ningún logo, hacemos una consulta
-   adicional sin limitar el idioma.
+   SEGUNDO INTENTO
+   Si la primera consulta no devuelve imágenes,
+   intentamos nuevamente sin filtro de idioma.
    ============================================================ */
 
 if (
-    !imagenes?.logos ||
-    !imagenes.logos.length
+    !imagenes?.posters?.length &&
+    !imagenes?.backdrops?.length
 ) {
 
     try {
@@ -419,24 +968,44 @@ if (
                 `/${tipo}/${id}/images`
             );
 
-        if (
-            imagenesCompletas?.logos?.length
-        ) {
+        if (imagenesCompletas) {
 
-            imagenes.logos =
-                imagenesCompletas.logos;
+            imagenes =
+                imagenesCompletas;
 
         }
 
     } catch (error) {
 
         console.warn(
-            'No se pudieron recuperar logos adicionales:',
-            id,
+            `Segundo intento de imágenes falló para ${tipo}/${id}:`,
             error
         );
 
     }
+
+}
+
+
+/* ============================================================
+   ASEGURAR ESTRUCTURA
+   ============================================================ */
+
+if (!Array.isArray(imagenes.posters)) {
+
+    imagenes.posters = [];
+
+}
+
+if (!Array.isArray(imagenes.backdrops)) {
+
+    imagenes.backdrops = [];
+
+}
+
+if (!Array.isArray(imagenes.logos)) {
+
+    imagenes.logos = [];
 
 }
 
@@ -456,35 +1025,89 @@ if (
    con títulos o textos localizados.
 */
 
-const postersLimpios =
-    (imagenes.posters || [])
-        .filter(img => img.iso_639_1 === null)
-        .sort((a, b) =>
-            (b.vote_average || 0) - (a.vote_average || 0)
+/* ============================================================
+   IMÁGENES TMDB
+   Prioridad:
+   1. Sin idioma
+   2. Español
+   3. Japonés
+   4. Inglés
+   5. Cualquier idioma
+   ============================================================ */
+
+function swiperOrdenarImagenes(imagenes) {
+
+    if (!Array.isArray(imagenes)) {
+        return [];
+    }
+
+    return [...imagenes].sort((a, b) => {
+
+        function prioridad(img) {
+
+            if (img?.iso_639_1 === null) return 1;
+            if (img?.iso_639_1 === 'es') return 2;
+            if (img?.iso_639_1 === 'ja') return 3;
+            if (img?.iso_639_1 === 'en') return 4;
+
+            return 5;
+        }
+
+        const prioridadA = prioridad(a);
+        const prioridadB = prioridad(b);
+
+        if (prioridadA !== prioridadB) {
+            return prioridadA - prioridadB;
+        }
+
+        return (
+            (b.vote_average || 0) -
+            (a.vote_average || 0)
         );
 
-const backdropsLimpios =
-    (imagenes.backdrops || [])
-        .filter(img => img.iso_639_1 === null)
-        .sort((a, b) =>
-            (b.vote_average || 0) - (a.vote_average || 0)
-        );
+    });
+
+}
 
 
-/* POSTER VERTICAL */
+/* ============================================================
+   POSTERS
+   ============================================================ */
+
+const postersOrdenados =
+    swiperOrdenarImagenes(
+        imagenes.posters
+    );
+
+
+/* ============================================================
+   BACKDROPS
+   ============================================================ */
+
+const backdropsOrdenados =
+    swiperOrdenarImagenes(
+        imagenes.backdrops
+    );
+
+
+/* ============================================================
+   POSTER VERTICAL
+   ============================================================ */
 
 const poster =
     swiperImagenPoster(
-        postersLimpios[0]?.file_path ||
+        postersOrdenados[0]?.file_path ||
         ''
     );
 
 
-/* BACKDROP HORIZONTAL */
+/* ============================================================
+   BACKDROP HORIZONTAL
+   ============================================================ */
 
 const backdrop =
     swiperImagenBackdrop(
-        backdropsLimpios[0]?.file_path ||
+        backdropsOrdenados[0]?.file_path ||
         ''
     );
 
@@ -829,6 +1452,12 @@ function swiperElement(id) {
 
 }
 
+function swiperTiposParaSeccion(seccion) {
+    if (seccion === 'series') return ['tv'];
+    if (seccion === 'peliculas') return ['movie'];
+    return ['movie', 'tv'];
+}
+
 
 /* ============================================================
    GENERAR SWIPER
@@ -843,21 +1472,34 @@ async function generarSwiper() {
         swiperElement('swiperSeccion')?.value ||
         'peliculas';
 
+        const carpeta =
+    swiperCarpetaActual();
+
+const config = {
+    ...(SWIPER_CONFIG[carpeta] || {}),
+    // La configuración actual usa filtros por carpeta; el tipo
+    // se determina desde la sección para no construir rutas "undefined".
+    tipo: swiperTiposParaSeccion(seccion)[0]
+};
+
+const filtro =
+    config.filtro || '';
+
     const modo =
         swiperElement('swiperModo')?.value ||
         'random';
 
     const cantidad =
-        Math.max(
-            1,
-            Math.min(
-                10,
-                parseInt(
-                    swiperElement('swiperCantidad')?.value || '6',
-                    10
-                )
+    Math.max(
+        1,
+        Math.min(
+            500,
+            parseInt(
+                swiperElement('swiperCantidad')?.value || '6',
+                10
             )
-        );
+        )
+    );
 
 
     const busqueda =
@@ -882,118 +1524,411 @@ async function generarSwiper() {
 
     try {
 
-        const config =
-    SWIPER_CONFIG[seccion];
+  
+let lista = [];
 
-if (!config) {
 
-    console.error(
-        'Sección TMDB no configurada:',
-        seccion
+/* ====================================================
+   BÚSQUEDA
+   ==================================================== */
+
+if (modo === 'search') {
+
+    if (!busqueda) {
+
+        resultados.innerHTML = `
+            <div class="p-4 text-yellow-400">
+                Escribe un nombre para buscar.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    /* ====================================================
+       ANIME
+       Películas + Series
+       ==================================================== */
+
+    if (seccion === 'anime') {
+
+        resultados.innerHTML = `
+            <div class="p-5 text-center text-slate-400">
+                ⏳ Buscando películas y series de anime...
+            </div>
+        `;
+
+
+        const [peliculas, series] =
+            await Promise.all([
+
+                swiperTMDBMultiplesPaginas(
+                    `/search/movie?query=${encodeURIComponent(busqueda)}`,
+                    cantidad
+                ),
+
+                swiperTMDBMultiplesPaginas(
+                    `/search/tv?query=${encodeURIComponent(busqueda)}`,
+                    cantidad
+                )
+
+            ]);
+
+
+        const peliculasAnime =
+            peliculas
+                .filter(item =>
+                    item &&
+                    Array.isArray(item.genre_ids) &&
+                    item.genre_ids.includes(16)
+                )
+                .map(item => ({
+                    ...item,
+                    _swiperTipo: 'movie'
+                }));
+
+
+        const seriesAnime =
+            series
+                .filter(item =>
+                    item &&
+                    Array.isArray(item.genre_ids) &&
+                    item.genre_ids.includes(16)
+                )
+                .map(item => ({
+                    ...item,
+                    _swiperTipo: 'tv'
+                }));
+
+
+        lista = [
+            ...peliculasAnime,
+            ...seriesAnime
+        ];
+
+
+        /*
+           Mezclar películas y series
+        */
+
+        lista.sort(
+            () => Math.random() - 0.5
+        );
+
+
+        lista =
+            lista.slice(
+                0,
+                cantidad
+            );
+
+
+    } else {
+
+        /* ====================================================
+           BÚSQUEDA NORMAL
+           ==================================================== */
+
+        const tipos = swiperTiposParaSeccion(seccion);
+
+        const listas = await Promise.all(
+            tipos.map(async tipo => {
+                const items = await swiperTMDBMultiplesPaginas(
+                    `/search/${tipo}?query=${encodeURIComponent(busqueda)}`,
+                    cantidad
+                );
+
+                return items.map(item => ({
+                    ...item,
+                    _swiperTipo: tipo
+                }));
+            })
+        );
+
+        lista = listas
+            .flat()
+            .sort(() => Math.random() - 0.5)
+            .slice(0, cantidad);
+
+    }
+
+
+} else {
+
+    /* ====================================================
+       ALEATORIO
+       ==================================================== */
+
+    const paginasNecesarias =
+        Math.max(
+            1,
+            Math.ceil(cantidad / 20)
+        );
+
+
+    const maxPaginas =
+        Math.min(
+            paginasNecesarias,
+            25
+        );
+
+
+    const paginas = [];
+
+
+    const paginasDisponibles =
+        Array.from(
+            { length: 500 },
+            (_, i) => i + 1
+        );
+
+
+    paginasDisponibles.sort(
+        () => Math.random() - 0.5
     );
 
-    resultados.innerHTML = `
-        <div class="p-4 text-red-400">
-            La categoría "${swiperEscapeHTML(seccion)}" no está configurada.
-        </div>
-    `;
 
-    return;
+    const paginasSeleccionadas =
+        paginasDisponibles.slice(
+            0,
+            maxPaginas
+        );
+
+
+    for (
+        const pagina of paginasSeleccionadas
+    ) {
+
+        let endpoint =
+            `/discover/${config.tipo}` +
+            `?sort_by=popularity.desc` +
+            `&page=${pagina}`;
+
+
+        /* ====================================================
+           ANIME
+           ==================================================== */
+
+        if (seccion === 'anime') {
+
+            /*
+               Anime puede ser película o serie.
+               Aquí hacemos discover de películas y series
+               por separado.
+            */
+
+            const endpointsAnime = [
+
+                `/discover/movie` +
+                `?sort_by=popularity.desc` +
+                `&with_genres=16` +
+                `&with_original_language=ja` +
+                `&page=${pagina}`,
+
+                `/discover/tv` +
+                `?sort_by=popularity.desc` +
+                `&with_genres=16` +
+                `&with_original_language=ja` +
+                `&page=${pagina}`
+
+            ];
+
+
+            for (
+                const endpointAnime of endpointsAnime
+            ) {
+
+                try {
+
+                    const dataAnime =
+                        await swiperTMDB(
+                            endpointAnime
+                        );
+
+
+                    if (
+                        dataAnime?.results?.length
+                    ) {
+
+                        const tipoAnime =
+                            endpointAnime.includes('/movie')
+                                ? 'movie'
+                                : 'tv';
+
+
+                        paginas.push(
+                            ...dataAnime.results.map(
+                                item => ({
+                                    ...item,
+                                    _swiperTipo:
+                                        tipoAnime
+                                })
+                            )
+                        );
+
+                    }
+
+                } catch (error) {
+
+                    console.warn(
+                        'Error obteniendo anime:',
+                        error
+                    );
+
+                }
+
+            }
+
+
+            if (
+                paginas.length >= cantidad
+            ) {
+                break;
+            }
+
+
+            continue;
+
+        }
+
+
+        /* ====================================================
+           FILTROS EXISTENTES
+           ==================================================== */
+
+        if (seccion === 'infantil') {
+
+            endpoint +=
+                '&with_genres=10751';
+
+        }
+
+
+        if (seccion === 'Doramas') {
+
+            endpoint +=
+                '&with_original_language=ko';
+
+        }
+
+
+        try {
+
+            const dataPagina =
+                await swiperTMDB(
+                    endpoint
+                );
+
+
+            if (
+                dataPagina?.results?.length
+            ) {
+
+                paginas.push(
+                    ...dataPagina.results
+                );
+
+            }
+
+
+            if (
+                paginas.length >= cantidad
+            ) {
+                break;
+            }
+
+        } catch (error) {
+
+            console.warn(
+                `Error obteniendo página ${pagina}:`,
+                error
+            );
+
+        }
+
+    }
+
+
+    lista = paginas;
+
+
+    lista.sort(
+        () => Math.random() - 0.5
+    );
+
+
+   const carpetaSeleccionada =
+    swiperCarpetaActual();
+
+const filtroCarpeta =
+    SWIPER_CONFIG[carpetaSeleccionada]?.filtro || '';
+
+if (!filtroCarpeta) {
+
+    console.warn(
+        'No existe filtro para la carpeta:',
+        carpetaSeleccionada
+    );
+
+}
+
+lista = await swiperObtenerLista(
+    filtroCarpeta,
+    cantidad,
+    seccion
+);
+
 }
 
 
-        let data;
+/* ====================================================
+   ELIMINAR DUPLICADOS
+   ==================================================== */
+
+const vistos = new Set();
+
+lista =
+    lista.filter(item => {
+
+        const tipoContenido =
+    item._swiperTipo ||
+    (
+        seccion === 'series'
+            ? 'tv'
+            : 'movie'
+    );
 
 
-        /* ====================================================
-           BÚSQUEDA
-           ==================================================== */
-
-        if (modo === 'search') {
-
-            if (!busqueda) {
-
-                resultados.innerHTML = `
-                    <div class="p-4 text-yellow-400">
-                        Escribe un nombre para buscar.
-                    </div>
-                `;
-
-                return;
-
-            }
+        const clave =
+            `${tipoContenido}-${item.id}`;
 
 
-            data =
-                await swiperTMDB(
-                    `/search/${config.tipo}?query=${encodeURIComponent(busqueda)}`
-                );
-
+        if (vistos.has(clave)) {
+            return false;
         }
 
 
-        /* ====================================================
-           ALEATORIO
-           ==================================================== */
+        vistos.add(clave);
 
-        else {
+        return true;
 
-            /*
-               Discover para obtener contenido.
-               Cada categoría puede tener filtros propios.
-            */
-
-            let endpoint =
-                `/discover/${config.tipo}?sort_by=popularity.desc&page=${Math.floor(Math.random() * 5) + 1}`;
+    });
 
 
-            /*
-               ANIME
-            */
-
-            if (seccion === 'anime') {
-
-                endpoint +=
-                    '&with_genres=16&with_original_language=ja';
-
-            }
+lista =
+    lista.slice(
+        0,
+        cantidad
+    );
 
 
-            /*
-               INFANTIL
-            */
-
-            if (seccion === 'infantil') {
-
-                endpoint +=
-                    '&with_genres=10751';
-
-            }
-
-
-            /*
-               DORAMAS
-            */
-
-            if (seccion === 'doramas') {
-
-                endpoint +=
-                    '&with_original_language=ko';
-
-            }
-
-
-            data =
-                await swiperTMDB(endpoint);
-
-        }
-
-
-        if (!data?.results?.length) {
+        if (!lista.length) {
 
             resultados.innerHTML = `
-                <div class="p-4 text-red-400">
-                    No se encontraron resultados.
+                <div class="p-4 text-yellow-400">
+                    No se encontraron resultados para la categoría seleccionada.
                 </div>
             `;
 
@@ -1001,26 +1936,6 @@ if (!config) {
 
         }
 
-
-        /*
-           Mezclamos los resultados en modo aleatorio.
-        */
-
-        let lista =
-            [...data.results];
-
-
-        if (modo === 'random') {
-
-            lista.sort(
-                () => Math.random() - 0.5
-            );
-
-        }
-
-
-        lista =
-            lista.slice(0, cantidad);
 
 
         resultados.innerHTML = `
@@ -1041,12 +1956,21 @@ if (!config) {
 
             try {
 
-                const contenido =
-                    await swiperObtenerContenido(
-                        item,
-                        config.tipo,
-                        swiperCarpetaActual()
-                    );
+           const tipoContenido =
+    item._swiperTipo ||
+    (
+        seccion === 'series'
+            ? 'tv'
+            : 'movie'
+    );
+
+
+const contenido =
+    await swiperObtenerContenido(
+        item,
+        tipoContenido,
+        swiperCarpetaActual()
+    );
 
 
                 /*
@@ -1182,26 +2106,70 @@ if (!config) {
    CARPETA
    ============================================================ */
 
+
 function swiperCarpetaActual() {
 
     const select =
         swiperElement('swiperCarpeta');
 
-
     if (select?.value) {
+
         return select.value;
+
     }
 
 
+    /*
+       Si no hay carpeta seleccionada,
+       usamos la carpeta correspondiente
+       a la sección.
+    */
+
     const seccion =
-    swiperElement('swiperDestino')?.value ||
-    'peliculas';
+        swiperElement('swiperSeccion')?.value ||
+        'peliculas';
 
 
-    return SWIPER_CONFIG[seccion]?.carpeta ||
-        'Peliculas/';
+    if (seccion === 'series') {
+
+        return 'series/';
+
+    }
+
+
+    if (seccion === 'peliculas') {
+
+        return 'peliculas/';
+
+    }
+
+
+    if (seccion === 'anime') {
+
+        return 'anime/';
+
+    }
+
+
+    if (seccion === 'doramas') {
+
+        return 'Doramas/';
+
+    }
+
+
+    if (seccion === 'infantil') {
+
+        return 'Infantil/';
+
+    }
+
+
+    return 'peliculas/';
 
 }
+
+
 
 
 /* ============================================================
@@ -1658,19 +2626,44 @@ async function copiarSwiper() {
         swiperObtenerJSON();
 
 
+    /* ========================================================
+       MÉTODO 1 — CLIPBOARD API
+       ======================================================== */
+
     try {
 
-        await navigator.clipboard.writeText(
-            json
-        );
+        if (
+            navigator.clipboard &&
+            window.isSecureContext
+        ) {
 
+            await navigator.clipboard.writeText(
+                json
+            );
 
-        alert(
-            '✅ JSON de Swipers copiado correctamente.'
-        );
+            alert(
+                '✅ JSON de Swipers copiado correctamente.'
+            );
 
+            return;
+
+        }
 
     } catch (error) {
+
+        console.warn(
+            'Clipboard API no disponible:',
+            error
+        );
+
+    }
+
+
+    /* ========================================================
+       MÉTODO 2 — TEXTAREA
+       ======================================================== */
+
+    try {
 
         const textarea =
             document.createElement('textarea');
@@ -1680,9 +2673,26 @@ async function copiarSwiper() {
             json;
 
 
+        textarea.setAttribute(
+            'readonly',
+            ''
+        );
+
+
         textarea.style.position =
             'fixed';
 
+        textarea.style.left =
+            '-9999px';
+
+        textarea.style.top =
+            '0';
+
+        textarea.style.width =
+            '1px';
+
+        textarea.style.height =
+            '1px';
 
         textarea.style.opacity =
             '0';
@@ -1693,20 +2703,107 @@ async function copiarSwiper() {
         );
 
 
+        textarea.focus();
+
         textarea.select();
 
-
-        document.execCommand(
-            'copy'
+        textarea.setSelectionRange(
+            0,
+            textarea.value.length
         );
+
+
+        const copiado =
+            document.execCommand('copy');
 
 
         textarea.remove();
 
 
-        alert(
-            '✅ JSON de Swipers copiado correctamente.'
+        if (copiado) {
+
+            alert(
+                '✅ JSON de Swipers copiado correctamente.'
+            );
+
+            return;
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            'Error copiando JSON:',
+            error
         );
+
+    }
+
+
+    /* ========================================================
+       SI TODO FALLÓ
+       ======================================================== */
+
+    alert(
+        '⚠️ No se pudo copiar automáticamente. El JSON se abrirá para copiarlo manualmente.'
+    );
+
+
+    /* ========================================================
+       ÚLTIMO RECURSO — MOSTRAR JSON
+       ======================================================== */
+
+    const ventana =
+        window.open(
+            '',
+            '_blank',
+            'width=900,height=700'
+        );
+
+
+    if (ventana) {
+
+        ventana.document.write(`
+            <html>
+            <head>
+                <title>JSON de Swipers</title>
+                <style>
+                    body {
+                        background:#0b0f19;
+                        color:#fff;
+                        font-family:monospace;
+                        padding:20px;
+                    }
+
+                    textarea {
+                        width:100%;
+                        height:90vh;
+                        box-sizing:border-box;
+                        background:#111827;
+                        color:#e5e7eb;
+                        border:1px solid #374151;
+                        padding:15px;
+                        font-family:monospace;
+                        font-size:14px;
+                    }
+                </style>
+            </head>
+            <body>
+
+                <textarea id="jsonCopiar"></textarea>
+
+                <script>
+                    document.getElementById('jsonCopiar').value =
+                        ${JSON.stringify(json)};
+                    
+                    document.getElementById('jsonCopiar').select();
+                <\/script>
+
+            </body>
+            </html>
+        `);
+
+        ventana.document.close();
 
     }
 
